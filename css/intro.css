@@ -1,4 +1,4 @@
-/* ---------- entrance: a windblown meadow, a turning sunflower ----------
+/* ---------- entrance: a windblown frame of gold flowers, a turning sunflower ----------
    Motion is driven from js/intro.js. This file only sets the stage. */
 
 body.intro-on { overflow: hidden; }
@@ -25,20 +25,14 @@ body.intro-on .brand__icon { opacity: 0; }        /* the header slot waits for t
 }
 .intro__meadow { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
 
-/* line-art flowers: gold strokes, petals filled with the night so the front row hides the back */
-.intro__meadow .st { fill: none; stroke: url(#intro-gold); stroke-width: 1.6; stroke-linecap: round; }
-.intro__meadow .p  { fill: #090807; stroke: url(#intro-gold); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
-.intro__meadow .v  { fill: none; stroke: url(#intro-gold); stroke-width: .8; stroke-linecap: round; }
-.intro__meadow .d  { fill: url(#intro-gold); }
-.intro__meadow .gb { fill: url(#intro-gold); }
-.intro__meadow .back { opacity: .55; }
-.intro__meadow .back .st, .intro__meadow .back .p { stroke-width: 1.1; }
-.intro__meadow .grass { opacity: .45; }
+/* hand-drawn leaves and flowers: each copy gets its own gold (--fl-line) and an opaque fill
+   (--fl-fill) from js/intro.js, so pieces layer over each other instead of showing through */
+.intro__meadow .back { opacity: .62; }
 .intro__meadow .mote { fill: #F6E2A6; }
 
 /* the sunflower: centred in the frame, transformed frame by frame */
 .intro__bloom {
-  --size: min(300px, 58vw);
+  --size: min(300px, 58vw, 46vh);                 /* stays inside the frame on short screens */
   position: absolute; left: 50%; top: 50%;
   width: var(--size); height: var(--size);
   margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
