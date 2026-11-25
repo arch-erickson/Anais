@@ -1,0 +1,40 @@
+/* ---------- wireframe layer ----------
+   Placeholders and decision notes. Delete this file (and the .ph / .wf-note markup)
+   once real photos and copy are in. */
+
+/* image placeholder: a crossed box with a label */
+.ph {
+  position: relative; display: grid; place-items: center; width: 100%;
+  aspect-ratio: 4 / 3; padding: 12px;
+  background:
+    linear-gradient(to top right, transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px)),
+    linear-gradient(to top left,  transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px)),
+    rgba(126, 85, 32, .06);
+  border: 1px solid var(--line);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; text-align: center; color: var(--gold-deep);
+}
+body.is-barber .ph { background-color: rgba(226, 188, 114, .05); }
+.ph--tall { aspect-ratio: 4 / 5; }
+.ph--square { aspect-ratio: 1; }
+.ph--portrait { aspect-ratio: 3 / 4; }
+.ph--wide { aspect-ratio: 16 / 9; }
+.ph--booking { aspect-ratio: auto; min-height: 460px; }
+.ph--map { aspect-ratio: 16 / 9; }
+
+/* decision notes */
+.wf-note {
+  display: block; width: fit-content; max-width: 560px; margin: 28px auto 0; padding: 8px 12px;
+  border: 1px dashed #C2410C; background: rgba(255, 237, 213, .9); color: #9A3412;
+  font: 500 12px/1.45 Montserrat, sans-serif; letter-spacing: .02em; text-align: left;
+}
+.split__text .wf-note { margin-left: 0; }
+.wf-note::before { content: "\270E  "; }
+body.wf-notes-off .wf-note { display: none; }
+
+.wf-toggle {
+  position: fixed; left: 16px; bottom: 16px; z-index: 20;
+  padding: 8px 14px; border: 1px dashed #C2410C; border-radius: 99px;
+  background: rgba(255, 237, 213, .95); color: #9A3412; cursor: pointer;
+  font: 500 11px/1 Montserrat, sans-serif; letter-spacing: .08em;
+}
+body.intro-on .wf-toggle { display: none; }

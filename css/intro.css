@@ -1,0 +1,60 @@
+/* ---------- entrance: a windblown meadow, a turning sunflower ----------
+   Motion is driven from js/intro.js. This file only sets the stage. */
+
+body.intro-on { overflow: hidden; }
+body.intro-on .brand__icon { opacity: 0; }        /* the header slot waits for the landing */
+
+.intro {
+  position: fixed; inset: 0; z-index: 100;
+  cursor: pointer;                                 /* click / tap / any key skips ahead */
+  /* failsafe: if the script never runs, the intro still gets out of the way */
+  animation: intro-failsafe 0s 12s forwards;
+}
+.is-done .intro { display: none; }
+@keyframes intro-failsafe { to { visibility: hidden; pointer-events: none; } }
+
+/* the dark field; an iris opens through it at the end */
+.intro__veil {
+  --iris: -120px;
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 45% at 50% 50%, #241a0d 0%, rgba(36, 26, 13, 0) 72%),
+    linear-gradient(180deg, #0b0a08 0%, #080706 100%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris), #000 calc(var(--iris) + 90px));
+          mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris), #000 calc(var(--iris) + 90px));
+}
+.intro__meadow { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* line-art flowers: gold strokes, petals filled with the night so the front row hides the back */
+.intro__meadow .st { fill: none; stroke: url(#intro-gold); stroke-width: 1.6; stroke-linecap: round; }
+.intro__meadow .p  { fill: #090807; stroke: url(#intro-gold); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.intro__meadow .v  { fill: none; stroke: url(#intro-gold); stroke-width: .8; stroke-linecap: round; }
+.intro__meadow .d  { fill: url(#intro-gold); }
+.intro__meadow .gb { fill: url(#intro-gold); }
+.intro__meadow .back { opacity: .55; }
+.intro__meadow .back .st, .intro__meadow .back .p { stroke-width: 1.1; }
+.intro__meadow .grass { opacity: .45; }
+.intro__meadow .mote { fill: #F6E2A6; }
+
+/* the sunflower: centred in the frame, transformed frame by frame */
+.intro__bloom {
+  --size: min(300px, 58vw);
+  position: absolute; left: 50%; top: 50%;
+  width: var(--size); height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  opacity: 0; transform-origin: 50% 50%; will-change: transform, opacity;
+}
+.intro__bloom::before {                            /* soft warm glow behind the flower */
+  content: ""; position: absolute; inset: -38%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 188, 114, .22) 0%, rgba(226, 188, 114, .07) 38%, rgba(226, 188, 114, 0) 68%);
+  transition: opacity .5s;
+}
+.intro.is-leaving .intro__bloom::before { opacity: 0; }
+.intro__bloom img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.intro__bloom-light { opacity: 0; }
+
+/* the page underneath rises into place as the iris opens */
+.hero > * { transition: opacity 1s ease, transform 1.2s cubic-bezier(.2, .8, .2, 1); }
+body.intro-on:not(.is-revealing) .hero > * { opacity: 0; transform: translateY(18px); }
+.hero > :nth-child(2) { transition-delay: .15s; }
+.hero > :nth-child(3) { transition-delay: .3s; }

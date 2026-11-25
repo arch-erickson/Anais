@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANAÍS Beauty Empire</title>
+  <link rel="icon" href="anais-icon-sunflower-gold-light-bg.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/wireframe.css">
+  <link rel="stylesheet" href="css/intro.css">
+</head>
+<body class="intro-on">
+
+  <!-- Entrance: a frame of gold flowers sways in the wind while the sunflower turns and grows,
+       then the frame parts and the sunflower settles into the header. -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro__veil">
+      <svg class="intro__meadow" preserveAspectRatio="xMidYMax slice"></svg>
+    </div>
+    <div class="intro__bloom">
+      <img class="intro__bloom-dark" src="anais-icon-sunflower-gold-dark-bg.svg" alt="">
+      <img class="intro__bloom-light" src="anais-icon-sunflower-gold-light-bg.svg" alt="">
+    </div>
+  </div>
+  <noscript><style>.intro { display: none; } body.intro-on { overflow: auto; }</style></noscript>
+
+  <!-- ================= HEADER =================
+       The menu swaps with the mode:
+       Salon:      Stylists · Services · Barbershop
+       Barbershop: Barbers  · Services · Salon -->
+  <header class="header">
+    <nav class="nav nav--left" aria-label="Main">
+      <a class="only-salon" href="#stylists">Stylists</a>
+      <a class="only-salon" href="#services">Services</a>
+      <a class="only-salon nav__switch" href="#barbershop">Barbershop</a>
+      <a class="only-barber" href="#barbers">Barbers</a>
+      <a class="only-barber" href="#barber-services">Services</a>
+      <a class="only-barber nav__switch" href="#salon">Salon</a>
+    </nav>
+    <a class="brand" href="#top" aria-label="Home">
+      <img class="brand__icon only-salon" data-intro-slot src="anais-icon-sunflower-gold-light-bg.svg" alt="">
+      <span class="brand__placeholder only-barber" aria-hidden="true">Barber <span>logo</span></span>
+    </a>
+    <div class="nav nav--right">
+      <a class="btn btn--small" href="#book">Book now</a>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       SALON
+       ========================================================= -->
+  <main id="salon" data-mode-view="salon">
+
+    <!-- Hero -->
+    <section class="hero">
+      <img class="hero__logo" src="anais-logo-gold-light-bg.svg" alt="ANAÍS Beauty Empire">
+      <p class="hero__lede">Beauty, in full bloom.</p>
+      <p class="hero__sub">A color-first salon: balayage, blonding, vivids and color correction, plus every cut, treatment and finish in between.</p>
+      <div class="hero__ctas">
+        <a class="btn" href="#book">Book an appointment</a>
+        <a class="btn btn--ghost" href="#color">Explore color</a>
+      </div>
+    </section>
+
+    <!-- Color Studio: the main service -->
+    <section class="sec" id="color">
+      <div class="split">
+        <div class="ph ph--tall">Hero color photo / short video loop</div>
+        <div class="split__text">
+          <p class="eyebrow">The Color Studio</p>
+          <h2>Color is our craft.</h2>
+          <p class="lede">Every color service starts with a consultation. We read your skin tone, your history and how you live with your hair, then build color that grows out beautifully.</p>
+          <ul class="checks">
+            <li>Balayage &amp; lived-in color</li>
+            <li>Blonding &amp; foil highlights</li>
+            <li>Vivid &amp; fashion color</li>
+            <li>Rich brunettes &amp; reds</li>
+            <li>Grey blending &amp; coverage</li>
+            <li>Color correction</li>
+          </ul>
+          <div class="row">
+            <a class="btn" href="#book">Book a color consultation</a>
+            <a class="link" href="#services">See color menu</a>
+          </div>
+          <span class="wf-note">Decision: free consult for new color guests? In person, virtual, or both?</span>
+        </div>
+      </div>
+
+      <div class="ba">
+        <figure><div class="ph ph--square">Before / after 1</div><figcaption>Brunette to soft balayage</figcaption></figure>
+        <figure><div class="ph ph--square">Before / after 2</div><figcaption>Copper refresh</figcaption></figure>
+        <figure><div class="ph ph--square">Before / after 3</div><figcaption>Vivid violet</figcaption></figure>
+        <figure><div class="ph ph--square">Before / after 4</div><figcaption>Color correction</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- How a color visit works -->
+    <section class="sec sec--band">
+      <div class="sec-head">
+        <p class="eyebrow">Your color visit</p>
+        <h2>Three steps to your color.</h2>
+      </div>
+      <ol class="steps">
+        <li><span class="steps__n">1</span><h3>Consult</h3><p>We talk goals, history and upkeep. Patch and strand tests when needed.</p></li>
+        <li><span class="steps__n">2</span><h3>Color</h3><p>Your colorist builds the formula and places it by hand, then we tone and gloss.</p></li>
+        <li><span class="steps__n">3</span><h3>Care</h3><p>You leave with a home-care plan and your next visit on the books.</p></li>
+      </ol>
+    </section>
+
+    <!-- Stylists -->
+    <section class="sec" id="stylists">
+      <div class="sec-head">
+        <p class="eyebrow">Stylists</p>
+        <h2>Meet the team.</h2>
+        <p class="lede">Colorists, cutters and finishers. Book with someone you know, or let us match you.</p>
+      </div>
+      <div class="people">
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Stylist name</h3>
+          <p class="person__role">Owner &amp; Color Director</p>
+          <ul class="tags"><li>Balayage</li><li>Corrections</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Stylist name</h3>
+          <p class="person__role">Senior Colorist</p>
+          <ul class="tags"><li>Blonding</li><li>Grey blending</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Stylist name</h3>
+          <p class="person__role">Vivid Color Specialist</p>
+          <ul class="tags"><li>Vivids</li><li>Creative cuts</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Stylist name</h3>
+          <p class="person__role">Stylist</p>
+          <ul class="tags"><li>Cuts</li><li>Extensions</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+      </div>
+      <span class="wf-note">Decision: how many stylists? Show levels (Junior / Senior / Director) with different pricing?</span>
+    </section>
+
+    <!-- Services -->
+    <section class="sec sec--band" id="services">
+      <div class="sec-head">
+        <p class="eyebrow">Services</p>
+        <h2>The full menu.</h2>
+        <p class="lede">Color leads, but we do it all. Prices are starting points and depend on length, density and stylist level.</p>
+      </div>
+
+      <div class="menu">
+        <div class="menu__cat menu__cat--feature">
+          <h3>Color <span class="badge">Signature</span></h3>
+          <ul class="svc svc--2col">
+            <li><span>Color consultation</span><b>Free</b></li>
+            <li><span>Balayage / lived-in color</span><b>from $—</b></li>
+            <li><span>Full highlights</span><b>from $—</b></li>
+            <li><span>Partial highlights</span><b>from $—</b></li>
+            <li><span>Vivid / fashion color</span><b>from $—</b></li>
+            <li><span>Single-process color</span><b>from $—</b></li>
+            <li><span>Root touch-up</span><b>from $—</b></li>
+            <li><span>Grey blending</span><b>from $—</b></li>
+            <li><span>Gloss / toner</span><b>from $—</b></li>
+            <li><span>Color correction</span><b>by consult</b></li>
+          </ul>
+        </div>
+
+        <div class="menu__cat">
+          <h3>Cuts &amp; styling</h3>
+          <ul class="svc">
+            <li><span>Women's cut &amp; style</span><b>from $—</b></li>
+            <li><span>Men's salon cut</span><b>from $—</b></li>
+            <li><span>Kids' cut (under 12)</span><b>from $—</b></li>
+            <li><span>Bang / fringe trim</span><b>from $—</b></li>
+            <li><span>Blowout</span><b>from $—</b></li>
+            <li><span>Silk press</span><b>from $—</b></li>
+          </ul>
+        </div>
+
+        <div class="menu__cat">
+          <h3>Treatments</h3>
+          <ul class="svc">
+            <li><span>Bond-repair treatment</span><b>from $—</b></li>
+            <li><span>Deep conditioning mask</span><b>from $—</b></li>
+            <li><span>Scalp treatment</span><b>from $—</b></li>
+            <li><span>Keratin smoothing</span><b>from $—</b></li>
+          </ul>
+        </div>
+
+        <div class="menu__cat">
+          <h3>Texture</h3>
+          <ul class="svc">
+            <li><span>Perm / body wave</span><b>from $—</b></li>
+            <li><span>Relaxer</span><b>from $—</b></li>
+            <li><span>Curl cut &amp; define</span><b>from $—</b></li>
+          </ul>
+        </div>
+
+        <div class="menu__cat">
+          <h3>Extensions</h3>
+          <ul class="svc">
+            <li><span>Extension consultation</span><b>Free</b></li>
+            <li><span>Tape-in</span><b>from $—</b></li>
+            <li><span>Hand-tied wefts</span><b>from $—</b></li>
+            <li><span>Move-up / maintenance</span><b>from $—</b></li>
+          </ul>
+        </div>
+
+        <div class="menu__cat">
+          <h3>Bridal &amp; events</h3>
+          <ul class="svc">
+            <li><span>Updo / event styling</span><b>from $—</b></li>
+            <li><span>Bridal trial</span><b>from $—</b></li>
+            <li><span>Wedding-day hair</span><b>by quote</b></li>
+          </ul>
+        </div>
+
+        <div class="menu__cat">
+          <h3>Brows &amp; extras</h3>
+          <ul class="svc">
+            <li><span>Brow shaping</span><b>from $—</b></li>
+            <li><span>Brow / lash tint</span><b>from $—</b></li>
+            <li><span>Add-on gloss</span><b>from $—</b></li>
+          </ul>
+        </div>
+      </div>
+      <span class="wf-note">Decision: real prices, or "from" prices? Keep brows, or hair only? Any services to drop or add?</span>
+    </section>
+
+    <!-- Gallery -->
+    <section class="sec" id="gallery">
+      <div class="sec-head">
+        <p class="eyebrow">Gallery</p>
+        <h2>Recent work.</h2>
+      </div>
+      <div class="chips" role="list">
+        <span class="chip is-on" role="listitem">All</span>
+        <span class="chip" role="listitem">Blonde</span>
+        <span class="chip" role="listitem">Brunette</span>
+        <span class="chip" role="listitem">Vivid</span>
+        <span class="chip" role="listitem">Corrections</span>
+        <span class="chip" role="listitem">Cuts</span>
+      </div>
+      <div class="gallery">
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+      </div>
+      <div class="row row--center"><a class="link" href="#gallery">Follow us on Instagram</a></div>
+      <span class="wf-note">Decision: live Instagram feed, or hand-picked photos?</span>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="sec sec--band">
+      <div class="sec-head">
+        <p class="eyebrow">Kind words</p>
+        <h2>From our guests.</h2>
+      </div>
+      <div class="quotes">
+        <blockquote><p>"Review text goes here. One or two lines about the color result and how they felt."</p><cite>Guest name · Balayage</cite></blockquote>
+        <blockquote><p>"Review text goes here. One or two lines about the color result and how they felt."</p><cite>Guest name · Color correction</cite></blockquote>
+        <blockquote><p>"Review text goes here. One or two lines about the color result and how they felt."</p><cite>Guest name · Vivids</cite></blockquote>
+      </div>
+    </section>
+
+    <!-- Cross-link to the barbershop -->
+    <section class="crosslink">
+      <div class="ph ph--wide">Barbershop interior photo</div>
+      <div class="crosslink__text">
+        <p class="eyebrow">Also under our roof</p>
+        <h2>The Barbershop</h2>
+        <p>Classic cuts, fades and hot-towel shaves, next door to the salon.</p>
+        <a class="btn" href="#barbershop">Visit the barbershop</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       BARBERSHOP
+       ========================================================= -->
+  <main id="barbershop" data-mode-view="barber" hidden>
+
+    <section class="hero hero--barber">
+      <div class="logo-slot">Barbershop logo <small>coming soon</small></div>
+      <p class="hero__lede">Sharp cuts. Clean fades. Hot towels.</p>
+      <p class="hero__sub">The barbershop at ANAÍS. Classic and modern cuts, beard work and straight-razor shaves.</p>
+      <div class="hero__ctas">
+        <a class="btn" href="#book">Book a chair</a>
+        <a class="btn btn--ghost" href="#barber-services">See services</a>
+      </div>
+      <span class="wf-note">Decision: barbershop name. Walk-ins welcome, or appointment only?</span>
+    </section>
+
+    <!-- Barbers -->
+    <section class="sec" id="barbers">
+      <div class="sec-head">
+        <p class="eyebrow">Barbers</p>
+        <h2>Your barbers.</h2>
+        <p class="lede">Pick your barber, or take the next open chair.</p>
+      </div>
+      <div class="people">
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Barber name</h3>
+          <p class="person__role">Master Barber</p>
+          <ul class="tags"><li>Fades</li><li>Razor shaves</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Barber name</h3>
+          <p class="person__role">Senior Barber</p>
+          <ul class="tags"><li>Scissor cuts</li><li>Beards</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+        <article class="person">
+          <div class="ph ph--portrait">Portrait</div>
+          <h3>Barber name</h3>
+          <p class="person__role">Barber</p>
+          <ul class="tags"><li>Designs</li><li>Kids' cuts</li></ul>
+          <a class="link" href="#book">Book</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Barber services -->
+    <section class="sec sec--band" id="barber-services">
+      <div class="sec-head">
+        <p class="eyebrow">Services</p>
+        <h2>The barber menu.</h2>
+      </div>
+      <div class="menu">
+        <div class="menu__cat">
+          <h3>Cuts</h3>
+          <ul class="svc">
+            <li><span>Classic cut</span><b>$—</b></li>
+            <li><span>Skin fade</span><b>$—</b></li>
+            <li><span>Taper</span><b>$—</b></li>
+            <li><span>Scissor cut</span><b>$—</b></li>
+            <li><span>Buzz cut</span><b>$—</b></li>
+            <li><span>Kids' cut (under 12)</span><b>$—</b></li>
+          </ul>
+        </div>
+        <div class="menu__cat">
+          <h3>Beard &amp; shave</h3>
+          <ul class="svc">
+            <li><span>Beard trim &amp; shape</span><b>$—</b></li>
+            <li><span>Beard line-up</span><b>$—</b></li>
+            <li><span>Hot-towel straight-razor shave</span><b>$—</b></li>
+            <li><span>Head shave</span><b>$—</b></li>
+          </ul>
+        </div>
+        <div class="menu__cat">
+          <h3>Extras</h3>
+          <ul class="svc">
+            <li><span>Line-up / edge-up</span><b>$—</b></li>
+            <li><span>Hair design / hard part</span><b>$—</b></li>
+            <li><span>Grey blending</span><b>$—</b></li>
+            <li><span>Brow cleanup</span><b>$—</b></li>
+            <li><span>Hot-towel facial</span><b>$—</b></li>
+          </ul>
+        </div>
+        <div class="menu__cat menu__cat--feature">
+          <h3>Packages</h3>
+          <ul class="svc svc--2col">
+            <li><span>Cut + beard</span><b>$—</b></li>
+            <li><span>The full service (cut, shave, facial)</span><b>$—</b></li>
+          </ul>
+        </div>
+      </div>
+      <span class="wf-note">Decision: monthly membership (e.g. two cuts a month)?</span>
+    </section>
+
+    <!-- Barber gallery -->
+    <section class="sec" id="barber-gallery">
+      <div class="sec-head">
+        <p class="eyebrow">Gallery</p>
+        <h2>Fresh cuts.</h2>
+      </div>
+      <div class="gallery">
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+        <div class="ph ph--square">Photo</div><div class="ph ph--square">Photo</div>
+      </div>
+    </section>
+
+    <!-- Cross-link back to the salon -->
+    <section class="crosslink">
+      <div class="ph ph--wide">Salon color photo</div>
+      <div class="crosslink__text">
+        <p class="eyebrow">Next door</p>
+        <h2>ANAÍS Salon</h2>
+        <p>Color specialists, cuts, treatments and extensions.</p>
+        <a class="btn" href="#salon">Visit the salon</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       SHARED: book + visit, footer
+       ========================================================= -->
+  <section class="sec" id="book">
+    <div class="sec-head">
+      <p class="eyebrow">Book</p>
+      <h2 class="only-salon">Book your appointment.</h2>
+      <h2 class="only-barber">Book your chair.</h2>
+    </div>
+    <div class="visit">
+      <div class="ph ph--booking">Online booking widget</div>
+      <div class="visit__info">
+        <h3>Visit</h3>
+        <p>Street address<br>City, State ZIP</p>
+        <h3>Hours</h3>
+        <dl class="hours">
+          <dt>Mon</dt><dd>Closed</dd>
+          <dt>Tue – Fri</dt><dd>9am – 7pm</dd>
+          <dt>Sat</dt><dd>9am – 5pm</dd>
+          <dt>Sun</dt><dd>10am – 4pm</dd>
+        </dl>
+        <h3>Contact</h3>
+        <p>(000) 000-0000<br>hello@yourdomain.com</p>
+        <div class="ph ph--map">Map</div>
+      </div>
+    </div>
+    <span class="wf-note">Decision: which booking system (Vagaro, Square, Boulevard, GlossGenius, Booksy...)? Separate booking for salon and barbershop? Real hours.</span>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__brand">
+      <img class="only-salon" src="anais-logo-gold-light-bg.svg" alt="ANAÍS Beauty Empire">
+      <span class="logo-slot logo-slot--small only-barber">Barbershop logo</span>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a class="only-salon" href="#stylists">Stylists</a>
+      <a class="only-salon" href="#services">Services</a>
+      <a class="only-salon" href="#gallery">Gallery</a>
+      <a class="only-salon" href="#barbershop">Barbershop</a>
+      <a class="only-barber" href="#barbers">Barbers</a>
+      <a class="only-barber" href="#barber-services">Services</a>
+      <a class="only-barber" href="#barber-gallery">Gallery</a>
+      <a class="only-barber" href="#salon">Salon</a>
+      <a href="#book">Book</a>
+    </nav>
+    <form class="signup" onsubmit="return false">
+      <label for="signup-email">Offers &amp; news</label>
+      <div class="signup__row">
+        <input id="signup-email" type="email" placeholder="Email address">
+        <button class="btn btn--small" type="submit">Join</button>
+      </div>
+    </form>
+    <div class="footer__social">
+      <span class="social">IG</span><span class="social">TT</span><span class="social">FB</span><span class="social">G</span>
+    </div>
+    <p class="footer__legal">© 2026 ANAÍS Beauty Empire · Policies · Gift cards</p>
+  </footer>
+
+  <button class="wf-toggle" type="button" aria-pressed="true">Wireframe notes: on</button>
+
+  <script src="js/mode.js"></script>
+  <script src="js/intro.js"></script>
+</body>
+</html>
