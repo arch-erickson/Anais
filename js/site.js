@@ -4,6 +4,8 @@
    3. Salon <-> barbershop: one page, two views. Links to #barbershop (or any barber section) show
       the barbershop; links to #salon (or any salon section) show the salon. Shared sections like
       #book keep whichever view you are in.
+   4. Pages: Stylists, Services, Gallery, Book (and the barber ones) are separate pages, one shown
+      at a time, instead of one long scroll.
    Runs before intro.js so a direct visit to #barbershop can skip the sunflower entrance, which
    belongs to the salon. */
 (() => {
@@ -22,6 +24,7 @@
   const menuBtn = document.querySelector('.menu-btn');
   const menu = document.getElementById('menu');
   let mode = null;
+  let titleHook = null;                        // set by the pages code below
 
   const lang = () => (root.lang === 'en' ? 'en' : 'es');
 
@@ -32,8 +35,9 @@
     document.querySelectorAll('[data-es-placeholder]').forEach((el) => {
       el.placeholder = el.dataset[next + 'Placeholder'];
     });
-    if (mode) document.title = TITLES[mode][next];
+    if (titleHook) titleHook();
     syncMenuLabel();
+    document.dispatchEvent(new CustomEvent('anais:lang', { detail: { lang: next } }));
   };
   langButtons.forEach((b) => b.addEventListener('click', () => setLang(b.dataset.lang)));
 
@@ -76,23 +80,116 @@
     body.classList.toggle('is-barber', next === 'barber');
     views.salon.hidden = next !== 'salon';
     views.barber.hidden = next !== 'barber';
-    document.title = TITLES[next][lang()];
+    return true;
+  };
+
+  /* ---------- 4. pages ----------
+     Each [data-page] block is its own page; only one shows at a time. #salon and #barbershop
+     (and #top, the logo) are the two home pages. An id inside a page (like #color on the salon
+     home) opens that page and scrolls to it. */
+  /* profile pages: one per stylist / barber, built from their card on the Stylists / Barbers page
+     (photo, name, and the hidden .person__details: role, specialties, bio). #stylist-1, #barber-2 ... */
+  const bi = (es, en) => `<span lang="es">${es}</span><span lang="en">${en}</span>`;
+  const textIn = (el, l) => {
+    const c = el.cloneNode(true);
+    c.querySelectorAll(`[lang]:not([lang="${l}"])`).forEach((n) => n.remove());
+    return c.textContent.trim();
+  };
+  const PROFILE_NAMES = {};
+  document.querySelectorAll('.person[data-profile]').forEach((card) => {
+    const id = card.dataset.profile;
+    const barber = !!card.closest('[data-mode-view="barber"]');
+    const list = barber ? 'barbers' : 'stylists';
+    const h3 = card.querySelector('h3');
+    const sec = document.createElement('section');
+    sec.className = 'page sec profile';
+    sec.id = id;
+    sec.dataset.page = id;
+    sec.dataset.staff = card.dataset.staff;
+    sec.dataset.whatsapp = card.dataset.whatsapp;
+    sec.innerHTML = `
+      <a class="profile__back" href="#${list}">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        ${barber ? bi('Todos los barberos', 'All barbers') : bi('Todas las estilistas', 'All stylists')}</a>
+      <div class="profile__body">
+        <div class="profile__photo"></div>
+        <div class="profile__text">
+          <h2>${h3.innerHTML}</h2>
+          ${card.querySelector('.person__details').innerHTML}
+          <div class="profile__actions">
+            <a class="profile__wa" href="#" data-wa target="_blank" rel="noopener">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg>
+              ${bi('Chatea por WhatsApp', 'Chat on WhatsApp')}</a>
+            <a class="profile__book" href="#book" data-book-staff>${bi('Reservar cita', 'Book appointment')}</a>
+          </div>
+        </div>
+      </div>`;
+    sec.querySelector('.profile__photo').append(card.querySelector('img, .ph').cloneNode(true));
+    document.getElementById(list).after(sec);
+    PROFILE_NAMES[id] = { es: textIn(h3, 'es'), en: textIn(h3, 'en') };
+  });
+
+  const pages = [...document.querySelectorAll('[data-page]')];
+  const PAGE_NAMES = {
+    stylists: { es: 'Estilistas', en: 'Stylists' },
+    services: { es: 'Servicios', en: 'Services' },
+    gallery: { es: 'Galería', en: 'Gallery' },
+    barbers: { es: 'Barberos', en: 'Barbers' },
+    'barber-services': { es: 'Servicios', en: 'Services' },
+    'barber-gallery': { es: 'Galería', en: 'Gallery' },
+    book: { es: 'Reservar', en: 'Book' },
+  };
+  Object.assign(PAGE_NAMES, PROFILE_NAMES);
+  const homeOf = (m) => (m === 'barber' ? 'barbershop' : 'salon');
+  let page = null;
+
+  // which page does this id open? Unknown ids fall back to the current home page.
+  const pageFor = (id) => {
+    if (!id || id === 'top') return homeOf(mode || 'salon');
+    const el = document.getElementById(id);
+    if (!el) return homeOf(mode || 'salon');
+    if (el.matches('[data-mode-view]')) return homeOf(el.dataset.modeView);
+    return el.closest('[data-page]')?.dataset.page || homeOf(mode || 'salon');
+  };
+
+  const syncTitle = () => {
+    const name = PAGE_NAMES[page];
+    document.title = (name ? name[lang()] + ' · ' : '') + TITLES[mode][lang()];
+  };
+  titleHook = syncTitle;
+
+  const showPage = (next) => {
+    if (next === page) return false;
+    page = next;
+    body.dataset.page = next;                  // lets CSS adjust per page (e.g. no floating WhatsApp on Book)
+    pages.forEach((p) => { p.hidden = p.dataset.page !== next; });
+    body.classList.toggle('on-profile', !!pages.find((p) => p.dataset.page === next)?.classList.contains('profile'));
+    document.querySelectorAll('.menu a, .footer__nav a').forEach((a) => {
+      const target = pageFor(decodeURIComponent(a.getAttribute('href').slice(1)));
+      if (target === next && next !== homeOf(mode)) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    syncTitle();
     return true;
   };
 
   const go = (id, smooth) => {
-    const switched = setMode(ownerOf(id) || mode || 'salon');
-    const target = id && id !== 'salon' && id !== 'barbershop' && id !== 'top' && document.getElementById(id);
-    const behavior = smooth && !switched ? 'smooth' : 'auto';
-    if (target) target.scrollIntoView({ behavior });
+    const switchedMode = setMode(ownerOf(id) || mode || 'salon');
+    const switchedPage = showPage(pageFor(id));
+    const el = id && document.getElementById(id);
+    const inner = el && !el.matches('[data-page], [data-mode-view]');   // e.g. #color on the home page
+    const behavior = smooth && !switchedMode && !switchedPage ? 'smooth' : 'auto';
+    if (inner) el.scrollIntoView({ behavior });
     else window.scrollTo({ top: 0, behavior });
+    document.dispatchEvent(new CustomEvent('anais:route', { detail: { mode, page } }));
   };
 
   // first load
   const first = decodeURIComponent(location.hash.slice(1));
   setMode(ownerOf(first) || 'salon');
+  showPage(pageFor(first));
   setLang(lang());
-  if (mode === 'barber') {                     // no sunflower entrance on the barbershop
+  if (page !== 'salon') {                      // the sunflower entrance only plays on the salon home
     document.querySelector('.intro')?.remove();
     body.classList.remove('intro-on');
     body.classList.add('is-revealing', 'is-done');
@@ -102,13 +199,26 @@
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#"]');
     if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    if (a.target === '_blank') return;          // WhatsApp links: booking.js fills in the real address
     e.preventDefault();
     setMenu(false);
-    const id = decodeURIComponent(a.getAttribute('href').slice(1));
-    if (location.hash.slice(1) !== id) history.pushState(null, '', id === 'top' ? location.pathname : '#' + id);
+    let id = decodeURIComponent(a.getAttribute('href').slice(1));
+    if (id === 'top') id = mode === 'barber' ? 'barbershop' : '';   // the logo goes to this side's home
+    const url = id ? '#' + id : location.pathname;
+    if (location.hash.slice(1) !== id) history.pushState(null, '', url);
     go(id, true);
   });
   addEventListener('popstate', () => go(decodeURIComponent(location.hash.slice(1)), false));
+
+  /* ---------- 5. service menus: dropdowns, one category open at a time ----------
+     Each category is a <details>; opening one closes the others so the page stays short.
+     Services with variations are their own small dropdown inside. */
+  document.querySelectorAll('.svc-menu').forEach((list) => {
+    const cats = [...list.querySelectorAll('.svc-menu__cat')];
+    cats.forEach((cat) => cat.addEventListener('toggle', () => {
+      if (cat.open) cats.forEach((other) => { if (other !== cat) other.open = false; });
+    }));
+  });
 
   /* ---------- wireframe notes toggle ---------- */
   const toggle = document.querySelector('.wf-toggle');

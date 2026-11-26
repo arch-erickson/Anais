@@ -2,4 +2,7 @@
 __pycache__/
 .DS_Store
 Thumbs.db
-photos/
+# raw client photos collected from Facebook (never published)
+/photos/
+# working source images; only the finished hero-*.jpg files are used by the site
+assets/photos/*.png

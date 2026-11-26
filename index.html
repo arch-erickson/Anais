@@ -8,10 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css">
-  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/site.css?v=2026-11-25e">
+  <link rel="stylesheet" href="css/sections.css?v=2026-11-25w">
+  <link rel="stylesheet" href="css/booking.css?v=2026-11-25w">
   <link rel="stylesheet" href="css/wireframe.css">
-  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/intro.css?v=2026-11-25e">
   <script>
     // pick the language before anything paints (Spanish unless the visitor chose English)
     try { if (localStorage.getItem('anais-lang') === 'en') document.documentElement.lang = 'en'; } catch (e) {}
@@ -19,18 +20,20 @@
 </head>
 <body class="intro-on">
 
-  <!-- Entrance: a frame of gold flowers sways in the wind while the sunflower turns and grows,
-       then the frame parts and the sunflower settles into the header. -->
+  <!-- Entrance: a frame of gold flowers circles the screen and breathes while a gold sunflower
+       turns in the centre and becomes the logo's sunflower; the frame parts, the sunflower
+       settles into the header, and the ANAÍS logo writes itself in. -->
   <div class="intro" aria-hidden="true">
     <div class="intro__veil">
       <svg class="intro__meadow" preserveAspectRatio="xMidYMax slice"></svg>
     </div>
     <div class="intro__bloom">
+      <img class="intro__bloom-photo" src="assets/flowers-photos/gold/sunflower-hero-rich.webp" alt="">
       <img class="intro__bloom-dark" src="anais-icon-sunflower-gold-dark-bg.svg" alt="">
       <img class="intro__bloom-light" src="anais-icon-sunflower-gold-light-bg.svg" alt="">
     </div>
   </div>
-  <noscript><style>.intro { display: none; } body.intro-on { overflow: auto; }</style></noscript>
+  <noscript><style>.intro { display: none; } body.intro-on { overflow: auto; } .hero__logo, .brand__word { -webkit-mask: none !important; mask: none !important; } .brand__icon { opacity: 0 !important; } .brand__flower { opacity: 1 !important; }</style></noscript>
 
   <!-- ================= HEADER =================
        ES | EN on the left, logo in the centre, menu button on the right.
@@ -42,7 +45,13 @@
       <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
     <a class="brand" href="#top" aria-label="ANAÍS">
-      <img class="brand__icon only-salon" data-intro-slot src="anais-icon-sunflower-gold-light-bg.svg" alt="">
+      <!-- the official logo, in layers: the intro's sunflower lands on .brand__icon, which then
+           turns into the logo's own sunflower while "ANAÍS" writes in over it -->
+      <span class="brand__lockup only-salon">
+        <img class="brand__icon" data-intro-slot src="anais-icon-sunflower-gold-light-bg.svg" alt="">
+        <img class="brand__flower" src="anais-lockup-flower-gold-light-bg.svg" alt="">
+        <img class="brand__word" src="anais-lockup-word-gold-light-bg.svg" alt="">
+      </span>
       <span class="brand__placeholder only-barber" aria-hidden="true">Logo</span>
     </a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menú">
@@ -54,10 +63,12 @@
     <a class="menu__book" href="#book" style="--i:0"><span lang="es">Reservar cita</span><span lang="en">Book appointment</span></a>
     <a class="only-salon" href="#stylists" style="--i:1"><span lang="es">Estilistas</span><span lang="en">Stylists</span></a>
     <a class="only-salon" href="#services" style="--i:2"><span lang="es">Servicios</span><span lang="en">Services</span></a>
-    <a class="only-salon" href="#barbershop" style="--i:3"><span lang="es">Barbería</span><span lang="en">Barbershop</span></a>
+    <a class="only-salon" href="#gallery" style="--i:3"><span lang="es">Galería</span><span lang="en">Gallery</span></a>
+    <a class="only-salon menu__switch" href="#barbershop" style="--i:4"><span lang="es">Barbería</span><span lang="en">Barbershop</span></a>
     <a class="only-barber" href="#barbers" style="--i:1"><span lang="es">Barberos</span><span lang="en">Barbers</span></a>
     <a class="only-barber" href="#barber-services" style="--i:2"><span lang="es">Servicios</span><span lang="en">Services</span></a>
-    <a class="only-barber" href="#salon" style="--i:3"><span lang="es">Salón</span><span lang="en">Salon</span></a>
+    <a class="only-barber" href="#barber-gallery" style="--i:3"><span lang="es">Galería</span><span lang="en">Gallery</span></a>
+    <a class="only-barber menu__switch" href="#salon" style="--i:4"><span lang="es">Salón</span><span lang="en">Salon</span></a>
   </nav>
 
   <!-- =========================================================
@@ -65,9 +76,22 @@
        ========================================================= -->
   <main id="salon" data-mode-view="salon">
 
+    <!-- PAGE: salon home -->
+    <div class="page" data-page="salon">
+
     <!-- Hero -->
-    <section class="hero">
-      <img class="hero__logo" src="anais-logo-gold-light-bg.svg" alt="ANAÍS Beauty Empire">
+    <section class="hero hero--photo">
+      <!-- the hero photos cross-fade, 3 seconds each (css/sections.css: hero-swap-*) -->
+      <div class="hero__slides">
+        <img class="hero__photo hero__photo--red" src="assets/photos/hero-red.jpg" width="1027" height="1532"
+             alt="Clienta con cabello rojo vivo, liso y largo / Client with long, sleek vivid red hair">
+        <img class="hero__photo hero__photo--silver" src="assets/photos/hero-silver.jpg" width="1117" height="1408"
+             alt="Clienta con ondas largas en plateado azulado / Client with long silver-blue waves">
+        <img class="hero__photo hero__photo--blonde" src="assets/photos/hero-blonde.jpg" width="1200" height="2145"
+             alt="Clienta con ondas largas en rubio claro / Client with long, light blonde waves">
+        <img class="hero__photo hero__photo--waves" src="assets/photos/hero-salon-curls.jpg" width="1086" height="1448"
+             alt="Clienta en el salón con ondas grandes en rubio miel / Salon client with big honey-blonde waves">
+      </div>
       <p class="hero__lede"><span lang="es">La belleza, en plena flor.</span><span lang="en">Beauty, in full bloom.</span></p>
       <p class="hero__sub">
         <span lang="es">Un salón especializado en color: balayage, rubios, colores vivos y corrección de color, y además cada corte, tratamiento y peinado.</span>
@@ -82,7 +106,12 @@
     <!-- Color Studio: the main service -->
     <section class="sec" id="color">
       <div class="split">
-        <div class="ph ph--tall"><span lang="es">Foto principal de color / video corto</span><span lang="en">Hero color photo / short video loop</span></div>
+        <div class="collage">
+          <div class="ph"><span lang="es">Foto de color 1</span><span lang="en">Color photo 1</span></div>
+          <div class="ph"><span lang="es">Foto de color 2</span><span lang="en">Color photo 2</span></div>
+          <div class="ph"><span lang="es">Foto de color 3</span><span lang="en">Color photo 3</span></div>
+          <div class="ph"><span lang="es">Foto de color 4</span><span lang="en">Color photo 4</span></div>
+        </div>
         <div class="split__text">
           <p class="eyebrow"><span lang="es">El Estudio de Color</span><span lang="en">The Color Studio</span></p>
           <h2><span lang="es">El color es nuestro arte.</span><span lang="en">Color is our craft.</span></h2>
@@ -105,7 +134,14 @@
           <span class="wf-note">Decision: free consult for new color guests? In person, virtual, or both?</span>
         </div>
       </div>
+    </section>
 
+    <!-- Before / after -->
+    <section class="sec sec--band" id="before-after">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Antes y después</span><span lang="en">Before &amp; after</span></p>
+        <h2><span lang="es">La transformación.</span><span lang="en">The transformation.</span></h2>
+      </div>
       <div class="ba">
         <figure><div class="ph ph--square"><span lang="es">Antes / después 1</span><span lang="en">Before / after 1</span></div><figcaption><span lang="es">De castaño a balayage suave</span><span lang="en">Brunette to soft balayage</span></figcaption></figure>
         <figure><div class="ph ph--square"><span lang="es">Antes / después 2</span><span lang="en">Before / after 2</span></div><figcaption><span lang="es">Cobre renovado</span><span lang="en">Copper refresh</span></figcaption></figure>
@@ -114,168 +150,28 @@
       </div>
     </section>
 
-    <!-- How a color visit works -->
-    <section class="sec sec--band">
+    <!-- How it works: four steps, from the first WhatsApp message to the follow-up -->
+    <section class="sec" id="how-it-works">
       <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Tu visita de color</span><span lang="en">Your color visit</span></p>
-        <h2><span lang="es">Tres pasos hacia tu color.</span><span lang="en">Three steps to your color.</span></h2>
+        <p class="eyebrow"><span lang="es">Cómo funciona</span><span lang="en">How it works</span></p>
+        <h2><span lang="es">Cuatro pasos hacia tu nuevo look.</span><span lang="en">Four steps to your new look.</span></h2>
       </div>
-      <ol class="steps">
-        <li><span class="steps__n">1</span><h3><span lang="es">Consulta</span><span lang="en">Consult</span></h3><p><span lang="es">Hablamos de tus metas, tu historial y el mantenimiento. Pruebas de mechón y de alergia cuando hace falta.</span><span lang="en">We talk goals, history and upkeep. Patch and strand tests when needed.</span></p></li>
-        <li><span class="steps__n">2</span><h3>Color</h3><p><span lang="es">Tu colorista crea la fórmula y la aplica a mano; luego matizamos y damos brillo.</span><span lang="en">Your colorist builds the formula and places it by hand, then we tone and gloss.</span></p></li>
-        <li><span class="steps__n">3</span><h3><span lang="es">Cuidado</span><span lang="en">Care</span></h3><p><span lang="es">Te vas con un plan de cuidado en casa y tu próxima cita reservada.</span><span lang="en">You leave with a home-care plan and your next visit on the books.</span></p></li>
+      <ol class="steps steps--4">
+        <li><span class="steps__n">1</span>
+          <h3><span lang="es">Escríbenos por WhatsApp</span><span lang="en">Message us on WhatsApp</span></h3>
+          <p><span lang="es">Cuéntanos qué buscas y mándanos una foto de inspiración. Te respondemos con ideas, precio y horarios.</span><span lang="en">Tell us what you have in mind and send an inspiration photo. We reply with ideas, pricing and times.</span>
+            <a class="steps__link" href="https://wa.me/15550100000" data-wa-main target="_blank" rel="noopener"><span lang="es">Escribir ahora</span><span lang="en">Message now</span></a></p></li>
+        <li><span class="steps__n">2</span>
+          <h3><span lang="es">Ven con cita o sin cita</span><span lang="en">Come in, booked or walk-in</span></h3>
+          <p><span lang="es">Reserva tu hora o pasa directo: si hay una silla libre, te atendemos ese mismo día.</span><span lang="en">Book a time or just drop by: if a chair is free, we'll take you that same day.</span></p></li>
+        <li><span class="steps__n">3</span>
+          <h3><span lang="es">Tu nuevo look</span><span lang="en">Your new look</span></h3>
+          <p><span lang="es">Confirmamos la idea en la silla y tu estilista hace la magia: color, corte o peinado.</span><span lang="en">We confirm the plan in the chair, then your stylist works the magic: color, cut or style.</span></p></li>
+        <li><span class="steps__n">4</span>
+          <h3><span lang="es">Seguimiento</span><span lang="en">Follow-up</span></h3>
+          <p><span lang="es">Te escribimos para ver cómo va tu cabello y apartar tu próxima visita. ¡Hasta la próxima!</span><span lang="en">We check in on how your hair is doing and set up your next visit. See you next time!</span></p></li>
       </ol>
-    </section>
-
-    <!-- Stylists -->
-    <section class="sec" id="stylists">
-      <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Estilistas</span><span lang="en">Stylists</span></p>
-        <h2><span lang="es">Conoce al equipo.</span><span lang="en">Meet the team.</span></h2>
-        <p class="lede"><span lang="es">Coloristas, cortadoras y estilistas. Reserva con quien ya conoces o deja que te recomendemos.</span><span lang="en">Colorists, cutters and finishers. Book with someone you know, or let us match you.</span></p>
-      </div>
-      <div class="people">
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre de estilista</span><span lang="en">Stylist name</span></h3>
-          <p class="person__role"><span lang="es">Dueña y Directora de Color</span><span lang="en">Owner &amp; Color Director</span></p>
-          <ul class="tags"><li>Balayage</li><li><span lang="es">Correcciones</span><span lang="en">Corrections</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre de estilista</span><span lang="en">Stylist name</span></h3>
-          <p class="person__role"><span lang="es">Colorista Sénior</span><span lang="en">Senior Colorist</span></p>
-          <ul class="tags"><li><span lang="es">Rubios</span><span lang="en">Blonding</span></li><li><span lang="es">Canas</span><span lang="en">Grey blending</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre de estilista</span><span lang="en">Stylist name</span></h3>
-          <p class="person__role"><span lang="es">Especialista en Colores Vivos</span><span lang="en">Vivid Color Specialist</span></p>
-          <ul class="tags"><li><span lang="es">Colores vivos</span><span lang="en">Vivids</span></li><li><span lang="es">Cortes creativos</span><span lang="en">Creative cuts</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre de estilista</span><span lang="en">Stylist name</span></h3>
-          <p class="person__role"><span lang="es">Estilista</span><span lang="en">Stylist</span></p>
-          <ul class="tags"><li><span lang="es">Cortes</span><span lang="en">Cuts</span></li><li><span lang="es">Extensiones</span><span lang="en">Extensions</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-      </div>
-      <span class="wf-note">Decision: how many stylists? Show levels (Junior / Senior / Director) with different pricing?</span>
-    </section>
-
-    <!-- Services -->
-    <section class="sec sec--band" id="services">
-      <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Servicios</span><span lang="en">Services</span></p>
-        <h2><span lang="es">El menú completo.</span><span lang="en">The full menu.</span></h2>
-        <p class="lede"><span lang="es">El color es lo principal, pero lo hacemos todo. Los precios son puntos de partida y dependen del largo, la densidad y el nivel del estilista.</span><span lang="en">Color leads, but we do it all. Prices are starting points and depend on length, density and stylist level.</span></p>
-      </div>
-
-      <div class="svc-menu">
-        <div class="svc-menu__cat svc-menu__cat--feature">
-          <h3>Color <span class="badge"><span lang="es">Especialidad</span><span lang="en">Signature</span></span></h3>
-          <ul class="svc svc--2col">
-            <li><span><span lang="es">Consulta de color</span><span lang="en">Color consultation</span></span><b><span lang="es">Gratis</span><span lang="en">Free</span></b></li>
-            <li><span><span lang="es">Balayage / color natural</span><span lang="en">Balayage / lived-in color</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Mechas completas</span><span lang="en">Full highlights</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Mechas parciales</span><span lang="en">Partial highlights</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Color vivo / fantasía</span><span lang="en">Vivid / fashion color</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Tinte de un solo proceso</span><span lang="en">Single-process color</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Retoque de raíz</span><span lang="en">Root touch-up</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Difuminado de canas</span><span lang="en">Grey blending</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Gloss / matizador</span><span lang="en">Gloss / toner</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Corrección de color</span><span lang="en">Color correction</span></span><b><span lang="es">con consulta</span><span lang="en">by consult</span></b></li>
-          </ul>
-        </div>
-
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Cortes y peinados</span><span lang="en">Cuts &amp; styling</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Corte y peinado de dama</span><span lang="en">Women's cut &amp; style</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Corte de caballero en salón</span><span lang="en">Men's salon cut</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Corte infantil (menores de 12)</span><span lang="en">Kids' cut (under 12)</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Recorte de flequillo</span><span lang="en">Bang / fringe trim</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Lavado y secado (blower)</span><span lang="en">Blowout</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span>Silk press</span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-          </ul>
-        </div>
-
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Tratamientos</span><span lang="en">Treatments</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Tratamiento reparador</span><span lang="en">Bond-repair treatment</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Hidratación profunda</span><span lang="en">Deep conditioning mask</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Tratamiento de cuero cabelludo</span><span lang="en">Scalp treatment</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Alisado de keratina</span><span lang="en">Keratin smoothing</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-          </ul>
-        </div>
-
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Textura</span><span lang="en">Texture</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Permanente / ondulado</span><span lang="en">Perm / body wave</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Alisado químico (relaxer)</span><span lang="en">Relaxer</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Corte y definición de rizos</span><span lang="en">Curl cut &amp; define</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-          </ul>
-        </div>
-
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Extensiones</span><span lang="en">Extensions</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Consulta de extensiones</span><span lang="en">Extension consultation</span></span><b><span lang="es">Gratis</span><span lang="en">Free</span></b></li>
-            <li><span>Tape-in</span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Cortinas cosidas a mano</span><span lang="en">Hand-tied wefts</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Mantenimiento</span><span lang="en">Move-up / maintenance</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-          </ul>
-        </div>
-
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Novias y eventos</span><span lang="en">Bridal &amp; events</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Recogido / peinado de evento</span><span lang="en">Updo / event styling</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Prueba de novia</span><span lang="en">Bridal trial</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Peinado de boda</span><span lang="en">Wedding-day hair</span></span><b><span lang="es">a cotizar</span><span lang="en">by quote</span></b></li>
-          </ul>
-        </div>
-
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Cejas y extras</span><span lang="en">Brows &amp; extras</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Diseño de cejas</span><span lang="en">Brow shaping</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Tinte de cejas / pestañas</span><span lang="en">Brow / lash tint</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-            <li><span><span lang="es">Gloss adicional</span><span lang="en">Add-on gloss</span></span><b><span lang="es">desde</span><span lang="en">from</span> $—</b></li>
-          </ul>
-        </div>
-      </div>
-      <span class="wf-note">Decision: real prices, or "from" prices? Keep brows, or hair only? Her Facebook also advertises manicures and pedicures. Add a Nails section?</span>
-    </section>
-
-    <!-- Gallery -->
-    <section class="sec" id="gallery">
-      <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Galería</span><span lang="en">Gallery</span></p>
-        <h2><span lang="es">Trabajos recientes.</span><span lang="en">Recent work.</span></h2>
-      </div>
-      <div class="chips" role="list">
-        <span class="chip is-on" role="listitem"><span lang="es">Todo</span><span lang="en">All</span></span>
-        <span class="chip" role="listitem"><span lang="es">Rubios</span><span lang="en">Blonde</span></span>
-        <span class="chip" role="listitem"><span lang="es">Castaños</span><span lang="en">Brunette</span></span>
-        <span class="chip" role="listitem"><span lang="es">Vivos</span><span lang="en">Vivid</span></span>
-        <span class="chip" role="listitem"><span lang="es">Correcciones</span><span lang="en">Corrections</span></span>
-        <span class="chip" role="listitem"><span lang="es">Cortes</span><span lang="en">Cuts</span></span>
-      </div>
-      <div class="gallery">
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-      </div>
-      <div class="row row--center"><a class="link" href="#gallery"><span lang="es">Síguenos en Instagram</span><span lang="en">Follow us on Instagram</span></a></div>
-      <span class="wf-note">Decision: live Instagram feed, or hand-picked photos? (127 salon photos from Facebook are in photos/facebook.)</span>
+      <span class="wf-note">Decision: does the salon take walk-ins every day, or only some days? Who sends the follow-up message, and how many days after?</span>
     </section>
 
     <!-- Testimonials -->
@@ -301,12 +197,193 @@
         <a class="btn" href="#barbershop"><span lang="es">Visitar la barbería</span><span lang="en">Visit the barbershop</span></a>
       </div>
     </section>
+    </div>
+
+    <!-- PAGE: Stylists -->
+    <section class="page sec" id="stylists" data-page="stylists">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Estilistas</span><span lang="en">Stylists</span></p>
+        <h2><span lang="es">Conoce al equipo.</span><span lang="en">Meet the team.</span></h2>
+        <p class="lede"><span lang="es">Coloristas, cortadoras y estilistas. Reserva con quien ya conoces o deja que te recomendemos.</span><span lang="en">Colorists, cutters and finishers. Book with someone you know, or let us match you.</span></p>
+      </div>
+      <div class="people">
+        <article class="person" data-staff="s1" data-whatsapp="15550100001" data-profile="stylist-1">
+          <a class="person__link" href="#stylist-1">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Estilista 1</span><span lang="en">Stylist 1</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Dueña y Directora de Color</span><span lang="en">Owner &amp; Color Director</span></p>
+            <ul class="tags"><li>Balayage</li><li><span lang="es">Correcciones</span><span lang="en">Corrections</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el trabajo que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and the work they love most.</span></p>
+          </div>
+        </article>
+        <article class="person" data-staff="s2" data-whatsapp="15550100002" data-profile="stylist-2">
+          <a class="person__link" href="#stylist-2">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Estilista 2</span><span lang="en">Stylist 2</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Colorista Sénior</span><span lang="en">Senior Colorist</span></p>
+            <ul class="tags"><li><span lang="es">Rubios</span><span lang="en">Blonding</span></li><li><span lang="es">Canas</span><span lang="en">Grey blending</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el trabajo que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and the work they love most.</span></p>
+          </div>
+        </article>
+        <article class="person" data-staff="s3" data-whatsapp="15550100003" data-profile="stylist-3">
+          <a class="person__link" href="#stylist-3">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Estilista 3</span><span lang="en">Stylist 3</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Especialista en Colores Vivos</span><span lang="en">Vivid Color Specialist</span></p>
+            <ul class="tags"><li><span lang="es">Colores vivos</span><span lang="en">Vivids</span></li><li><span lang="es">Cortes creativos</span><span lang="en">Creative cuts</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el trabajo que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and the work they love most.</span></p>
+          </div>
+        </article>
+        <article class="person" data-staff="s4" data-whatsapp="15550100004" data-profile="stylist-4">
+          <a class="person__link" href="#stylist-4">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Estilista 4</span><span lang="en">Stylist 4</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Estilista</span><span lang="en">Stylist</span></p>
+            <ul class="tags"><li><span lang="es">Cortes</span><span lang="en">Cuts</span></li><li><span lang="es">Extensiones</span><span lang="en">Extensions</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el trabajo que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and the work they love most.</span></p>
+          </div>
+        </article>
+      </div>
+      <span class="wf-note">Decision: how many stylists? Show levels (Junior / Senior / Director) with different pricing?</span>
+    </section>
+
+    <!-- PAGE: Services -->
+    <section class="page sec" id="services" data-page="services">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Servicios</span><span lang="en">Services</span></p>
+        <h2><span lang="es">El menú completo.</span><span lang="en">The full menu.</span></h2>
+        <p class="lede"><span lang="es">Nos especializamos en colores únicos, creados solo para ti, y somos un salón completo: cortes, tratamientos, peinados y uñas.</span><span lang="en">We specialize in one-of-a-kind hair color made just for you, and we're a full-service salon: cuts, treatments, styling and nails.</span></p>
+        <p class="svc-call"><a href="https://wa.me/15550100000" data-wa-desk target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><use href="#icon-whatsapp"/></svg><span lang="es">Pregunta precios por WhatsApp</span><span lang="en">Ask for prices on WhatsApp</span></a></p>
+      </div>
+
+      <div class="svc-menu">
+        <details class="svc-menu__cat svc-menu__cat--feature">
+          <summary><h3>Color <span class="badge"><span lang="es">Especialidad</span><span lang="en">Signature</span></span></h3><span class="svc-menu__desc"><span lang="es">Balayage, mechas, colores vivos, canas y corrección</span><span lang="en">Balayage, highlights, vivids, greys and correction</span></span></summary>
+          <ul class="svc">
+            <li><span><span lang="es">Consulta de color</span><span lang="en">Color consultation</span></span><b><span lang="es">Gratis</span><span lang="en">Free</span></b></li>
+            <li><span><span lang="es">Balayage y color natural</span><span lang="en">Balayage &amp; lived-in color</span></span></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Mechas</span><span lang="en">Highlights</span></span><small>2</small></summary><ul><li><span lang="es">Completas</span><span lang="en">Full</span></li><li><span lang="es">Parciales</span><span lang="en">Partial</span></li></ul></details></li>
+            <li><span><span lang="es">Colores vivos y fantasía</span><span lang="en">Vivid &amp; fashion color</span></span></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Tinte</span><span lang="en">All-over color</span></span><small>2</small></summary><ul><li><span lang="es">Un solo proceso</span><span lang="en">Single process</span></li><li><span lang="es">Retoque de raíz</span><span lang="en">Root touch-up</span></li></ul></details></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Canas</span><span lang="en">Grey hair</span></span><small>2</small></summary><ul><li><span lang="es">Difuminado</span><span lang="en">Blending</span></li><li><span lang="es">Cobertura</span><span lang="en">Coverage</span></li></ul></details></li>
+            <li><span><span lang="es">Gloss y matizador</span><span lang="en">Gloss &amp; toner</span></span></li>
+            <li><span><span lang="es">Corrección de color</span><span lang="en">Color correction</span></span></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Cortes y peinados</span><span lang="en">Cuts &amp; styling</span></h3><span class="svc-menu__desc"><span lang="es">Cortes, secados, silk press, novias y eventos</span><span lang="en">Cuts, blowouts, silk press, bridal and events</span></span></summary>
+          <ul class="svc">
+            <li><details class="svc-sub"><summary><span><span lang="es">Cortes</span><span lang="en">Cuts</span></span><small>4</small></summary><ul><li><span lang="es">Dama</span><span lang="en">Women's</span></li><li><span lang="es">Caballero</span><span lang="en">Men's</span></li><li><span lang="es">Infantil (menores de 12)</span><span lang="en">Kids (under 12)</span></li><li><span lang="es">Flequillo</span><span lang="en">Bang trim</span></li></ul></details></li>
+            <li><span><span lang="es">Secado (blower)</span><span lang="en">Blowout</span></span></li>
+            <li><span>Silk press</span></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Novias y eventos</span><span lang="en">Bridal &amp; events</span></span><small>3</small></summary><ul><li><span lang="es">Recogido o peinado de evento</span><span lang="en">Updo or event styling</span></li><li><span lang="es">Prueba de novia</span><span lang="en">Bridal trial</span></li><li><span lang="es">Peinado de boda</span><span lang="en">Wedding-day hair</span></li></ul></details></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Tratamientos y textura</span><span lang="en">Treatments &amp; texture</span></h3><span class="svc-menu__desc"><span lang="es">Reparación, hidratación, keratina, rizos y alisados</span><span lang="en">Repair, hydration, keratin, curls and smoothing</span></span></summary>
+          <ul class="svc">
+            <li><details class="svc-sub"><summary><span><span lang="es">Tratamientos</span><span lang="en">Treatments</span></span><small>3</small></summary><ul><li><span lang="es">Reparador</span><span lang="en">Bond repair</span></li><li><span lang="es">Hidratación profunda</span><span lang="en">Deep conditioning</span></li><li><span lang="es">Cuero cabelludo</span><span lang="en">Scalp</span></li></ul></details></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Alisados</span><span lang="en">Smoothing</span></span><small>2</small></summary><ul><li><span lang="es">Keratina</span><span lang="en">Keratin</span></li><li><span lang="es">Alisado químico (relaxer)</span><span lang="en">Relaxer</span></li></ul></details></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Rizos y ondas</span><span lang="en">Curls &amp; waves</span></span><small>2</small></summary><ul><li><span lang="es">Permanente / ondulado</span><span lang="en">Perm / body wave</span></li><li><span lang="es">Corte y definición de rizos</span><span lang="en">Curl cut &amp; define</span></li></ul></details></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Extensiones</span><span lang="en">Extensions</span></h3><span class="svc-menu__desc"><span lang="es">Tape-in, cortinas cosidas a mano y mantenimiento</span><span lang="en">Tape-in, hand-tied wefts and maintenance</span></span></summary>
+          <ul class="svc">
+            <li><span><span lang="es">Consulta de extensiones</span><span lang="en">Extension consultation</span></span><b><span lang="es">Gratis</span><span lang="en">Free</span></b></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Tipos de extensiones</span><span lang="en">Extension methods</span></span><small>2</small></summary><ul><li>Tape-in</li><li><span lang="es">Cortinas cosidas a mano</span><span lang="en">Hand-tied wefts</span></li></ul></details></li>
+            <li><span><span lang="es">Mantenimiento</span><span lang="en">Move-up / maintenance</span></span></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Uñas: manos y pies</span><span lang="en">Nails: hands &amp; feet</span></h3><span class="svc-menu__desc"><span lang="es">Manicura, pedicura, gel, acrílico y diseños</span><span lang="en">Manicures, pedicures, gel, acrylic and nail art</span></span></summary>
+          <ul class="svc">
+            <li><details class="svc-sub"><summary><span><span lang="es">Manos</span><span lang="en">Hands</span></span><small>3</small></summary><ul><li><span lang="es">Manicura clásica</span><span lang="en">Classic manicure</span></li><li><span lang="es">Manicura en gel</span><span lang="en">Gel manicure</span></li><li><span lang="es">Acrílicas: set completo y relleno</span><span lang="en">Acrylic: full set &amp; fill</span></li></ul></details></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Pies</span><span lang="en">Feet</span></span><small>3</small></summary><ul><li><span lang="es">Pedicura clásica</span><span lang="en">Classic pedicure</span></li><li><span lang="es">Pedicura spa</span><span lang="en">Spa pedicure</span></li><li><span lang="es">Pedicura en gel</span><span lang="en">Gel pedicure</span></li></ul></details></li>
+            <li><span><span lang="es">Diseño de uñas (nail art)</span><span lang="en">Nail art</span></span></li>
+            <li><span><span lang="es">Retiro de gel o acrílico</span><span lang="en">Gel or acrylic removal</span></span></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Cejas y pestañas</span><span lang="en">Brows &amp; lashes</span></h3><span class="svc-menu__desc"><span lang="es">Diseño y tinte</span><span lang="en">Shaping and tinting</span></span></summary>
+          <ul class="svc">
+            <li><span><span lang="es">Diseño de cejas</span><span lang="en">Brow shaping</span></span></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Tinte</span><span lang="en">Tint</span></span><small>2</small></summary><ul><li><span lang="es">Cejas</span><span lang="en">Brows</span></li><li><span lang="es">Pestañas</span><span lang="en">Lashes</span></li></ul></details></li>
+          </ul>
+        </details>
+      </div>
+      <span class="wf-note">Decision: confirm the categories and the services inside each one, especially nails (from her Facebook manicure / pedicure posts) and brows &amp; lashes.</span>
+    </section>
+
+    <!-- PAGE: Gallery -->
+    <section class="page sec" id="gallery" data-page="gallery">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Galería</span><span lang="en">Gallery</span></p>
+        <h2><span lang="es">Trabajos recientes.</span><span lang="en">Recent work.</span></h2>
+      </div>
+      <!-- chips filter the gallery by data-cat (js/gallery.js). Only Nails has real photos so far;
+           the hair chips show the hair placeholders for now. -->
+      <div class="chips" data-gallery-filter>
+        <button type="button" class="chip is-on" data-filter="all" aria-pressed="true"><span lang="es">Todo</span><span lang="en">All</span></button>
+        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Rubios</span><span lang="en">Blonde</span></button>
+        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Castaños</span><span lang="en">Brunette</span></button>
+        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Vivos</span><span lang="en">Vivid</span></button>
+        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Correcciones</span><span lang="en">Corrections</span></button>
+        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Cortes</span><span lang="en">Cuts</span></button>
+        <button type="button" class="chip" data-filter="nails" aria-pressed="false"><span lang="es">Uñas</span><span lang="en">Nails</span></button>
+      </div>
+      <!-- A tile can hold several photos of the same work; they take turns every 3 seconds
+           (js/gallery.js). Photos: assets/gallery/, web copies of photos/facebook/. -->
+      <div class="gallery">
+        <figure class="shot" data-cat="nails">
+          <img class="is-on" src="assets/gallery/nails-129.jpg" alt="Uñas largas nude con punta francesa plateada / Long nude nails with silver French tips" loading="lazy">
+          <img src="assets/gallery/nails-130.jpg" alt="" loading="lazy">
+        </figure>
+        <figure class="shot" data-cat="nails">
+          <img class="is-on" src="assets/gallery/nails-355.jpg" alt="Uñas naranja neón con plateado y cristales / Neon orange nails with silver glitter and crystals" loading="lazy">
+          <img src="assets/gallery/nails-357.jpg" alt="" loading="lazy">
+        </figure>
+        <figure class="shot" data-cat="nails">
+          <img class="is-on" src="assets/gallery/nails-354.jpg" alt="Uñas azul eléctrico con una uña brillante / Electric blue nails with a glitter accent" loading="lazy">
+          <img src="assets/gallery/nails-359.jpg" alt="" loading="lazy">
+          <img src="assets/gallery/nails-350.jpg" alt="" loading="lazy">
+        </figure>
+        <figure class="shot" data-cat="nails">
+          <img class="is-on" src="assets/gallery/nails-361.jpg" alt="Uñas rosa salmón con una uña plateada / Salmon pink nails with a silver accent" loading="lazy">
+        </figure>
+        <figure class="shot" data-cat="nails">
+          <img class="is-on" src="assets/gallery/nails-343.jpg" alt="Uñas blancas cuadradas / Square white nails" loading="lazy">
+        </figure>
+        <figure class="shot" data-cat="nails">
+          <img class="is-on" src="assets/gallery/nails-059.jpg" alt="Uñas cortas rosa pálido / Short pale pink nails" loading="lazy">
+        </figure>
+        <div class="ph ph--square" data-cat="hair">Foto</div><div class="ph ph--square" data-cat="hair">Foto</div><div class="ph ph--square" data-cat="hair">Foto</div>
+      </div>
+      <div class="row row--center"><a class="link" href="#gallery"><span lang="es">Síguenos en Instagram</span><span lang="en">Follow us on Instagram</span></a></div>
+      <span class="wf-note">Decision: live Instagram feed, or hand-picked photos? (127 salon photos from Facebook are in photos/facebook.)</span>
+    </section>
+
   </main>
 
   <!-- =========================================================
        BARBERSHOP
        ========================================================= -->
   <main id="barbershop" data-mode-view="barber" hidden>
+
+    <!-- PAGE: barbershop home -->
+    <div class="page" data-page="barbershop">
 
     <section class="hero hero--barber">
       <div class="logo-slot"><span lang="es">Logo de la barbería</span><span lang="en">Barbershop logo</span> <small><span lang="es">próximamente</span><span lang="en">coming soon</span></small></div>
@@ -322,100 +399,6 @@
       <span class="wf-note">Decision: barbershop name. Walk-ins welcome, or appointment only?</span>
     </section>
 
-    <!-- Barbers -->
-    <section class="sec" id="barbers">
-      <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Barberos</span><span lang="en">Barbers</span></p>
-        <h2><span lang="es">Tus barberos.</span><span lang="en">Your barbers.</span></h2>
-        <p class="lede"><span lang="es">Elige a tu barbero o toma la próxima silla libre.</span><span lang="en">Pick your barber, or take the next open chair.</span></p>
-      </div>
-      <div class="people">
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre del barbero</span><span lang="en">Barber name</span></h3>
-          <p class="person__role"><span lang="es">Barbero Maestro</span><span lang="en">Master Barber</span></p>
-          <ul class="tags"><li><span lang="es">Degradados</span><span lang="en">Fades</span></li><li><span lang="es">Navaja</span><span lang="en">Razor shaves</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre del barbero</span><span lang="en">Barber name</span></h3>
-          <p class="person__role"><span lang="es">Barbero Sénior</span><span lang="en">Senior Barber</span></p>
-          <ul class="tags"><li><span lang="es">Cortes a tijera</span><span lang="en">Scissor cuts</span></li><li><span lang="es">Barbas</span><span lang="en">Beards</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-        <article class="person">
-          <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-          <h3><span lang="es">Nombre del barbero</span><span lang="en">Barber name</span></h3>
-          <p class="person__role"><span lang="es">Barbero</span><span lang="en">Barber</span></p>
-          <ul class="tags"><li><span lang="es">Diseños</span><span lang="en">Designs</span></li><li><span lang="es">Cortes infantiles</span><span lang="en">Kids' cuts</span></li></ul>
-          <a class="link" href="#book"><span lang="es">Reservar</span><span lang="en">Book</span></a>
-        </article>
-      </div>
-    </section>
-
-    <!-- Barber services -->
-    <section class="sec sec--band" id="barber-services">
-      <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Servicios</span><span lang="en">Services</span></p>
-        <h2><span lang="es">El menú de barbería.</span><span lang="en">The barber menu.</span></h2>
-      </div>
-      <div class="svc-menu">
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Cortes</span><span lang="en">Cuts</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Corte clásico</span><span lang="en">Classic cut</span></span><b>$—</b></li>
-            <li><span><span lang="es">Degradado a piel (skin fade)</span><span lang="en">Skin fade</span></span><b>$—</b></li>
-            <li><span>Taper</span><b>$—</b></li>
-            <li><span><span lang="es">Corte a tijera</span><span lang="en">Scissor cut</span></span><b>$—</b></li>
-            <li><span><span lang="es">Rapado (buzz cut)</span><span lang="en">Buzz cut</span></span><b>$—</b></li>
-            <li><span><span lang="es">Corte infantil (menores de 12)</span><span lang="en">Kids' cut (under 12)</span></span><b>$—</b></li>
-          </ul>
-        </div>
-        <div class="svc-menu__cat">
-          <h3><span lang="es">Barba y afeitado</span><span lang="en">Beard &amp; shave</span></h3>
-          <ul class="svc">
-            <li><span><span lang="es">Recorte y forma de barba</span><span lang="en">Beard trim &amp; shape</span></span><b>$—</b></li>
-            <li><span><span lang="es">Perfilado de barba</span><span lang="en">Beard line-up</span></span><b>$—</b></li>
-            <li><span><span lang="es">Afeitado con navaja y toalla caliente</span><span lang="en">Hot-towel straight-razor shave</span></span><b>$—</b></li>
-            <li><span><span lang="es">Afeitado de cabeza</span><span lang="en">Head shave</span></span><b>$—</b></li>
-          </ul>
-        </div>
-        <div class="svc-menu__cat">
-          <h3>Extras</h3>
-          <ul class="svc">
-            <li><span><span lang="es">Perfilado (line-up)</span><span lang="en">Line-up / edge-up</span></span><b>$—</b></li>
-            <li><span><span lang="es">Diseño / raya marcada</span><span lang="en">Hair design / hard part</span></span><b>$—</b></li>
-            <li><span><span lang="es">Difuminado de canas</span><span lang="en">Grey blending</span></span><b>$—</b></li>
-            <li><span><span lang="es">Limpieza de cejas</span><span lang="en">Brow cleanup</span></span><b>$—</b></li>
-            <li><span><span lang="es">Facial con toalla caliente</span><span lang="en">Hot-towel facial</span></span><b>$—</b></li>
-          </ul>
-        </div>
-        <div class="svc-menu__cat svc-menu__cat--feature">
-          <h3><span lang="es">Paquetes</span><span lang="en">Packages</span></h3>
-          <ul class="svc svc--2col">
-            <li><span><span lang="es">Corte + barba</span><span lang="en">Cut + beard</span></span><b>$—</b></li>
-            <li><span><span lang="es">Servicio completo (corte, afeitado, facial)</span><span lang="en">The full service (cut, shave, facial)</span></span><b>$—</b></li>
-          </ul>
-        </div>
-      </div>
-      <span class="wf-note">Decision: monthly membership (e.g. two cuts a month)?</span>
-    </section>
-
-    <!-- Barber gallery -->
-    <section class="sec" id="barber-gallery">
-      <div class="sec-head">
-        <p class="eyebrow"><span lang="es">Galería</span><span lang="en">Gallery</span></p>
-        <h2><span lang="es">Cortes frescos.</span><span lang="en">Fresh cuts.</span></h2>
-      </div>
-      <div class="gallery">
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
-      </div>
-    </section>
-
     <!-- Cross-link back to the salon -->
     <section class="crosslink">
       <div class="ph ph--wide"><span lang="es">Foto de color del salón</span><span lang="en">Salon color photo</span></div>
@@ -426,26 +409,217 @@
         <a class="btn" href="#salon"><span lang="es">Visitar el salón</span><span lang="en">Visit the salon</span></a>
       </div>
     </section>
+    </div>
+
+    <!-- PAGE: Barbers -->
+    <section class="page sec" id="barbers" data-page="barbers">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Barberos</span><span lang="en">Barbers</span></p>
+        <h2><span lang="es">Tus barberos.</span><span lang="en">Your barbers.</span></h2>
+        <p class="lede"><span lang="es">Elige a tu barbero o toma la próxima silla libre.</span><span lang="en">Pick your barber, or take the next open chair.</span></p>
+      </div>
+      <div class="people">
+        <article class="person" data-staff="b1" data-whatsapp="15550100011" data-profile="barber-1">
+          <a class="person__link" href="#barber-1">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Barbero 1</span><span lang="en">Barber 1</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Barbero Maestro</span><span lang="en">Master Barber</span></p>
+            <ul class="tags"><li><span lang="es">Degradados</span><span lang="en">Fades</span></li><li><span lang="es">Navaja</span><span lang="en">Razor shaves</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el corte que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and their favorite cut to do.</span></p>
+          </div>
+        </article>
+        <article class="person" data-staff="b2" data-whatsapp="15550100012" data-profile="barber-2">
+          <a class="person__link" href="#barber-2">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Barbero 2</span><span lang="en">Barber 2</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Barbero Sénior</span><span lang="en">Senior Barber</span></p>
+            <ul class="tags"><li><span lang="es">Cortes a tijera</span><span lang="en">Scissor cuts</span></li><li><span lang="es">Barbas</span><span lang="en">Beards</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el corte que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and their favorite cut to do.</span></p>
+          </div>
+        </article>
+        <article class="person" data-staff="b3" data-whatsapp="15550100013" data-profile="barber-3">
+          <a class="person__link" href="#barber-3">
+            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
+            <h3><span lang="es">Barbero 3</span><span lang="en">Barber 3</span></h3>
+          </a>
+          <!-- shown on the profile page (built by js/site.js) -->
+          <div class="person__details" hidden>
+            <p class="person__role"><span lang="es">Barbero</span><span lang="en">Barber</span></p>
+            <ul class="tags"><li><span lang="es">Diseños</span><span lang="en">Designs</span></li><li><span lang="es">Cortes infantiles</span><span lang="en">Kids' cuts</span></li></ul>
+            <p class="person__bio"><span lang="es">Biografía breve: años de experiencia, en qué se especializa y el corte que más le gusta hacer.</span><span lang="en">Short bio: years of experience, specialties and their favorite cut to do.</span></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PAGE: Barber services -->
+    <section class="page sec" id="barber-services" data-page="barber-services">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Servicios</span><span lang="en">Services</span></p>
+        <h2><span lang="es">El menú de barbería.</span><span lang="en">The barber menu.</span></h2>
+        <p class="svc-call"><a href="https://wa.me/15550100000" data-wa-desk target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><use href="#icon-whatsapp"/></svg><span lang="es">Pregunta precios por WhatsApp</span><span lang="en">Ask for prices on WhatsApp</span></a></p>
+      </div>
+      <div class="svc-menu">
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Cortes</span><span lang="en">Cuts</span></h3><span class="svc-menu__desc"><span lang="es">Clásicos, degradados, a tijera y rapados</span><span lang="en">Classics, fades, scissor cuts and buzz cuts</span></span></summary>
+          <ul class="svc">
+            <li><span><span lang="es">Corte clásico</span><span lang="en">Classic cut</span></span></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Degradados</span><span lang="en">Fades</span></span><small>2</small></summary><ul><li>Skin fade</li><li>Taper</li></ul></details></li>
+            <li><span><span lang="es">Corte a tijera</span><span lang="en">Scissor cut</span></span></li>
+            <li><span><span lang="es">Rapado (buzz cut)</span><span lang="en">Buzz cut</span></span></li>
+            <li><span><span lang="es">Corte infantil (menores de 12)</span><span lang="en">Kids' cut (under 12)</span></span></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Barba y afeitado</span><span lang="en">Beard &amp; shave</span></h3><span class="svc-menu__desc"><span lang="es">Recorte, perfilado y afeitado con navaja</span><span lang="en">Trims, line-ups and razor shaves</span></span></summary>
+          <ul class="svc">
+            <li><details class="svc-sub"><summary><span><span lang="es">Barba</span><span lang="en">Beard</span></span><small>2</small></summary><ul><li><span lang="es">Recorte y forma</span><span lang="en">Trim &amp; shape</span></li><li><span lang="es">Perfilado</span><span lang="en">Line-up</span></li></ul></details></li>
+            <li><span><span lang="es">Afeitado con navaja y toalla caliente</span><span lang="en">Hot-towel straight-razor shave</span></span></li>
+            <li><span><span lang="es">Afeitado de cabeza</span><span lang="en">Head shave</span></span></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3>Extras</h3><span class="svc-menu__desc"><span lang="es">Perfilado, diseños, canas y facial</span><span lang="en">Line-ups, designs, greys and facials</span></span></summary>
+          <ul class="svc">
+            <li><span><span lang="es">Perfilado (line-up)</span><span lang="en">Line-up / edge-up</span></span></li>
+            <li><span><span lang="es">Diseño / raya marcada</span><span lang="en">Hair design / hard part</span></span></li>
+            <li><span><span lang="es">Difuminado de canas</span><span lang="en">Grey blending</span></span></li>
+            <li><span><span lang="es">Limpieza de cejas</span><span lang="en">Brow cleanup</span></span></li>
+            <li><span><span lang="es">Facial con toalla caliente</span><span lang="en">Hot-towel facial</span></span></li>
+          </ul>
+        </details>
+        <details class="svc-menu__cat">
+          <summary><h3><span lang="es">Paquetes</span><span lang="en">Packages</span></h3><span class="svc-menu__desc"><span lang="es">Varios servicios en una visita</span><span lang="en">Several services in one visit</span></span></summary>
+          <ul class="svc">
+            <li><span><span lang="es">Corte + barba</span><span lang="en">Cut + beard</span></span></li>
+            <li><details class="svc-sub"><summary><span><span lang="es">Servicio completo</span><span lang="en">The full service</span></span><small>3</small></summary><ul><li><span lang="es">Corte</span><span lang="en">Cut</span></li><li><span lang="es">Afeitado</span><span lang="en">Shave</span></li><li>Facial</li></ul></details></li>
+          </ul>
+        </details>
+      </div>
+      <span class="wf-note">Decision: monthly membership (e.g. two cuts a month)?</span>
+    </section>
+
+    <!-- PAGE: Barber gallery -->
+    <section class="page sec" id="barber-gallery" data-page="barber-gallery">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Galería</span><span lang="en">Gallery</span></p>
+        <h2><span lang="es">Cortes frescos.</span><span lang="en">Fresh cuts.</span></h2>
+      </div>
+      <div class="gallery">
+        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
+        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
+        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
+      </div>
+    </section>
+
   </main>
 
   <!-- =========================================================
-       SHARED: book + visit, footer
+       SHARED: the booking page (keeps the current salon / barbershop look) and the footer
        ========================================================= -->
-  <section class="sec" id="book">
+  <section class="page sec" id="book" data-page="book">
     <div class="sec-head">
       <p class="eyebrow"><span lang="es">Reservar</span><span lang="en">Book</span></p>
       <h2 class="only-salon"><span lang="es">Reserva tu cita.</span><span lang="en">Book your appointment.</span></h2>
       <h2 class="only-barber"><span lang="es">Reserva tu silla.</span><span lang="en">Book your chair.</span></h2>
     </div>
     <div class="visit">
-      <div class="ph ph--booking"><span lang="es">Reservas en línea</span><span lang="en">Online booking widget</span></div>
+      <!-- Booking: four steps, one at a time, then WhatsApp. Nothing is stored on the site; the
+           request opens in WhatsApp addressed to the chosen stylist, who replies to confirm.
+           Every step has an "I'm not sure yet" choice, so nobody gets stuck. js/booking.js -->
+      <form class="booker" id="booker" novalidate
+            data-wa-salon="15550100000" data-wa-barber="15550100010">
+
+        <div class="bk-progress">
+          <p class="bk-progress__text">
+            <span lang="es">Paso</span><span lang="en">Step</span> <b data-fill="step-n">1</b>
+            <span lang="es">de</span><span lang="en">of</span> 4
+          </p>
+          <div class="bk-progress__bar" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <!-- 1. who -->
+        <div class="bk-step" data-step="1">
+          <h3 class="bk-q">
+            <span class="only-salon"><span lang="es">Elige tu estilista</span><span lang="en">Choose your stylist</span></span>
+            <span class="only-barber"><span lang="es">Elige tu barbero</span><span lang="en">Choose your barber</span></span>
+          </h3>
+          <div class="bk-people" data-fill="staff" role="radiogroup"></div>
+        </div>
+
+        <!-- 2. when -->
+        <div class="bk-step" data-step="2" hidden>
+          <h3 class="bk-q"><span lang="es">Elige el día</span><span lang="en">Choose the day</span></h3>
+          <div class="bk-cal" data-fill="calendar"></div>
+          <p class="bk-q2"><span lang="es">Hora preferida</span><span lang="en">Preferred time</span> <small><span lang="es">· tu estilista confirma la hora exacta</span><span lang="en">· your stylist confirms the exact time</span></small></p>
+          <div class="bk-times" data-fill="times" role="radiogroup"></div>
+          <button type="button" class="bk-unsure" data-unsure="2" aria-pressed="false">
+            <span lang="es">Aún no sé la fecha</span><span lang="en">I'm not sure of the date yet</span>
+          </button>
+        </div>
+
+        <!-- 3. what: the category only; the details are for the WhatsApp chat -->
+        <div class="bk-step" data-step="3" hidden>
+          <h3 class="bk-q"><span lang="es">¿Qué servicio?</span><span lang="en">Which service?</span></h3>
+          <p class="bk-sub"><span lang="es">Elige uno o varios. Los detalles los hablas con tu estilista por WhatsApp.</span><span lang="en">Pick one or more. You'll go over the details with your stylist on WhatsApp.</span></p>
+          <div class="bk-cats" data-fill="cats"></div>
+        </div>
+
+        <!-- 4. review -->
+        <div class="bk-step" data-step="4" hidden>
+          <h3 class="bk-q"><span lang="es">Revisa y envía</span><span lang="en">Review and send</span></h3>
+          <dl class="bk-summary" data-fill="summary"></dl>
+          <label class="bk-field">
+            <span class="bk-field__label"><span lang="es">Tu nombre</span><span lang="en">Your name</span></span>
+            <input id="bk-name" type="text" autocomplete="name" maxlength="80">
+          </label>
+          <label class="bk-field">
+            <span class="bk-field__label"><span lang="es">¿Es tu primera visita?</span><span lang="en">Is this your first visit?</span></span>
+            <select id="bk-first">
+              <option value="">—</option>
+              <option value="yes" data-es="Sí, es mi primera vez" data-en="Yes, it's my first time">Sí, es mi primera vez</option>
+              <option value="no" data-es="No, ya he venido" data-en="No, I've been before">No, ya he venido</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- always at the bottom: back, then continue (or send on the last step) -->
+        <div class="bk-nav">
+          <button type="button" class="bk-back" data-back>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span lang="es">Atrás</span><span lang="en">Back</span>
+          </button>
+          <button type="button" class="bk-next" data-next disabled>
+            <span lang="es">Continuar</span><span lang="en">Continue</span>
+          </button>
+          <button type="submit" class="bk-next bk-next--wa" data-send hidden disabled>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg>
+            <span lang="es">Enviar por WhatsApp</span><span lang="en">Send on WhatsApp</span>
+          </button>
+          <p class="bk-note" data-note="4" hidden><span lang="es">Tu cita queda confirmada cuando tu estilista te responda.</span><span lang="en">Your appointment is confirmed once your stylist replies.</span></p>
+        </div>
+
+        <!-- after sending -->
+        <div class="booker__done" hidden>
+          <svg class="booker__done-icon" aria-hidden="true" viewBox="0 0 24 24" width="44" height="44"><use href="#icon-whatsapp"/></svg>
+          <h3 class="bk-q"><span lang="es">Solicitud lista</span><span lang="en">Request ready</span></h3>
+          <p><span lang="es">Abrimos WhatsApp con tu mensaje. Toca enviar y espera la respuesta de</span><span lang="en">We opened WhatsApp with your message. Tap send and wait for a reply from</span> <b data-fill="done-who"></b>.</p>
+          <a class="bk-next bk-next--wa" href="#" data-fill="done-link" target="_blank" rel="noopener"><span lang="es">¿No se abrió? Abrir WhatsApp</span><span lang="en">Didn't open? Open WhatsApp</span></a>
+          <button type="button" class="bk-back" data-restart><span lang="es">Hacer otra solicitud</span><span lang="en">Make another request</span></button>
+        </div>
+      </form>
       <div class="visit__info">
         <h3><span lang="es">Visítanos</span><span lang="en">Visit</span></h3>
         <p><span lang="es">Dirección<br>Ciudad, Estado, Código postal</span><span lang="en">Street address<br>City, State ZIP</span></p>
         <h3><span lang="es">Horario</span><span lang="en">Hours</span></h3>
         <dl class="hours">
-          <dt><span lang="es">Lun</span><span lang="en">Mon</span></dt><dd><span lang="es">Cerrado</span><span lang="en">Closed</span></dd>
-          <dt><span lang="es">Mar – Vie</span><span lang="en">Tue – Fri</span></dt><dd>9am – 7pm</dd>
+          <dt><span lang="es">Lun – Vie</span><span lang="en">Mon – Fri</span></dt><dd>9am – 7pm</dd>
           <dt><span lang="es">Sáb</span><span lang="en">Sat</span></dt><dd>9am – 5pm</dd>
           <dt><span lang="es">Dom</span><span lang="en">Sun</span></dt><dd>10am – 4pm</dd>
         </dl>
@@ -454,7 +628,7 @@
         <div class="ph ph--map"><span lang="es">Mapa</span><span lang="en">Map</span></div>
       </div>
     </div>
-    <span class="wf-note">Decision: which booking system (Vagaro, Square, Boulevard, GlossGenius, Booksy...)? Separate booking for salon and barbershop? Real hours.</span>
+    <span class="wf-note">Decision: each stylist's and barber's real WhatsApp number (now placeholders +1 555 010 00xx), and the front-desk numbers used for "No preference". Real salon hours for this list (the booking itself is open every day; each stylist confirms their own schedule). Deposit or cancellation policy?</span>
   </section>
 
   <footer class="footer">
@@ -486,9 +660,25 @@
     <p class="footer__legal">© 2026 ANAÍS Beauty Empire · <span lang="es">Políticas · Tarjetas de regalo</span><span lang="en">Policies · Gift cards</span></p>
   </footer>
 
+  <!-- WhatsApp glyph, reused by the floating button and the booking page -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+      <path fill="currentColor" fill-rule="evenodd" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/>
+      <path fill="currentColor" d="M9.3 7.2c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 2.2.9 2.6.7 3.1.6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3l-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.5l.4-.4.3-.4v-.5l-.9-2.1z"/>
+    </symbol>
+  </svg>
+
+  <!-- floating WhatsApp button: the salon's main number (js/booking.js adds a greeting) -->
+  <a class="wa-float" href="https://wa.me/15550100000" data-wa-main target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="30" height="30"><use href="#icon-whatsapp"/></svg>
+  </a>
+
   <button class="wf-toggle" type="button" aria-pressed="true">Wireframe notes: on</button>
 
-  <script src="js/site.js"></script>
-  <script src="js/intro.js"></script>
+  <script src="js/site.js?v=2026-11-25w"></script>
+  <script src="js/booking.js?v=2026-11-25w"></script>
+  <script src="js/gallery.js?v=2026-11-25a"></script>
+  <script src="js/intro-flowers.js?v=2026-11-25e"></script>
+  <script src="js/intro.js?v=2026-11-25e"></script>
 </body>
 </html>

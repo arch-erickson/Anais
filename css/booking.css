@@ -1,0 +1,179 @@
+/* ---------- Book page: the WhatsApp appointment request (js/booking.js) ----------
+   One step at a time, in the plain sans-serif (only "Reserva tu cita" keeps the serif).
+   Nothing scrolls sideways; Back sits above Continue at the bottom of every step. */
+.booker {
+  --wa: #1F9D55; --wa-hover: #17834A; --off: #DADADA; --off-ink: #8E8E8E; --shade: rgba(0, 0, 0, .5);
+  min-width: 0; max-width: 560px; font-family: Montserrat, system-ui, sans-serif;
+}
+body.is-barber .booker { --off: rgba(239, 231, 216, .14); --off-ink: rgba(239, 231, 216, .45); }
+.booker [hidden] { display: none !important; }
+.booker button { font-family: inherit; color: inherit; }
+#book .sec-head { margin-bottom: 20px; }
+#book .sec-head .eyebrow { display: none; }
+
+/* progress: "Step 2 of 4" and four bars */
+.bk-progress { margin-bottom: 22px; }
+.bk-progress__text { margin: 0 0 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+.bk-progress__text b { font-weight: 500; }
+.bk-progress__bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.bk-progress__bar i { height: 3px; background: var(--line); }
+.bk-progress__bar i.is-on { background: var(--gold); }
+
+/* the question of each step */
+.bk-q { margin: 0 0 16px; font: 500 20px/1.25 Montserrat, system-ui, sans-serif; letter-spacing: 0; }
+.bk-q2 { margin: 18px 0 10px; font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.bk-q2 small { font-size: 11px; font-weight: 400; letter-spacing: .02em; text-transform: none; opacity: .7; }
+.bk-sub { margin: -8px 0 16px; font-size: 14px; line-height: 1.5; opacity: .75; }
+
+/* the check shown on anything selected */
+.bk-check { width: 22px; height: 22px; }
+
+/* step 1: people, a photo grid */
+.bk-people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
+.bk-person { display: grid; gap: 8px; padding: 0; border: 0; background: none; cursor: pointer; text-align: center; }
+.bk-person__photo {
+  position: relative; display: grid; place-items: center; aspect-ratio: 1; overflow: hidden;
+  background:
+    linear-gradient(to top right, transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px)),
+    linear-gradient(to top left, transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px)),
+    rgba(126, 85, 32, .06);
+  border: 1px solid var(--line);
+}
+.bk-person__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bk-person__photo .bk-check {            /* hidden until chosen: then a 50% black fill and a check */
+  position: absolute; inset: 0; width: 100%; height: 100%; padding: 32%;
+  background: var(--shade); color: #fff; opacity: 0; transition: opacity .15s;
+}
+.bk-person.is-on .bk-person__photo .bk-check { opacity: 1; }
+.bk-person--unsure .bk-person__photo { background: none; border-style: dashed; }
+.bk-person__q { font-size: 30px; font-weight: 300; color: var(--gold-deep); }
+.bk-person__name { font-size: 13px; line-height: 1.3; }
+.bk-person.is-on .bk-person__name { font-weight: 500; }
+.bk-person:focus-visible { outline: none; }
+.bk-person:focus-visible .bk-person__photo { outline: 2px solid var(--gold-deep); outline-offset: 2px; }
+
+/* step 2: calendar */
+.bk-cal { border: 1px solid var(--line); padding: 10px 10px 8px; }
+.bk-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.bk-cal__title { font-size: 14px; font-weight: 500; }
+.bk-cal__title span { display: inline-block; }
+.bk-cal__title span::first-letter { text-transform: uppercase; }
+.bk-cal__nav { width: 36px; height: 32px; border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; }
+.bk-cal__nav:disabled { opacity: .25; cursor: default; }
+.bk-cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.bk-cal__wd { padding: 4px 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .55; }
+.bk-day {
+  height: 36px; border: 0; background: none; font-size: 14px; cursor: pointer;
+  width: 36px; justify-self: center; transition: background-color .15s;
+}
+.bk-day:hover:not(:disabled) { background: rgba(184, 134, 58, .15); }
+.bk-day.is-today { box-shadow: inset 0 0 0 1px var(--gold); }
+.bk-day.is-on { background: var(--gold); color: #fff; font-weight: 500; }
+.bk-day:disabled { color: var(--off-ink); opacity: .45; cursor: default; text-decoration: none; }
+
+/* step 2: preferred time, four in a row */
+.bk-times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.bk-time {
+  display: grid; gap: 2px; padding: 9px 2px; border: 1px solid var(--line); background: none;
+  cursor: pointer; text-align: center;
+}
+.bk-time b { font-size: 13px; font-weight: 500; }
+.bk-time small { font-size: 10.5px; opacity: .7; }
+.bk-time.is-on { background: var(--gold); border-color: var(--gold); color: #fff; }
+.bk-time.is-on small { opacity: .9; }
+.bk-time:disabled { opacity: .35; cursor: default; }
+
+/* "not sure yet" for the date */
+.bk-unsure {
+  display: block; width: 100%; margin-top: 10px; padding: 11px; border: 1px dashed var(--line);
+  background: none; font-size: 14px; cursor: pointer;
+}
+.bk-unsure.is-on { border-style: solid; border-color: var(--gold); background: rgba(184, 134, 58, .12); font-weight: 500; }
+.bk-unsure.is-on::before { content: "✓  "; }
+
+/* step 3: categories */
+.bk-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bk-cat {
+  position: relative; display: flex; align-items: center; min-height: 52px; padding: 10px 34px 10px 14px;
+  border: 1px solid var(--line); background: none; cursor: pointer; text-align: left; font-size: 14px; line-height: 1.3;
+}
+.bk-cat .bk-check { position: absolute; right: 10px; top: 50%; width: 18px; height: 18px; margin-top: -9px; opacity: 0; }
+.bk-cat.is-on { border-color: var(--gold); background: var(--gold); color: #fff; font-weight: 500; }
+.bk-cat.is-on .bk-check { opacity: 1; }
+.bk-cat--unsure { border-style: dashed; }
+
+/* step 4: summary + fields */
+.bk-summary { margin: 0 0 18px; border-top: 1px solid var(--line); }
+.bk-summary__row { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.bk-summary dt { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); }
+.bk-summary dd { grid-column: 1; margin: 0; font-size: 15px; line-height: 1.4; overflow-wrap: anywhere; }
+.bk-edit { grid-column: 2; grid-row: 1 / span 2; align-self: center; padding: 6px 0; border: 0; background: none; color: var(--gold-deep) !important; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.bk-cap { display: inline-block; }
+.bk-cap::first-letter { text-transform: uppercase; }
+.bk-field { display: grid; gap: 6px; margin-bottom: 14px; }
+.bk-field__label { font-size: 13px; font-weight: 500; }
+.bk-field input, .bk-field select {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--line); background: var(--cream); color: var(--ink);
+  font: 400 16px/1.4 Montserrat, sans-serif;           /* 16px keeps phones from zooming in */
+}
+.bk-field input:focus, .bk-field select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+
+/* bottom: Back above Continue */
+.bk-nav { display: grid; gap: 10px; margin-top: 22px; }
+.bk-back {
+  justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px 8px 0;
+  border: 0; background: none; font-size: 14px; font-weight: 500; cursor: pointer;
+}
+.bk-back:hover { color: var(--gold-deep); }
+.bk-next {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 15px 20px;
+  border: 0; background: var(--gold); color: #fff !important;
+  font: 500 14px/1 Montserrat, sans-serif; letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  transition: background-color .2s;
+}
+.bk-next:hover:not(:disabled) { background: var(--gold-deep); }
+body.is-barber .bk-next:hover:not(:disabled) { background: #9C7130; }
+.bk-next:disabled { background: var(--off); color: var(--off-ink) !important; cursor: not-allowed; }
+.bk-next--wa { background: var(--wa); }
+.bk-next--wa:hover:not(:disabled) { background: var(--wa-hover) !important; }
+.bk-note { margin: 2px 0 0; font-size: 13px; line-height: 1.5; text-align: center; opacity: .7; }
+
+/* after sending */
+.booker__done { display: grid; justify-items: center; gap: 12px; padding: 28px 20px; border: 1px solid var(--line); text-align: center; }
+.booker__done-icon { color: var(--wa); }
+.booker__done .bk-q { margin: 0; }
+.booker__done p { margin: 0; font-size: 15px; line-height: 1.5; }
+.booker__done .bk-back { justify-self: center; }
+
+/* stylist / barber cards: Book + WhatsApp side by side */
+.person__links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.link--wa { color: #1F9D55; border-color: rgba(31, 157, 85, .35); }
+body.is-barber .link--wa { color: #4CC981; }
+
+@media (min-width: 641px) { .bk-people { grid-template-columns: repeat(4, 1fr); } }
+
+/* phones: each step fits one screen */
+@media (max-width: 640px) {
+  #book .sec-head { margin-bottom: 14px; }
+  #book .sec-head h2 { font-size: 28px; }
+  .bk-progress { margin-bottom: 16px; }
+  .bk-q { margin-bottom: 12px; font-size: 18px; }
+  .bk-day { width: 34px; height: 34px; }
+  .bk-nav { margin-top: 18px; gap: 6px; }
+  .visit__info { margin-top: 12px; padding-top: 28px; border-top: 1px solid var(--line); }
+}
+
+/* ---------- floating WhatsApp button: the salon's main number ---------- */
+.wa-float {
+  position: fixed; right: 16px; bottom: 16px; z-index: 20; display: grid; place-items: center;
+  width: 56px; height: 56px; border-radius: 50%; background: #25D366; color: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .22); transition: transform .2s, box-shadow .2s;
+}
+.wa-float:hover { transform: scale(1.06); box-shadow: 0 8px 26px rgba(0, 0, 0, .28); }
+.wa-float:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+body.intro-on .wa-float { display: none; }
+/* the Book page already ends in a WhatsApp step and its own Back / Continue at the bottom */
+body[data-page="book"] .wa-float { display: none; }
+/* a stylist's page has its own big "Chat on WhatsApp" button */
+body.on-profile .wa-float { display: none; }
+@media (prefers-reduced-motion: reduce) { .wa-float { transition: none; } }

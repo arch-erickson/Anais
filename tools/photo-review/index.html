@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANAÍS · Facebook photo review</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>★</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #F6F1E8; --ink: #1A1A1A; --gold: #B8863A; --gold-deep: #7E5520; --line: rgba(126, 85, 32, .22); --red: #B42318; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 400 14px/1.5 Montserrat, system-ui, sans-serif; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+
+    .top {
+      position: sticky; top: 0; z-index: 5; padding: 18px clamp(14px, 3vw, 32px) 12px;
+      background: rgba(246, 241, 232, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+    }
+    h1 { margin: 0; font: 500 26px/1.1 "Cormorant Garamond", Georgia, serif; }
+    .sub { margin: 4px 0 12px; font-size: 12px; opacity: .7; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      padding: 6px 12px; border: 1px solid var(--line); border-radius: 99px; background: none;
+      font-size: 12px; letter-spacing: .06em; text-transform: capitalize;
+    }
+    .chip b { font-weight: 500; opacity: .55; margin-left: 4px; }
+    .chip.on { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+    .chip.on b { opacity: .7; }
+    .chip--star.on { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px;
+      padding: 14px clamp(14px, 3vw, 32px) 90px;
+    }
+    .card { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: #e8e0d2; border-radius: 4px; }
+    .card img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; transition: transform .3s; }
+    .card:hover img { transform: scale(1.03); }
+    .card.starred { outline: 3px solid var(--gold); outline-offset: -3px; }
+    .card__name {
+      position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 8px 6px; font-size: 11px; color: #fff;
+      background: linear-gradient(transparent, rgba(0,0,0,.55)); pointer-events: none;
+    }
+    .act {
+      position: absolute; top: 6px; width: 34px; height: 34px; border: 0; border-radius: 50%;
+      display: grid; place-items: center; background: rgba(255,255,255,.9); box-shadow: 0 1px 4px rgba(0,0,0,.2);
+      font-size: 17px; line-height: 1; transition: transform .15s, background .15s;
+    }
+    .act:hover { transform: scale(1.1); }
+    .act--star { left: 6px; color: #9a8f7e; }
+    .starred .act--star { background: var(--gold); color: #fff; }
+    .act--del { right: 6px; color: var(--red); }
+    .act--restore { right: 6px; width: auto; padding: 0 12px; border-radius: 99px; font-size: 12px; color: var(--ink); }
+    .empty { grid-column: 1 / -1; padding: 60px 0; text-align: center; opacity: .6; }
+
+    /* lightbox */
+    .lb { position: fixed; inset: 0; z-index: 20; display: none; background: rgba(12, 10, 8, .94); color: #fff; }
+    .lb.open { display: grid; grid-template-rows: auto 1fr auto; }
+    .lb__bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; font-size: 13px; }
+    .lb__bar .grow { flex: 1; opacity: .8; }
+    .lb__btn { padding: 8px 14px; border: 1px solid rgba(255,255,255,.3); border-radius: 99px; background: none; color: #fff; font-size: 13px; }
+    .lb__btn.star.on { background: var(--gold); border-color: var(--gold); }
+    .lb__btn.del { border-color: rgba(255,120,110,.6); color: #ffb3ac; }
+    .lb__stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 56px; }
+    .lb__stage img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .lb__nav { position: absolute; top: 50%; translate: 0 -50%; width: 44px; height: 64px; border: 0; background: rgba(255,255,255,.08); color: #fff; font-size: 26px; border-radius: 6px; }
+    .lb__nav--prev { left: 8px; } .lb__nav--next { right: 8px; }
+    .lb__hint { padding: 8px 16px 14px; font-size: 11px; opacity: .55; text-align: center; }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 18px; z-index: 30; translate: -50% 20px; opacity: 0; pointer-events: none;
+      display: flex; align-items: center; gap: 14px; padding: 10px 12px 10px 16px; border-radius: 99px;
+      background: var(--ink); color: var(--cream); font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+      transition: opacity .2s, translate .2s;
+    }
+    .toast.show { opacity: 1; translate: -50% 0; pointer-events: auto; }
+    .toast button { padding: 5px 12px; border: 0; border-radius: 99px; background: var(--gold); color: #fff; font-size: 12px; }
+
+    @media (max-width: 520px) { .grid { grid-template-columns: repeat(2, 1fr); } .lb__stage { padding: 0 8px; } .lb__nav { display: none; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1>Facebook photos</h1>
+    <p class="sub" id="sub">Loading…</p>
+    <div class="chips" id="chips"></div>
+  </header>
+  <main class="grid" id="grid"></main>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lb__bar">
+      <span class="grow" id="lbName"></span>
+      <button class="lb__btn star" id="lbStar" type="button">☆ Star</button>
+      <button class="lb__btn del" id="lbDel" type="button">🗑 Delete</button>
+      <button class="lb__btn" id="lbClose" type="button">✕</button>
+    </div>
+    <div class="lb__stage">
+      <button class="lb__nav lb__nav--prev" id="lbPrev" type="button" aria-label="Previous">‹</button>
+      <img id="lbImg" alt="">
+      <button class="lb__nav lb__nav--next" id="lbNext" type="button" aria-label="Next">›</button>
+    </div>
+    <p class="lb__hint" id="lbHint">← → browse · S star · D or Delete to delete · Esc close</p>
+  </div>
+
+  <div class="toast" id="toast" role="status"><span id="toastMsg"></span><button id="toastUndo" type="button">Undo</button></div>
+
+<script>
+(() => {
+  'use strict';
+  const CATS = ['hair', 'salon', 'promos', 'nails', 'maybe'];
+  let photos = [], deleted = [], filter = 'all', view = [], lbIndex = -1, undo = null, toastTimer;
+  const $ = (id) => document.getElementById(id);
+
+  const api = (url, body) => fetch(url, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {})
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+
+  async function load() {
+    const d = await api('/api/list');
+    photos = d.photos; deleted = d.deleted;
+    render();
+  }
+
+  function current() {
+    if (filter === 'deleted') return deleted;
+    if (filter === 'starred') return photos.filter((p) => p.starred);
+    if (filter === 'all') return photos;
+    return photos.filter((p) => p.cat === filter);
+  }
+
+  function render() {
+    const stars = photos.filter((p) => p.starred).length;
+    $('sub').textContent = `${photos.length} photos · ${stars} starred · ${deleted.length} deleted. Star the best ones; deleting moves a photo to photos/facebook/_deleted, so nothing is lost.`;
+    const chips = [['all', 'All', photos.length], ['starred', '★ Starred', stars],
+      ...CATS.map((c) => [c, c, photos.filter((p) => p.cat === c).length]), ['deleted', 'Deleted', deleted.length]];
+    $('chips').innerHTML = chips.map(([k, label, n]) =>
+      `<button class="chip${k === 'starred' ? ' chip--star' : ''}${filter === k ? ' on' : ''}" data-f="${k}" type="button">${label}<b>${n}</b></button>`).join('');
+    view = current();
+    const trash = filter === 'deleted';
+    $('grid').innerHTML = view.length ? view.map((p, i) => `
+      <div class="card${p.starred ? ' starred' : ''}" data-i="${i}">
+        <img src="/${trash ? 'trash' : 'photo'}/${encodeURI(p.path)}" alt="${p.path}" loading="lazy">
+        ${trash ? '' : `<button class="act act--star" data-act="star" type="button" title="Star" aria-label="Star">${p.starred ? '★' : '☆'}</button>`}
+        ${trash ? '<button class="act act--restore" data-act="restore" type="button">Restore</button>'
+                : '<button class="act act--del" data-act="del" type="button" title="Delete" aria-label="Delete">🗑</button>'}
+        <span class="card__name">${p.path.split('/').pop()}</span>
+      </div>`).join('') : `<p class="empty">${trash ? 'Nothing deleted.' : filter === 'starred' ? 'No starred photos yet. Tap ☆ on the ones you like.' : 'No photos here.'}</p>`;
+    if (lbIndex >= 0) showLb();
+  }
+
+  async function star(p) {
+    const next = !p.starred;
+    p.starred = next; render();
+    try { await api('/api/star', { path: p.path, starred: next }); } catch { p.starred = !next; render(); toast('Could not save the star.'); }
+  }
+
+  async function del(p) {
+    try { await api('/api/delete', { path: p.path }); } catch { return toast('Could not delete that photo.'); }
+    const wasStarred = p.starred;
+    photos = photos.filter((x) => x !== p);
+    deleted = [...deleted, { ...p, starred: false }].sort((a, b) => a.path.localeCompare(b.path));
+    if (lbIndex >= 0) { view = current(); if (!view.length) closeLb(); else lbIndex = Math.min(lbIndex, view.length - 1); }
+    render();
+    toast(`Deleted ${p.path.split('/').pop()}`, async () => {
+      await restore(deleted.find((x) => x.path === p.path));
+      if (wasStarred) { const back = photos.find((x) => x.path === p.path); if (back) await star(back); }
+    });
+  }
+
+  async function restore(p) {
+    if (!p) return;
+    try { await api('/api/restore', { path: p.path }); } catch { return toast('Could not restore that photo.'); }
+    deleted = deleted.filter((x) => x !== p);
+    photos = [...photos, { ...p, starred: false }].sort((a, b) => a.path.localeCompare(b.path));
+    render();
+  }
+
+  function toast(msg, onUndo) {
+    $('toastMsg').textContent = msg;
+    undo = onUndo || null;
+    $('toastUndo').hidden = !undo;
+    $('toast').classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { $('toast').classList.remove('show'); undo = null; }, 6000);
+  }
+  $('toastUndo').addEventListener('click', async () => { const u = undo; undo = null; $('toast').classList.remove('show'); if (u) await u(); });
+
+  // lightbox
+  function showLb() {
+    const p = view[lbIndex]; if (!p) return closeLb();
+    const trash = filter === 'deleted';
+    $('lb').classList.add('open');
+    $('lbImg').src = `/${trash ? 'trash' : 'photo'}/${encodeURI(p.path)}`;
+    $('lbName').textContent = `${p.path}  ·  ${lbIndex + 1} / ${view.length}`;
+    $('lbStar').hidden = trash;
+    $('lbStar').classList.toggle('on', p.starred);
+    $('lbStar').textContent = p.starred ? '★ Starred' : '☆ Star';
+    $('lbDel').textContent = trash ? '↩ Restore' : '🗑 Delete';
+  }
+  function closeLb() { lbIndex = -1; $('lb').classList.remove('open'); }
+  const step = (d) => { if (view.length) { lbIndex = (lbIndex + d + view.length) % view.length; showLb(); } };
+
+  $('lbClose').onclick = closeLb;
+  $('lbPrev').onclick = () => step(-1);
+  $('lbNext').onclick = () => step(1);
+  $('lbStar').onclick = () => view[lbIndex] && star(view[lbIndex]);
+  $('lbDel').onclick = () => { const p = view[lbIndex]; if (!p) return; filter === 'deleted' ? restore(p) : del(p); };
+  $('lb').addEventListener('click', (e) => { if (e.target.classList.contains('lb__stage')) closeLb(); });
+  addEventListener('keydown', (e) => {
+    if (lbIndex < 0) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key.toLowerCase() === 's' && filter !== 'deleted') star(view[lbIndex]);
+    else if (e.key === 'Delete' || e.key.toLowerCase() === 'd') $('lbDel').click();
+  });
+
+  // grid + chips
+  $('chips').addEventListener('click', (e) => { const b = e.target.closest('[data-f]'); if (b) { filter = b.dataset.f; closeLb(); render(); scrollTo(0, 0); } });
+  $('grid').addEventListener('click', (e) => {
+    const card = e.target.closest('.card'); if (!card) return;
+    const p = view[+card.dataset.i];
+    const act = e.target.closest('[data-act]')?.dataset.act;
+    if (act === 'star') star(p);
+    else if (act === 'del') del(p);
+    else if (act === 'restore') restore(p);
+    else if (e.target.tagName === 'IMG') { lbIndex = +card.dataset.i; showLb(); }
+  });
+
+  load().catch(() => { $('sub').textContent = 'Could not reach the review server. Start it with: python tools/photo-review/server.py'; });
+})();
+</script>
+</body>
+</html>

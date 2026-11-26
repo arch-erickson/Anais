@@ -1,30 +1,37 @@
 /* ---------- page sections (salon + barbershop) ---------- */
 
 :root {
-  --band: #EFE7D9;
   --serif: "Cormorant Garamond", Georgia, serif;
   --pad-x: clamp(20px, 5vw, 64px);
 }
 
 /* ---------- mode switching ----------
-   body.is-barber flips the palette to dark and swaps salon-only / barber-only pieces. */
+   The salon is the cream page (the default palette in site.css). body.is-barber flips the page
+   to black with ivory text and gold accents, and swaps salon-only / barber-only pieces. */
+:root { --band: #EFE7D9; }
 body.is-barber {
   --cream: #0E0C0A;
   --ink: #EFE7D8;
   --gold-deep: #D9B26A;
   --line: rgba(226, 188, 114, .2);
   --band: #17140F;
+  --header-bg: rgba(14, 12, 10, .92);
+  --menu-book-fg: #0E0C0A;
 }
 body:not(.is-barber) .only-barber,
 body.is-barber .only-salon { display: none !important; }
-body.is-barber .header { background: rgba(14, 12, 10, .92); }
-body.is-barber .menu a.menu__book { color: #0E0C0A; }
 body { transition: background-color .35s ease, color .35s ease; }
 
 [data-mode-view]:not([hidden]) { animation: view-in .45s ease both; }
 @keyframes view-in { from { opacity: 0; } to { opacity: 1; } }
 
 section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
+
+/* ---------- pages: one [data-page] block shows at a time (js/site.js) ---------- */
+[data-page][hidden] { display: none !important; }
+[data-page]:not([hidden]) { animation: view-in .35s ease both; }
+/* inner pages start right under the fixed header, so give them room */
+.page.sec { padding-top: calc(var(--header-h) + clamp(40px, 7vw, 88px)); min-height: 70vh; min-height: 70svh; }
 
 /* ---------- barbershop logo placeholder in the header ---------- */
 .brand__placeholder {
@@ -39,6 +46,91 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 .hero > :nth-child(4) { transition-delay: .45s; }
 .btn--ghost { border-color: transparent; }
 .btn--ghost:hover { background: transparent; color: var(--gold); border-color: var(--gold); }
+
+/* salon hero: a full-screen client photo (assets/photos/hero-red.jpg) in place of the big logo.
+   Mobile: the photo fills the screen and the text sits over a dark fade at the bottom.
+   Desktop: text on the left, photo on the right. */
+.hero--photo {
+  position: relative; isolation: isolate; overflow: hidden;
+  place-content: end center; gap: 18px;
+  padding: 120px 24px clamp(40px, 8vh, 72px);
+  color: #F6F1E8;
+}
+.hero--photo .hero__slides {
+  position: absolute; inset: 0; z-index: -1;
+  transform: none !important;                       /* no rise-in nudge on the photos */
+}
+.hero--photo .hero__photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.hero__photo--red { object-position: 75% 30%; }     /* her face sits right of centre */
+/* phones are narrower than this photo: keep her left arm and knee in, let the feet crop on the right */
+.hero__photo--silver { object-position: 20% 20%; }
+/* the blonde selfie has extra headroom (selfie-long-hair-top-300px.png), which sits behind the header */
+.hero__photo--blonde { object-position: 55% 0; }
+.hero__photo--waves { object-position: 45% 40%; }
+/* the photos take turns, 3 seconds each, over a 12-second loop: red (underneath, always there)
+   -> silver fades in on top -> blonde on top of that -> waves on top of that -> waves fade out
+   back to red. Each fade takes 0.4s; a photo that has been covered drops away unseen. */
+.hero__photo--silver { opacity: 0; animation: hero-swap-2 12s linear infinite; }
+.hero__photo--blonde { opacity: 0; animation: hero-swap-3 12s linear infinite; }
+.hero__photo--waves  { opacity: 0; animation: hero-swap-4 12s linear infinite; }
+@keyframes hero-swap-2 {
+  0%, 25% { opacity: 0; }
+  28.33%, 53.33% { opacity: 1; }
+  53.4%, 100% { opacity: 0; }
+}
+@keyframes hero-swap-3 {
+  0%, 50% { opacity: 0; }
+  53.33%, 78.33% { opacity: 1; }
+  78.4%, 100% { opacity: 0; }
+}
+@keyframes hero-swap-4 {
+  0%, 75% { opacity: 0; }
+  78.33%, 96.67% { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* a pure cross-fade, no movement, so it also runs when the visitor has "reduce motion" on */
+.hero--photo::after {                                /* fade so the text reads over the photo */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(14, 12, 10, 0) 40%, rgba(14, 12, 10, .55) 65%, rgba(14, 12, 10, .85) 100%);
+}
+.hero--photo .hero__lede { color: #E2BC72; }
+.hero--photo .hero__sub { opacity: .9; }
+.hero--photo .btn { color: #F6F1E8; border-color: #E2BC72; }
+.hero--photo .btn:hover { background: #E2BC72; color: #1A1A1A; }
+.hero--photo .btn--ghost { border-color: transparent; }
+.hero--photo .btn--ghost:hover { background: transparent; color: #E2BC72; }
+
+@media (min-width: 900px) {
+  /* the hero is exactly one screen tall (under the fixed header), so all of it shows on load.
+     The photo column is a 3:4 portrait as tall as the space under the header, close to the
+     photos' own shape, so each photo shows (nearly) whole instead of zoomed into a wide column. */
+  .hero--photo {
+    --hero-h: max(560px, 100vh);
+    --hero-h: max(560px, 100svh);
+    grid-template-columns: 1fr min(calc((var(--hero-h) - var(--header-h)) * 3 / 4), 58vw);
+    grid-template-rows: 1fr auto auto auto 1fr;
+    height: var(--hero-h); min-height: 0;
+    place-content: stretch; justify-items: start; gap: 22px 0;
+    padding: var(--header-h) 0 0; text-align: left; color: var(--ink);
+  }
+  .hero--photo::after { content: none; }
+  .hero--photo .hero__slides { position: relative; inset: auto; grid-column: 2; grid-row: 1 / -1; z-index: 0; min-height: 0; align-self: stretch; justify-self: stretch; }
+  .hero__photo--red { object-position: 50% 30%; }
+  .hero__photo--silver { object-position: 50% 50%; }
+  .hero__photo--blonde { object-position: 50% 8%; }
+  .hero__photo--waves { object-position: 50% 40%; }
+  .hero--photo > :not(.hero__slides) { grid-column: 1; justify-self: center; width: min(100%, 620px); padding: 0 clamp(32px, 5vw, 64px); }
+  .hero--photo .hero__lede { grid-row: 2; color: var(--gold-deep); font-size: clamp(34px, 3.6vw, 52px); }
+  .hero--photo .hero__sub { grid-row: 3; }
+  .hero--photo .hero__ctas { grid-row: 4; justify-content: flex-start; }
+  .hero--photo .btn { color: var(--gold-deep); border-color: var(--gold); }
+  .hero--photo .btn:hover { background: var(--gold); color: var(--cream); }
+  .hero--photo .btn--ghost { border-color: transparent; }
+  .hero--photo .btn--ghost:hover { background: transparent; color: var(--gold); }
+}
 
 .logo-slot {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
@@ -78,8 +170,9 @@ h3 { font-size: 24px; line-height: 1.2; }
 .checks li { padding-left: 22px; position: relative; font-size: 15px; }
 .checks li::before { content: ""; position: absolute; left: 0; top: .7em; width: 10px; height: 1px; background: var(--gold); }
 
-.ba { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: clamp(48px, 7vw, 80px); }
+.ba { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .ba figure { margin: 0; }
+.ba .ph { aspect-ratio: 4 / 5; }                     /* portrait, like hair photos */
 .ba figcaption { margin-top: 10px; font-size: 13px; opacity: .75; }
 
 /* ---------- steps ---------- */
@@ -89,41 +182,118 @@ h3 { font-size: 24px; line-height: 1.2; }
   border: 1px solid var(--gold); border-radius: 50%; font-family: var(--serif); font-size: 20px; color: var(--gold-deep);
 }
 .steps p { margin: 10px auto 0; max-width: 300px; font-size: 15px; opacity: .82; }
+.steps--4 { grid-template-columns: repeat(4, 1fr); }
+.steps h3 { font-size: 22px; }
+.steps__link {
+  display: inline-block; margin-top: 8px; color: #1F9D55; font-size: 12px; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; border-bottom: 1px solid rgba(31, 157, 85, .4); padding-bottom: 2px; opacity: 1;
+}
+body.is-barber .steps__link { color: #4CC981; }
 
 /* ---------- people (stylists / barbers) ---------- */
-.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
-.person h3 { margin-top: 18px; }
+/* the team page is a grid of photo + name; each opens that person's profile page */
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px 20px; }
+.person__link { display: block; }
+.person__link .ph { overflow: hidden; transition: border-color .2s; }
+.person__link h3 { margin-top: 12px; font: 500 16px/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .04em; text-align: center; }
+.person__link:hover .ph, .person__link:focus-visible .ph { border-color: var(--gold); }
+.person__link:hover h3 { color: var(--gold-deep); }
 .person__role { margin: 4px 0 12px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
-.tags { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 6px; }
-.tags li { font-size: 12px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 99px; }
 
-/* ---------- service menu (price list) ---------- */
-.svc-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.svc-menu__cat { padding: 28px; border: 1px solid var(--line); background: var(--cream); transition: background-color .35s ease; }
-.svc-menu__cat--feature { grid-column: 1 / -1; border-color: var(--gold); }
-.svc-menu__cat h3 { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+/* profile page (built by js/site.js from the card) */
+.profile__back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px; font-size: 13px; font-weight: 500; }
+.profile__back:hover { color: var(--gold-deep); }
+.profile__body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
+.profile__photo .ph, .profile__photo img {
+  width: 100%; height: min(calc(100svh - var(--header-h) - 180px), 640px); aspect-ratio: auto; object-fit: cover;
+}
+.profile h2 { margin-bottom: 6px; }
+.profile .person__role { margin-bottom: 14px; }
+.person__bio { margin: 14px 0 0; font-size: 15px; line-height: 1.6; opacity: .85; max-width: 460px; }
+.profile__actions { display: grid; gap: 10px; margin-top: 24px; }
+.profile__wa, .profile__book {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;
+  font: 500 13px/1 Montserrat, sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: background-color .2s, color .2s;
+}
+.profile__wa { background: #1F9D55; color: #fff; }
+.profile__wa:hover { background: #17834A; }
+.profile__book { border: 1px solid var(--gold); color: var(--gold-deep); }
+.profile__book:hover { background: var(--gold); color: #fff; }
+.tags { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tags li { font-size: 12px; padding: 3px 10px; border: 1px solid var(--line); }
+
+/* ---------- service menu: category dropdowns > services > sub-service dropdowns ---------- */
+.svc-menu { display: grid; gap: 0; max-width: 760px; border-top: 1px solid var(--line); }
+.svc-menu__cat { border-bottom: 1px solid var(--line); }
+.svc-menu__cat > summary {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 16px;
+  padding: 18px 4px; cursor: pointer; list-style: none;
+}
+.svc-menu__cat > summary::-webkit-details-marker, .svc-sub > summary::-webkit-details-marker { display: none; }
+.svc-menu__cat > summary::after {                    /* plus that turns into a minus */
+  content: "+"; grid-column: 2; grid-row: 1 / span 2; font: 300 26px/1 Montserrat, sans-serif; color: var(--gold-deep);
+}
+.svc-menu__cat[open] > summary::after { content: "\2013"; }
+.svc-menu__cat h3 {
+  display: flex; align-items: center; gap: 10px; margin: 0;
+  font: 500 17px/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .02em;
+}
+.svc-menu__desc { grid-column: 1; font-size: 13px; line-height: 1.4; opacity: .65; }
+.svc-menu__cat[open] > summary .svc-menu__desc { opacity: .45; }
 .badge {
-  font: 500 10px/1 Montserrat, sans-serif; letter-spacing: .22em; text-transform: uppercase;
-  padding: 6px 10px; background: var(--gold); color: var(--cream);
+  font: 500 9px/1 Montserrat, sans-serif; letter-spacing: .2em; text-transform: uppercase;
+  padding: 5px 8px; background: var(--gold); color: #fff;
 }
-.svc { list-style: none; padding: 0; margin: 0; }
-.svc--2col { columns: 2; column-gap: 48px; }
-.svc li {
-  display: flex; align-items: baseline; gap: 10px; padding: 9px 0; break-inside: avoid;
-  border-bottom: 1px solid var(--line); font-size: 15px;
+.svc { list-style: none; padding: 0 0 14px; margin: 0; }
+.svc > li { display: flex; align-items: center; gap: 10px; padding: 11px 4px 11px 16px; border-top: 1px solid var(--line); font-size: 15px; }
+.svc > li > span { flex: 1; }
+.svc li b { font-weight: 500; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); white-space: nowrap; }
+/* a service with variations: its own small dropdown */
+.svc > li:has(.svc-sub) { display: block; padding: 0; }
+.svc-sub > summary {
+  display: flex; align-items: center; gap: 10px; padding: 11px 4px 11px 16px; cursor: pointer; list-style: none;
 }
-.svc li span { flex: 1; }
-.svc li b { font-weight: 500; font-size: 13px; color: var(--gold-deep); white-space: nowrap; }
+.svc-sub > summary > span { flex: 1; }
+.svc-sub > summary small { font-size: 11px; opacity: .55; }
+.svc-sub > summary::after {
+  content: ""; width: 7px; height: 7px; margin: 0 4px 3px 2px;
+  border-right: 1.5px solid var(--gold-deep); border-bottom: 1.5px solid var(--gold-deep); transform: rotate(45deg);
+  transition: transform .2s;
+}
+.svc-sub[open] > summary::after { transform: rotate(-135deg); margin-bottom: -3px; }
+.svc-sub ul { list-style: none; margin: 0 0 8px; padding: 0 0 0 32px; }
+.svc-sub li { position: relative; padding: 6px 0; font-size: 14px; opacity: .8; }
+.svc-sub li::before { content: ""; position: absolute; left: -14px; top: 50%; width: 6px; height: 1px; background: var(--gold); }
+.svc-menu__cat > summary:hover h3, .svc-sub > summary:hover > span { color: var(--gold-deep); }
+.svc-menu__cat > summary:focus-visible, .svc-sub > summary:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: -2px; }
+/* no prices on the site: one "Ask for prices on WhatsApp" link under each menu heading */
+.svc-call { margin: 16px auto 0; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.svc-call a {
+  display: inline-flex; align-items: center; gap: 8px; color: #1F9D55;
+  border-bottom: 1px solid rgba(31, 157, 85, .4); padding-bottom: 3px;
+}
+.svc-call a:hover { border-color: #1F9D55; }
+body.is-barber .svc-call a { color: #4CC981; }
 
 /* ---------- gallery ---------- */
 .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
-.chip { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--line); border-radius: 99px; }
+.chip { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; padding: 7px 16px; border: 1px solid var(--line); }
 .chip.is-on { border-color: var(--gold); color: var(--gold-deep); }
 .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.gallery > [hidden] { display: none !important; }
+button.chip { background: none; color: inherit; font-family: inherit; cursor: pointer; }
+/* a photo tile; several photos of the same work stack and take turns (js/gallery.js) */
+.shot { position: relative; margin: 0; aspect-ratio: 1; overflow: hidden; background: var(--band); }
+.shot img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  opacity: 0; transition: opacity .6s ease;
+}
+.shot img.is-on { opacity: 1; }
 
 /* ---------- testimonials ---------- */
 .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.quotes blockquote { margin: 0; padding: 32px; border-top: 1px solid var(--gold); }
+/* reviews sit on cards in the page colour, over the tan band */
+.quotes blockquote { margin: 0; padding: 36px 32px 30px; background: var(--cream); border-top: 2px solid var(--gold); transition: background-color .35s ease; }
 .quotes p { margin: 0 0 18px; font: italic 400 22px/1.35 var(--serif); }
 .quotes cite { font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
 
@@ -132,9 +302,10 @@ h3 { font-size: 24px; line-height: 1.2; }
 .crosslink .ph { min-height: 380px; aspect-ratio: auto; }
 .crosslink__text { display: grid; align-content: center; justify-items: start; gap: 14px; padding: clamp(40px, 6vw, 88px); }
 .crosslink__text p { margin: 0; opacity: .85; }
-.crosslink .eyebrow { color: var(--gold); }
-.crosslink .btn { margin-top: 10px; color: var(--gold); }
-.crosslink .btn:hover { color: var(--ink); }
+/* the cross-link band is always dark, so its accents use a fixed gold in both modes */
+.crosslink .eyebrow { color: #C9A05A; }
+.crosslink .btn { margin-top: 10px; color: #C9A05A; border-color: #C9A05A; }
+.crosslink .btn:hover { background: #C9A05A; color: #0E0C0A; }
 
 /* ---------- book / visit ---------- */
 .visit { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
@@ -166,16 +337,126 @@ h3 { font-size: 24px; line-height: 1.2; }
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .split, .visit, .crosslink { grid-template-columns: 1fr; }
-  .svc-menu { grid-template-columns: 1fr 1fr; }
   .ba, .gallery { grid-template-columns: repeat(2, 1fr); }
   .quotes, .steps { grid-template-columns: 1fr; }
   .footer { grid-template-columns: 1fr 1fr; }
   .crosslink .ph { min-height: 240px; }
 }
+/* ---------- Color Studio collage: four photos, 2 x 2 ---------- */
+.collage { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.collage .ph { aspect-ratio: auto; font-size: 10px; letter-spacing: .14em; }
+#color .collage { height: min(calc(100svh - var(--header-h) - 120px), 640px); }
+
+/* ---------- one screen per section on tablets and desktops ---------- */
+@media (min-width: 641px) {
+  .sec { padding-top: clamp(48px, 7vh, 88px); padding-bottom: clamp(48px, 7vh, 88px); }
+  .page.sec { padding-top: calc(var(--header-h) + clamp(28px, 5vh, 56px)); min-height: calc(100svh - 200px); }
+  .sec-head { margin-bottom: clamp(24px, 4vh, 44px); }
+  /* portraits shrink with the screen height so the team fits */
+  .people .ph--portrait { aspect-ratio: auto; height: clamp(200px, calc(100svh - 530px), 360px); }
+  /* galleries: one large photo and eight small ones, two rows */
+  .gallery { grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .gallery > :first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+  .visit__info .ph--map { aspect-ratio: 3 / 1; margin-top: 16px; }
+  .visit__info h3:not(:first-child) { margin-top: 16px; }
+}
+
+/* ---------- one screen per section on phones ----------
+   Every section is at most one phone screen tall: tighter spacing, rows that swipe sideways
+   (reviews, stylists, barbers, galleries' filters, menu tabs) instead of stacking. On the two
+   home pages each section fills exactly one screen, content centred. */
+@media (max-width: 640px) {
+  .sec { padding: 40px var(--pad-x); }
+  .page.sec { padding-top: calc(var(--header-h) + 24px); padding-bottom: 32px; min-height: 0; }
+  .sec-head { margin-bottom: 20px; }
+  .eyebrow { margin-bottom: 8px; }
+  h2 { font-size: clamp(28px, 8.4vw, 34px); }
+  .lede { margin-top: 10px; font-size: 14px; line-height: 1.5; }
+  .sec .wf-note { margin-top: 14px; }
+
+  /* home sections take the height their content needs, with the same 56px above and below
+     each (no forced full screen: short sections were leaving big blank bands between them) */
+  [data-page="salon"] > .sec, [data-page="barbershop"] > .sec {
+    display: grid; align-content: center; padding-top: 56px; padding-bottom: 56px;
+    grid-template-columns: minmax(0, 1fr);          /* rows that scroll sideways must not widen the page */
+  }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .split__text { min-width: 0; }
+  [data-page="salon"] > .sec > :not(.wf-note), [data-page="barbershop"] > .sec > :not(.wf-note) { width: 100%; }
+
+  /* Color Studio: collage on top, text below, all on one screen */
+  #color .split { gap: 18px; }
+  #color .collage { height: 28svh; gap: 6px; }
+  #color .collage .ph { aspect-ratio: auto; }
+  #color .lede { font-size: 14px; }
+  #color .checks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  #color .checks li { padding: 4px 10px; border: 1px solid var(--line); font-size: 12px; }
+  #color .checks li::before { content: none; }
+  #color .row { margin-top: 16px; gap: 12px 20px; }
+  #color .btn { padding: 12px 20px; }
+
+  /* before / after: 2 x 2 portraits */
+  .ba { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 0; }
+  .ba figcaption { margin-top: 6px; font-size: 12px; }
+
+  /* three steps: number beside the text */
+  .steps { gap: 14px; margin: 0; text-align: left; }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; align-items: start; }
+  .steps__n { grid-row: 1 / span 2; margin: 0; }
+  .steps p { margin: 4px 0 0; max-width: none; font-size: 14px; }
+
+  /* reviews: stacked, compact */
+  .quotes { gap: 10px; }
+  .quotes blockquote { padding: 20px 20px 18px; }
+  .quotes p { margin-bottom: 8px; font-size: 17px; }
+  .quotes cite { font-size: 11px; }
+
+  /* team: a 2-column grid of photo + name */
+  .people { grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+  .person .ph--portrait { aspect-ratio: 4 / 5; }
+  .person h3 { margin-top: 8px; font-size: 17px; }
+
+  /* profile page: photo on top, then name, details and the two buttons */
+  .profile__body { grid-template-columns: 1fr; gap: 18px; }
+  .profile__photo .ph, .profile__photo img { height: 38svh; }
+  .profile h2 { font-size: 30px; }
+  .profile__actions { margin-top: 16px; }
+
+  /* gallery filters wrap */
+  .chips { gap: 6px; margin-bottom: 16px; }
+  .chip { padding: 6px 12px; font-size: 11px; }
+  /* service dropdowns: compact rows */
+  .svc-menu__cat > summary { padding: 14px 2px; }
+  .svc-menu__cat h3 { font-size: 16px; }
+  .svc-menu__desc { font-size: 12px; }
+  .svc > li, .svc-sub > summary { padding: 10px 2px 10px 12px; font-size: 14px; }
+  .svc > li:has(.svc-sub) { padding: 0; }
+  #services .sec-head .eyebrow, #barber-services .sec-head .eyebrow { display: none; }
+  #services .sec-head, #barber-services .sec-head { margin-bottom: 18px; }
+  .svc-call { margin-top: 10px; font-size: 11px; }
+
+  /* galleries: 3 x 3 */
+  .gallery { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .gallery .ph { font-size: 9px; padding: 4px; }
+  .gallery + .row { margin-top: 18px; }
+
+  /* cross-link: photo then text, one screen */
+  .crosslink { min-height: calc(100svh - var(--header-h)); grid-template-rows: 1fr auto; }
+  .crosslink .ph { min-height: 0; height: 100%; }
+  .crosslink__text { padding: 32px var(--pad-x) 40px; gap: 10px; }
+
+  /* book: contact details in two short columns under the booking steps */
+  .visit { gap: 32px; }
+  .visit__info { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; align-items: start; }
+  .visit__info h3 { grid-column: 1 / -1; font-size: 18px; }
+  .visit__info h3:not(:first-child) { margin-top: 16px; }
+  .visit__info p, .hours { grid-column: 1 / -1; font-size: 14px; }
+  .visit__info .ph--map { grid-column: 1 / -1; margin-top: 16px; aspect-ratio: 2 / 1; }
+}
+
 @media (max-width: 640px) {
   .brand__placeholder { width: 42px; height: 42px; }
-  .hero { padding-top: 100px; }
-  .svc-menu, .footer { grid-template-columns: 1fr; }
-  .svc--2col { columns: 1; }
+  .hero:not(.hero--photo) { padding-top: 100px; }
+  .footer { grid-template-columns: 1fr; }
   .checks { grid-template-columns: 1fr; }
 }
