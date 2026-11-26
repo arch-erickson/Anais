@@ -196,6 +196,16 @@
     document.dispatchEvent(new CustomEvent('anais:route', { detail: { mode, page } }));
   };
 
+  // the landing always opens on the red photo: hold the photo loop (css/sections.css, body.hero-wait)
+  // until that photo has loaded, so a slow connection cannot open on one of the others
+  const heroFirst = document.querySelector('.hero__photo--red');
+  if (heroFirst && !heroFirst.complete) {
+    body.classList.add('hero-wait');
+    const startLoop = () => body.classList.remove('hero-wait');
+    heroFirst.addEventListener('load', startLoop, { once: true });
+    heroFirst.addEventListener('error', startLoop, { once: true });
+  }
+
   // first load
   const first = decodeURIComponent(location.hash.slice(1));
   setMode(ownerOf(first) || 'salon');

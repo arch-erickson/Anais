@@ -101,6 +101,11 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 .hero__photo--silver { opacity: 0; animation: hero-swap-2 12s linear infinite; }
 .hero__photo--blonde { opacity: 0; animation: hero-swap-3 12s linear infinite; }
 .hero__photo--waves  { opacity: 0; animation: hero-swap-4 12s linear infinite; }
+/* THE LANDING ALWAYS OPENS ON THE RED PHOTO (Erickson, 25 Nov 2026), on every refresh and every device.
+   The loop above starts from red, so it must not start early: it waits while the sunflower entrance
+   is playing (body.intro-on) and until the red photo itself has loaded (body.hero-wait, js/site.js).
+   Without this the loop ran unseen behind the entrance and the page could open on another photo. */
+body.intro-on .hero__photo, body.hero-wait .hero__photo { animation: none; }
 @keyframes hero-swap-2 {
   0%, 25% { opacity: 0; }
   28.33%, 53.33% { opacity: 1; }
