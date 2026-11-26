@@ -200,7 +200,18 @@ h3 { font: 500 17px/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .02em
 
 .ba { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .ba figure { margin: 0; }
-.ba .ph { aspect-ratio: 4 / 5; }                     /* portrait, like hair photos */
+.ba .ph, .ba .shot { aspect-ratio: 4 / 5; }         /* portrait, like hair photos */
+/* before / after: the tile shows the before photo, then the after (js/gallery.js swaps .is-on);
+   the label in the corner follows the photo on screen */
+.ba__shot::after {
+  content: "Antes"; position: absolute; left: 8px; top: 8px; z-index: 1; padding: 4px 10px;
+  background: rgba(14, 12, 10, .72); color: #F6F1E8;
+  font: 500 10px/1.2 Montserrat, sans-serif; letter-spacing: .18em; text-transform: uppercase;
+  transition: background-color .4s ease;
+}
+.ba__shot:has(img:last-child.is-on)::after { content: "Después"; background: #8F6326; }
+html[lang="en"] .ba__shot::after { content: "Before"; }
+html[lang="en"] .ba__shot:has(img:last-child.is-on)::after { content: "After"; }
 .ba figcaption { margin-top: 10px; font-size: 13px; opacity: .75; }
 
 /* ---------- steps ---------- */
@@ -321,11 +332,15 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
 .crosslink .ph { min-height: 380px; aspect-ratio: auto; }
 /* a real photo in the band (salon page: the barbershop interior, cropped to the barber at work;
    barbershop page: a salon client) */
+/* Two columns (desktop layout): the photo is laid over the left half and fills it, so the band's
+   height comes from the text (at least 380px), never from the photo's own shape. One column
+   (mobile layout, below): a normal photo of fixed height. Either way object-fit crops it.
+   (Not "contain: size": Safari then forgets the photo's shape and squashes it to fit.) */
+.crosslink:has(.crosslink__photo) { position: relative; min-height: 380px; }
+.crosslink:has(.crosslink__photo) > .crosslink__text { grid-column: 2; }
 .crosslink__photo {
-  display: block; width: 100%; height: auto; min-height: 380px; object-fit: cover; object-position: 55% 58%;
-  /* the band's height comes from the text, not the photo: no size or shape of its own, so it
-     stretches to fill its half of the band */
-  contain: size; aspect-ratio: auto;
+  position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+  display: block; object-fit: cover; object-position: 55% 58%;
 }
 .crosslink__photo--salon { object-position: 45% 45%; }   /* barbershop page: her waves and the stylist */
 .crosslink__text { display: grid; align-content: center; justify-items: start; gap: 14px; padding: clamp(40px, 6vw, 88px); }
@@ -436,7 +451,9 @@ html:has(.lightbox[open]) { overflow: hidden; }          /* the page behind does
   .quotes, .steps { grid-template-columns: 1fr; }
   .footer { grid-template-columns: 1fr 1fr; }
   .crosslink .ph { min-height: 240px; }
-  .crosslink__photo { min-height: 240px; }
+  .crosslink:has(.crosslink__photo) { min-height: 0; }
+  .crosslink:has(.crosslink__photo) > .crosslink__text { grid-column: auto; }
+  .crosslink__photo { position: static; width: 100%; height: 240px; }
 }
 /* ---------- a real photo inside a placeholder box (.ph.ph--photo): it fills the box, so the box
    keeps deciding the size and shape, exactly as it did for the grey placeholder ---------- */
@@ -687,7 +704,7 @@ html:has(.lightbox[open]) { overflow: hidden; }          /* the page behind does
   .profile__back { margin-bottom: 12px; }
   .profile__photo .ph, .profile__photo img { height: max(240px, calc(100svh - var(--header-h) - 96px)); }
   .profile__actions { margin-top: 18px; }
-  .crosslink .ph, .crosslink__photo { min-height: 240px; }
+  .crosslink .ph, .crosslink:has(.crosslink__photo) { min-height: 240px; }
   .visit { gap: 32px; }
   .visit__map { aspect-ratio: auto; height: max(240px, calc(100svh - var(--header-h) - 48px)); }
   .map-pin { width: 76px; height: 76px; }

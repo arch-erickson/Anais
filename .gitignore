@@ -6,3 +6,7 @@ Thumbs.db
 /photos/
 # working source images; only the finished hero-*.jpg files are used by the site
 assets/photos/*.png
+
+# working copies of the site photos for batch editing (the site uses the ones in assets/)
+/codex-batch/
+/codex-batch-edited/
