@@ -139,7 +139,8 @@ html[lang="en"] [lang="es"] { display: none !important; }
   color: var(--gold-deep);
 }
 
-@media (max-width: 640px) {
+/* the mobile layout (see the top of sections.css for which screens get it) */
+@media (max-width: 540px), (orientation: portrait) and (max-width: 899px), (orientation: portrait) and (max-width: 1024px) and (pointer: coarse) {
   :root { --header-h: 60px; }
   .brand__lockup { height: 44px; }
 }

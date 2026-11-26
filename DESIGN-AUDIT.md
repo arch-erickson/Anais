@@ -20,7 +20,7 @@ Three parts:
 **Look**
 7. Salon: cream background with gold. Barbershop: black background with gold. You tried a black salon and a gold barbershop, and rejected both.
 8. The Color Studio photo is a 4-photo collage.
-9. Every section fits one screen; no scrolling several times within one section.
+9. Every section fits one screen; no scrolling several times within one section. **Relaxed by Erickson on 25 Nov 2026:** "It's okay to space the sections better. No need to compress everything so much. Feels too heavy. Instead make it feel curated and properly spaced like a high end design." Sections are no longer squeezed to fit one screen.
 10. No sideways scrolling anywhere.
 11. No rounded corners on buttons.
 12. Buttons on a person's page run from the left edge to the right edge.
@@ -54,7 +54,7 @@ Three parts:
 
 | # | Rule | Comes from requests |
 |---|------|---------------------|
-| A | **Phone first, one screen per section.** Nothing scrolls sideways and nothing scrolls inside a section. | 3, 9, 10 |
+| A | **Phone first, with room to breathe.** Nothing scrolls sideways and nothing scrolls inside a section. Sections are spaced generously so the page feels curated and high-end; a section may be taller than the screen, and content is never compressed or boxed up just to make it fit. Booking steps are the exception: Continue stays on screen. | 3, 9, 10 |
 | B | **WhatsApp is the front door.** Every point where a client might decide or hesitate offers WhatsApp. No phone numbers and no prices; a person confirms everything. | 15–18, 24, 28 |
 | C | **One clear next step.** One task per screen, with the main button full width at the bottom and Back above it. Disabled means gray. Two button styles only: the **gold outline** for the main button of a screen, and a simple button with **no outline and no fill** (just the words) for the rest. No solid gold buttons: Erickson rejected them on 25 Nov 2026. | 12, 19–21 |
 | D | **Two fonts, two jobs.** The serif (Cormorant) is for big display titles only. Everything you read or tap is in the sans-serif (Montserrat). | 13 |
@@ -105,6 +105,7 @@ Ranked by how much each one shows. "Where" says the page or element; "Rule" poin
    - Fix: replace them with a "Chatea por WhatsApp" button.
 
 5. **The Book page is two screens.** *(Rules A, C)*
+   - **Added 25 Nov 2026 at Erickson's request:** the Visit page is centred, shows the real address (809 Hunts Point Ave, Bronx, NY 10474) and has a live map in black with beige streets, with the ANAÍS sunflower as the pin (`js/map.js`). The map is drawn with MapLibre on OpenStreetMap data (free, no key); a restyled *Google* map needs a paid Google Maps Platform key, so the pin and "Cómo llegar" open Google Maps instead. Hours are still placeholders.
    - **Status: Done.** "Visítanos" is its own page (`#visit`: address, hours, map, WhatsApp button), linked from the menu and the footer on both sides. The Book page is only the booking steps, centred. Every step fits one screen: the tallest, the calendar in a six-week month, is 804 of 812 px on a phone and 797 of 800 px on a laptop.
    - The address, hours and map sit under the booking steps, so the page keeps going after the task ends.
    - Fix: move "Visítanos" to its own small page (linked from the menu and footer), or to the footer, so Book only books.
@@ -168,6 +169,7 @@ Ranked by how much each one shows. "Where" says the page or element; "Rule" poin
     - Fix: show real salon hours, or replace the list with "Horario según tu estilista · escríbenos por WhatsApp".
 
 16. **One screen per section, re-check on desktop** after the new services dropdowns and team grid. An open services category may run past the screen on purpose; only one stays open at a time.
+    - **Superseded on 25 Nov 2026 by the relaxed rule A.** The one-screen figures in this status and in items 5, 10 and 11 describe the site before the spacing change. Now: 88 px above and below each section on phones (was 40-56), 24 px side margins, more room between a title, its text and its buttons; on desktop about 96 px above and below each section at 800 px tall (was 56). Home sections on a phone run 420-1,100 px. The booking calendar keeps Continue on screen in a five-week month (800 of 812 px) and scrolls 33 px in a six-week month; days are 44 x 44.
     - **Status: Done.** At 1280 x 800 every section fits (limit 732 px under the header, 800 px for a page's first screen): salon home 800 / 724 / 601 / 465 / 431 / 380 / 260, barbershop home 800 / 441 / 487 / 380 / 260, Stylists 652, profile 755, Services 785 (was 865), Gallery 765, Book 797 at its tallest (was 959), Visit 632. Same result in English.
 
 17. **Photos.** *(Rule J)*
@@ -189,3 +191,41 @@ Ranked by how much each one shows. "Where" says the page or element; "Rule" poin
 3. **Button hover colours** (gold text, and cream on gold for the outline button, as before the audit) are about 2.9:1 while hovering. Use the deeper gold on hover?
 4. **Footer sign-up** (item 14) and **hours** (item 15) still need a decision.
 5. **Menu:** "Visítanos" was added between Galería and Barbería / Salón. Keep it in the menu, or footer only?
+
+---
+
+## 4. Screens: which layout each device gets (audit of 25 Nov 2026)
+
+Erickson asked for a phone-landscape audit and an iPad audit: iPad upright should feel like the phone, iPad sideways should be the desktop version.
+
+| Screen | Layout | Checked at |
+|---|---|---|
+| Phone upright | Mobile: one column, photo hero with the text over it, full-width buttons | 375 x 812 |
+| iPad upright | Mobile, in one centred column 680 px wide, bigger titles, buttons capped at 440 px | 768 x 1024, 820 x 1180 |
+| iPad sideways | Desktop, unchanged | 1024 x 768, 1180 x 820, 1366 x 1024 |
+| Computer | Desktop | 1280 x 800 |
+| Phone sideways | Desktop columns, re-measured for a screen about 375 px tall | 667 x 375, 844 x 390, 932 x 430 |
+
+The two media queries that decide this are written out at the top of `css/sections.css`.
+
+**What was wrong on a phone held sideways, and is fixed**
+- The menu's last bar (Barbería / Salón) fell below the screen and could not be reached: it ended at 413 px on a 375-390 px screen. Now it ends at 289 px.
+- On the widest phones the hero was 560 px tall on a 430 px screen, with its buttons below the fold. Now the hero is exactly one screen at every size, with the text beside the photo.
+- The header took 68 of 375 px; it is 52 px there now.
+- Profile photos were squashed to 127-182 px tall; they are at least 240 px.
+- In the photo viewer the photo shrank to about 103 x 137 px; it now sits beside its caption and button at about 257 x 343 px.
+- The steps, reviews, Color Studio and before / after sections stacked in one very long column (up to 1,259 px for one section); they now use two to four columns.
+- Booking: step 1 is one row of people, step 2 has the calendar beside the time, step 4 has the summary beside the fields.
+- The barbershop footer was 24 px wider than a 667 px screen (the only sideways scroll found). Fixed.
+
+**What was wrong on an iPad, and is fixed**
+- Upright, an iPad got a mix: the phone's hero with desktop spacing, a three-across team grid with 212 x 440 px portraits, and a two-column profile with a 290 x 640 px photo. It is now the mobile layout throughout.
+- Sideways it already matched the desktop and still does: same columns, same hero.
+
+**Not checkable in the preview** (it has a mouse, not a touch screen): the 12.9-inch iPad upright (1024 px wide) is sent to the mobile layout by a touch-screen test, and touch screens keep 44 px calendar days where laptops get 36 px.
+
+## 5. Other changes of 25 Nov 2026
+
+- **Map pin:** the gold sunflower photo from the entrance animation, turning once every 30 seconds. The two streets that meet at the salon, Hunts Point Avenue and Lafayette Avenue, are named in larger letters and placed before any other street name.
+- **Color Studio:** the four placeholders are now four photos of the salon's own colour work (copper, golden blonde, caramel balayage, cherry red), cropped to the hair. They still need the house treatment (item 17).
+- **Team: placeholders.** Names are invented: Anaís, Carolina, Yaritza, Marisol; Ángel, Manny, Luis. All seven portraits are free-licence stock headshots from unsplash.com (Erickson, 25 Nov 2026: "use headshots from online ... placeholders for now"); they are not the salon's people. The photo pages are listed in a comment above the team grid in `index.html`. Names and photos must both be replaced before launch (item 18).

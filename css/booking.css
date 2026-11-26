@@ -38,7 +38,7 @@
     rgba(126, 85, 32, .06);
   border: 1px solid var(--line);
 }
-.bk-person__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bk-person__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
 .bk-person__photo .bk-check {            /* hidden until chosen: then a 50% black fill and a check */
   position: absolute; inset: 0; width: 100%; height: 100%; padding: 32%;
   background: var(--shade); color: #fff; opacity: 0; transition: opacity .15s;
@@ -141,27 +141,31 @@
 .person__links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
 .link--wa { color: var(--wa-text); border-color: currentColor; }
 
-@media (min-width: 641px) { .bk-people { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 541px) { .bk-people { grid-template-columns: repeat(4, 1fr); } }
 
-/* phones: each step fits one screen, the calendar step included even in a six-week month
-   (days are 44 x 42, so the spacing around the calendar is tightened to make room) */
+/* phones: booking is a task, so it stays calmer than the other pages but is no longer squeezed.
+   A step keeps Continue on screen in a normal five-week month; a six-week month scrolls a
+   little. Days are 44 x 44. */
 @media (max-width: 640px) {
-  #book.page.sec { padding-top: calc(var(--header-h) + 16px); padding-bottom: 20px; }
-  #book .sec-head { margin-bottom: 10px; }
-  #book .sec-head h2 { font-size: 28px; }
-  .bk-progress { margin-bottom: 12px; }
-  .bk-q { margin-bottom: 10px; font-size: 18px; }
-  .bk-day { height: 42px; }
+  #book.page.sec { padding-top: calc(var(--header-h) + 28px); padding-bottom: 56px; }
+  #book .sec-head { margin-bottom: 18px; }
+  #book .sec-head h2 { font-size: 30px; }
+  .bk-progress { margin-bottom: 18px; }
+  .bk-q { margin-bottom: 14px; font-size: 18px; }
+  .bk-cal { padding: 8px 3px 6px; }
   .bk-cal__grid { gap: 1px 2px; }
-  .bk-q2 { margin: 12px 0 8px; letter-spacing: .06em; white-space: nowrap; }
+  .bk-q2 { margin: 16px 0 10px; letter-spacing: .04em; white-space: nowrap; }
   .bk-q2 small { font-size: 10.5px; letter-spacing: 0; }
-  .bk-unsure { margin-top: 8px; padding: 10px; }
-  .bk-nav { margin-top: 12px; gap: 6px; }
+  .bk-unsure { margin-top: 10px; }
+  .bk-nav { margin-top: 16px; gap: 6px; }
+  .bk-people { gap: 20px 12px; }
+  .bk-cats { gap: 10px; }
 }
 
 /* laptops (wide but short screens, used with a mouse): the calendar step fits one screen even
-   in a six-week month. Tall touch screens such as tablets keep the 44px days. */
-@media (min-width: 641px) and (max-height: 900px) {
+   in a six-week month. Touch screens (an iPad held sideways) keep the 44px days and scroll a
+   little instead. */
+@media (min-width: 641px) and (max-height: 900px) and (pointer: fine) {
   #book.page.sec { padding-top: calc(var(--header-h) + 24px); padding-bottom: 24px; }
   #book .sec-head { margin-bottom: 14px; }
   #book .sec-head h2 { font-size: 40px; }
@@ -172,6 +176,33 @@
   .bk-q2 { margin: 12px 0 8px; }
   .bk-unsure { margin-top: 8px; padding: 9px; }
   .bk-nav { margin-top: 14px; gap: 6px; }
+}
+
+/* a phone held sideways: the form uses the width. Step 1 is one row of people; step 2 has the
+   calendar on the left and the time on the right; step 4 has the summary beside the two fields.
+   Back still sits above Continue. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .booker { max-width: 720px; }
+  #book.page.sec { padding-top: calc(var(--header-h) + 20px); padding-bottom: 32px; }
+  #book .sec-head { margin-bottom: 12px; }
+  #book .sec-head h2 { font-size: 30px; }
+  .bk-progress { margin-bottom: 14px; }
+  .bk-q { margin-bottom: 12px; font-size: 18px; }
+  .bk-people { grid-template-columns: repeat(6, 1fr); }
+  .bk-cats { grid-template-columns: repeat(3, 1fr); }
+  .bk-step[data-step="2"], .bk-step[data-step="4"] { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 28px; align-items: start; }
+  .bk-step[data-step="2"] > .bk-q, .bk-step[data-step="4"] > .bk-q { grid-column: 1 / -1; }
+  .bk-step[data-step="2"] > .bk-cal { grid-column: 1; grid-row: 2 / span 3; }
+  .bk-step[data-step="2"] > .bk-q2 { grid-column: 2; margin-top: 0; }
+  .bk-step[data-step="2"] > .bk-times { grid-column: 2; grid-template-columns: 1fr 1fr; }
+  .bk-step[data-step="2"] > .bk-unsure { grid-column: 2; }
+  .bk-step[data-step="4"] > .bk-summary { grid-column: 1; grid-row: 2 / span 2; margin-bottom: 0; }
+  .bk-step[data-step="4"] > .bk-field { grid-column: 2; }
+  .bk-cal { padding: 6px 6px 4px; }
+  .bk-day { height: 40px; }
+  .bk-nav { margin-top: 14px; gap: 6px; }
+  .wa-float { right: 12px; bottom: 12px; width: 48px; height: 48px; }
+  .wa-float svg { width: 26px; height: 26px; }
 }
 
 /* ---------- floating WhatsApp button: the salon's main number ---------- */

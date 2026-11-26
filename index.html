@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=2026-11-25-audit11">
-  <link rel="stylesheet" href="css/sections.css?v=2026-11-25-audit11">
-  <link rel="stylesheet" href="css/booking.css?v=2026-11-25-audit9">
+  <link rel="stylesheet" href="css/site.css?v=2026-11-25-screens1">
+  <link rel="stylesheet" href="css/sections.css?v=2026-11-25-team2">
+  <link rel="stylesheet" href="css/booking.css?v=2026-11-25-team1">
   <link rel="stylesheet" href="css/wireframe.css">
   <link rel="stylesheet" href="css/intro.css?v=2026-11-25e">
   <script>
@@ -110,10 +110,16 @@
     <section class="sec" id="color">
       <div class="split">
         <div class="collage">
-          <div class="ph"><span lang="es">Foto de color 1</span><span lang="en">Color photo 1</span></div>
-          <div class="ph"><span lang="es">Foto de color 2</span><span lang="en">Color photo 2</span></div>
-          <div class="ph"><span lang="es">Foto de color 3</span><span lang="en">Color photo 3</span></div>
-          <div class="ph"><span lang="es">Foto de color 4</span><span lang="en">Color photo 4</span></div>
+          <!-- four colours from the salon's own work (web copies of photos/facebook/hair, cropped to
+               the hair). Still to do: the house photo treatment, quiet black-and-white background. -->
+          <div class="ph ph--photo"><img src="assets/color/hair-123.jpg" width="551" height="788" loading="lazy"
+               alt="Melena cobre intenso con puntas hacia fuera / Vivid copper hair with flicked ends"></div>
+          <div class="ph ph--photo"><img src="assets/color/hair-136.jpg" width="1100" height="1027" loading="lazy"
+               alt="Melena media en rubio dorado / Golden blonde shoulder-length hair"></div>
+          <div class="ph ph--photo"><img src="assets/color/hair-349.jpg" width="878" height="1100" loading="lazy"
+               alt="Balayage de castaño a caramelo con ondas / Brunette to caramel balayage with curls"></div>
+          <div class="ph ph--photo"><img src="assets/color/hair-299.jpg" width="720" height="797" loading="lazy"
+               alt="Rojo cereza con ondas / Cherry red with curls"></div>
         </div>
         <div class="split__text">
           <p class="eyebrow"><span lang="es">El Estudio de Color</span><span lang="en">The Color Studio</span></p>
@@ -190,7 +196,7 @@
 
     <!-- Cross-link to the barbershop -->
     <section class="crosslink">
-      <img class="crosslink__photo" src="assets/photos/hero-barber.jpg" width="1200" height="1600" loading="lazy"
+      <img class="crosslink__photo" src="assets/photos/hero-barber.jpg?v=editorial" width="1200" height="1600" loading="lazy"
            alt="Barbero cortando el pelo a un cliente en la barbería / A barber giving a client a cut in the shop">
       <div class="crosslink__text">
         <p class="eyebrow"><span lang="es">También bajo nuestro techo</span><span lang="en">Also under our roof</span></p>
@@ -221,11 +227,17 @@
         <h2><span lang="es">Conoce al equipo.</span><span lang="en">Meet the team.</span></h2>
         <p class="lede"><span lang="es">Especialistas en color, corte y peinado. Reserva con quien ya conoces o deja que te recomendemos.</span><span lang="en">Colorists, cutters and finishers. Book with someone you know, or let us match you.</span></p>
       </div>
+      <!-- PLACEHOLDER TEAM: invented names and stock headshots, not the salon's people. Replace both
+           before launch. The seven portraits (here and on the Barbers page) are free-licence photos
+           from unsplash.com, cropped to 4:5: stylist-1 /photos/SJvDxw0azqw, stylist-2 /photos/r0Sua2EUKh4,
+           stylist-3 /photos/pq9npYMirk8, stylist-4 /photos/YOpW7lvK794, barber-1 /photos/UqHd7ge2kWU,
+           barber-2 /photos/oCQSzJp5mVE, barber-3 /photos/1L-rg-6Ux5I -->
       <div class="people">
         <article class="person" data-staff="s1" data-whatsapp="15550100001" data-profile="stylist-1">
           <a class="person__link" href="#stylist-1">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Estilista 1</span><span lang="en">Stylist 1</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/stylist-1.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Anaís / Portrait of Anaís"></div>
+            <h3>Anaís</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -236,8 +248,9 @@
         </article>
         <article class="person" data-staff="s2" data-whatsapp="15550100002" data-profile="stylist-2">
           <a class="person__link" href="#stylist-2">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Estilista 2</span><span lang="en">Stylist 2</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/stylist-2.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Carolina / Portrait of Carolina"></div>
+            <h3>Carolina</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -248,8 +261,9 @@
         </article>
         <article class="person" data-staff="s3" data-whatsapp="15550100003" data-profile="stylist-3">
           <a class="person__link" href="#stylist-3">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Estilista 3</span><span lang="en">Stylist 3</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/stylist-3.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Yaritza / Portrait of Yaritza"></div>
+            <h3>Yaritza</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -260,8 +274,9 @@
         </article>
         <article class="person" data-staff="s4" data-whatsapp="15550100004" data-profile="stylist-4">
           <a class="person__link" href="#stylist-4">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Estilista 4</span><span lang="en">Stylist 4</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/stylist-4.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Marisol / Portrait of Marisol"></div>
+            <h3>Marisol</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -404,7 +419,7 @@
     <section class="hero hero--barber hero--photo">
       <!-- same layout as the salon hero, with one photo (assets/photos/hero-barber.jpg) -->
       <div class="hero__slides">
-        <img class="hero__photo hero__photo--barber" src="assets/photos/hero-barber.jpg" width="1200" height="1600"
+        <img class="hero__photo hero__photo--barber" src="assets/photos/hero-barber.jpg?v=editorial" width="1200" height="1600"
              alt="Barbero cortando el pelo a un cliente en la barbería / A barber giving a client a cut in the shop">
       </div>
       <p class="hero__lede"><span lang="es">Cortes precisos. Degradados limpios. Toallas calientes.</span><span lang="en">Sharp cuts. Clean fades. Hot towels.</span></p>
@@ -456,7 +471,8 @@
 
     <!-- Cross-link back to the salon -->
     <section class="crosslink">
-      <div class="ph ph--wide"><span lang="es">Foto de color del salón</span><span lang="en">Salon color photo</span></div>
+      <img class="crosslink__photo crosslink__photo--salon" src="assets/photos/hero-salon-curls.jpg" width="1086" height="1448" loading="lazy"
+           alt="Clienta en el salón con ondas grandes en rubio miel / Salon client with big honey-blonde waves">
       <div class="crosslink__text">
         <p class="eyebrow"><span lang="es">Al lado</span><span lang="en">Next door</span></p>
         <h2><span lang="es">Salón ANAÍS</span><span lang="en">ANAÍS Salon</span></h2>
@@ -488,8 +504,9 @@
       <div class="people">
         <article class="person" data-staff="b1" data-whatsapp="15550100011" data-profile="barber-1">
           <a class="person__link" href="#barber-1">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Barbero 1</span><span lang="en">Barber 1</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/barber-1.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Ángel / Portrait of Ángel"></div>
+            <h3>Ángel</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -500,8 +517,9 @@
         </article>
         <article class="person" data-staff="b2" data-whatsapp="15550100012" data-profile="barber-2">
           <a class="person__link" href="#barber-2">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Barbero 2</span><span lang="en">Barber 2</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/barber-2.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Manny / Portrait of Manny"></div>
+            <h3>Manny</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -512,8 +530,9 @@
         </article>
         <article class="person" data-staff="b3" data-whatsapp="15550100013" data-profile="barber-3">
           <a class="person__link" href="#barber-3">
-            <div class="ph ph--portrait"><span lang="es">Retrato</span><span lang="en">Portrait</span></div>
-            <h3><span lang="es">Barbero 3</span><span lang="en">Barber 3</span></h3>
+            <div class="ph ph--portrait ph--photo"><img src="assets/team/barber-3.jpg" width="800" height="1000" loading="lazy"
+                 alt="Retrato de Luis / Portrait of Luis"></div>
+            <h3>Luis</h3>
           </a>
           <!-- shown on the profile page (built by js/site.js) -->
           <div class="person__details" hidden>
@@ -691,17 +710,34 @@
     </div>
     <div class="visit">
       <div class="visit__info">
-        <h3><span lang="es">Dirección</span><span lang="en">Address</span></h3>
-        <p><span lang="es">Calle y número<br>Ciudad, Estado, Código postal</span><span lang="en">Street address<br>City, State ZIP</span></p>
-        <h3><span lang="es">Horario</span><span lang="en">Hours</span></h3>
-        <dl class="hours">
-          <dt><span lang="es">Lun – Vie</span><span lang="en">Mon – Fri</span></dt><dd>9am – 7pm</dd>
-          <dt><span lang="es">Sáb</span><span lang="en">Sat</span></dt><dd>9am – 5pm</dd>
-          <dt><span lang="es">Dom</span><span lang="en">Sun</span></dt><dd>10am – 4pm</dd>
-        </dl>
+        <div>
+          <h3><span lang="es">Dirección</span><span lang="en">Address</span></h3>
+          <p>809 Hunts Point Ave<br>Bronx, NY 10474</p>
+        </div>
+        <div>
+          <h3><span lang="es">Horario</span><span lang="en">Hours</span></h3>
+          <dl class="hours">
+            <dt><span lang="es">Lun – Vie</span><span lang="en">Mon – Fri</span></dt><dd>9am – 7pm</dd>
+            <dt><span lang="es">Sáb</span><span lang="en">Sat</span></dt><dd>9am – 5pm</dd>
+            <dt><span lang="es">Dom</span><span lang="en">Sun</span></dt><dd>10am – 4pm</dd>
+          </dl>
+        </div>
       </div>
-      <div class="ph ph--map"><span lang="es">Mapa</span><span lang="en">Map</span></div>
-      <a class="btn btn--key btn--wa visit__wa" href="https://wa.me/15550100000" data-wa-desk="ask" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg><span lang="es">Chatea por WhatsApp</span><span lang="en">Chat on WhatsApp</span></a>
+      <!-- the map: black with beige streets, the ANAÍS sunflower as the pin (js/map.js draws it
+           over this box). What is inside the box is the stand-in shown until the map arrives,
+           or if it cannot load: the pin and a link to Google Maps. -->
+      <div class="visit__map" id="visit-map" data-lat="40.8169426" data-lng="-73.8883818" data-zoom="15.2" data-streets="Hunts Point Avenue|Lafayette Avenue"
+           data-pin="assets/flowers-photos/gold/sunflower-hero-rich.webp"
+           data-directions="https://www.google.com/maps/dir/?api=1&amp;destination=809+Hunts+Point+Ave%2C+Bronx%2C+NY+10474">
+        <a class="visit__map-standin" href="https://www.google.com/maps/search/?api=1&amp;query=809+Hunts+Point+Ave%2C+Bronx%2C+NY+10474" target="_blank" rel="noopener">
+          <span class="map-pin"><img src="assets/flowers-photos/gold/sunflower-hero-rich.webp" alt=""></span>
+          <span lang="es">Abrir en Google Maps</span><span lang="en">Open in Google Maps</span>
+        </a>
+      </div>
+      <div class="visit__actions">
+        <a class="btn btn--key btn--wa" href="https://wa.me/15550100000" data-wa-desk="ask" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg><span lang="es">Chatea por WhatsApp</span><span lang="en">Chat on WhatsApp</span></a>
+        <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=809+Hunts+Point+Ave%2C+Bronx%2C+NY+10474" target="_blank" rel="noopener"><span lang="es">Cómo llegar</span><span lang="en">Get directions</span></a>
+      </div>
     </div>
   </section>
 
@@ -769,6 +805,7 @@
   <script src="js/booking.js?v=2026-11-25-audit6"></script>
   <script src="js/gallery.js?v=2026-11-25-audit6"></script>
   <script src="js/lightbox.js?v=2026-11-25-audit6"></script>
+  <script src="js/map.js?v=2026-11-25-map2"></script>
   <script src="js/intro-flowers.js?v=2026-11-25e"></script>
   <script src="js/intro.js?v=2026-11-25e"></script>
 </body>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero photo framer · ANAÍS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  Frame a hero photo for the phone view of the site, then copy the setting and send it to Claude.
+
+  The phone frame below is the site's real phone hero, measured at 390 x 844 (an iPhone 14/15):
+  header 60px, the dark fade behind the text, the headline, text and buttons in the same places,
+  and the WhatsApp button. The photo is shown exactly the way the site shows it
+  (object-fit: cover + object-position, plus an optional zoom), so what you see here is what
+  the site will show.
+
+  Open it straight from the folder (double-click) or at http://localhost:5173/tools/hero-framer/
+-->
+<style>
+  :root { --cream: #F6F1E8; --gold: #E2BC72; --ink: #1A1A1A; --ui: #2a2622; --ui-line: #4a433b; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    display: grid; grid-template-columns: minmax(280px, 340px) 1fr; gap: 0;
+    background: #1b1916; color: #eee7da; font: 14px/1.5 Montserrat, system-ui, sans-serif;
+  }
+
+  /* ---------- controls ---------- */
+  .panel { padding: 24px 22px; border-right: 1px solid var(--ui-line); overflow-y: auto; }
+  h1 { margin: 0 0 4px; font: italic 400 28px/1.1 "Cormorant Garamond", Georgia, serif; color: var(--gold); }
+  .lead { margin: 0 0 22px; font-size: 13px; opacity: .75; }
+  label { display: block; margin: 18px 0 6px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
+  select, button { font: inherit; color: inherit; }
+  select { width: 100%; padding: 9px 10px; background: var(--ui); border: 1px solid var(--ui-line); border-radius: 6px; }
+  input[type=range] { width: 100%; accent-color: var(--gold); }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .row > * { flex: 1; }
+  .btn {
+    padding: 10px 12px; border: 1px solid var(--ui-line); border-radius: 6px; background: var(--ui);
+    cursor: pointer; text-align: center;
+  }
+  .btn:hover { border-color: var(--gold); }
+  .btn--main { background: var(--gold); border-color: var(--gold); color: #1a1a1a; font-weight: 500; }
+  .btn--main:hover { filter: brightness(1.06); }
+  .check { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 13px; cursor: pointer; }
+  .readout {
+    margin-top: 22px; padding: 12px 14px; border: 1px solid var(--ui-line); border-radius: 8px; background: #141210;
+    font: 13px/1.6 ui-monospace, Consolas, monospace; white-space: pre-wrap; word-break: break-word;
+  }
+  .hint { margin-top: 16px; font-size: 12px; opacity: .6; }
+  .toast { margin-top: 10px; min-height: 1.5em; font-size: 12px; color: var(--gold); }
+
+  /* ---------- phone ---------- */
+  .stage { display: grid; place-items: start center; padding: 28px; overflow: auto; }
+  .phone {
+    position: relative; overflow: hidden; flex: none;
+    border-radius: 34px; box-shadow: 0 0 0 10px #000, 0 0 0 11px #3a352f, 0 30px 80px rgba(0,0,0,.6);
+    background: #000; cursor: grab; touch-action: none; user-select: none;
+  }
+  .phone.dragging { cursor: grabbing; }
+  .phone__photo {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+    object-fit: cover; pointer-events: none;
+  }
+  .ov { position: absolute; pointer-events: none; }
+  .ov--fade { inset: 0; background: linear-gradient(rgba(14,12,10,0) 40%, rgba(14,12,10,.55) 65%, rgba(14,12,10,.85) 100%); }
+  .ov--header {
+    left: 0; right: 0; top: 0; height: 60px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    padding: 0 16px; background: rgba(246, 241, 232, .92); border-bottom: 1px solid rgba(126, 85, 32, .22);
+  }
+  .ov--header .lang { font-size: 12px; letter-spacing: .16em; color: #7E5520; }
+  .ov--header .lang span { opacity: .45; color: var(--ink); }
+  .ov--header .logo { position: relative; height: 44px; aspect-ratio: 1344 / 412; }
+  .ov--header .logo img { position: absolute; top: 0; left: 0; height: 100%; }
+  .ov--header .logo .flower { width: calc(100% * 412 / 1344); }
+  .ov--header .logo .word { width: 100%; }
+  .ov--header .burger { justify-self: end; width: 24px; height: 15px; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); position: relative; }
+  .ov--header .burger::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px solid var(--ink); transform: translateY(-50%); }
+  .ov--text {
+    left: 24px; right: 24px; bottom: 70px; display: flex; flex-direction: column; align-items: center; text-align: center;
+    color: var(--cream);
+  }
+  .ov--text .lede { margin: 0; font: italic 400 22px/26.4px "Cormorant Garamond", Georgia, serif; color: var(--gold); }
+  .ov--text .sub { margin: 18px 0 0; font-size: 15px; line-height: 24px; opacity: .9; }
+  .ov--text .b {
+    width: 100%; height: 48px; display: grid; place-items: center; border: 1px solid transparent;
+    font: 500 13px/1 Montserrat, sans-serif; letter-spacing: 1.69px; text-transform: uppercase;
+  }
+  .ov--text .b1 { margin-top: 18px; border-color: var(--gold); }
+  .ov--text .b2 { margin-top: 8px; }
+  .ov--wa { right: 16px; bottom: 16px; width: 56px; height: 56px; border-radius: 50%; background: #25D366; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+  .phone.no-overlay .ov { display: none; }
+  .size-tag { margin-top: 14px; text-align: center; font-size: 12px; opacity: .6; }
+</style>
+</head>
+<body>
+
+<aside class="panel">
+  <h1>Hero photo framer</h1>
+  <p class="lead">Drag the photo in the phone until it sits the way you want, then copy the setting and send it to Claude.</p>
+
+  <label for="photo">Photo</label>
+  <select id="photo"></select>
+
+  <label for="size">Phone size</label>
+  <select id="size">
+    <option value="390x844" selected>390 × 844 (iPhone 14 / 15, the size the site was tuned for)</option>
+    <option value="375x667">375 × 667 (iPhone SE)</option>
+    <option value="430x932">430 × 932 (iPhone Pro Max)</option>
+    <option value="360x800">360 × 800 (most Android phones)</option>
+  </select>
+
+  <label for="zoom">Zoom <span id="zoomVal">1.00×</span></label>
+  <input id="zoom" type="range" min="1" max="2" step="0.01" value="1">
+
+  <label class="check"><input id="overlay" type="checkbox" checked> Show the header, text and buttons</label>
+
+  <div class="readout" id="readout"></div>
+  <div class="row" style="margin-top:12px">
+    <button class="btn btn--main" id="copy" type="button">Copy this setting</button>
+    <button class="btn" id="reset" type="button">Back to the site's</button>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <button class="btn" id="copyAll" type="button">Copy all photos' settings</button>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <p class="hint">Drag to move. Arrow keys nudge by 0.5% (hold Shift for 2%). Zoom only makes the photo bigger: at 1.00× it just fills the screen, like now.</p>
+</aside>
+
+<main class="stage">
+  <div id="fit">
+    <div class="phone" id="phone" tabindex="0" aria-label="Phone preview: drag the photo">
+      <img class="phone__photo" id="img" alt="">
+      <div class="ov ov--fade"></div>
+      <div class="ov ov--header">
+        <div class="lang">ES <span>| EN</span></div>
+        <div class="logo"><img class="word" src="../../anais-lockup-word-gold-light-bg.svg" alt=""><img class="flower" src="../../anais-lockup-flower-gold-light-bg.svg" alt=""></div>
+        <div class="burger"></div>
+      </div>
+      <div class="ov ov--text">
+        <p class="lede">La belleza, en plena flor.</p>
+        <p class="sub">Un salón especializado en color: balayage, rubios, colores vivos y corrección de color, y además cada corte, tratamiento y peinado.</p>
+        <div class="b b1">Reservar cita</div>
+        <div class="b b2">Conoce a las estilistas</div>
+      </div>
+      <div class="ov ov--wa"></div>
+    </div>
+    <div class="size-tag" id="sizeTag"></div>
+  </div>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  // The site's current phone settings (css/sections.css), so you start from what the site shows now.
+  const PHOTOS = [
+    { key: 'silver', name: 'Silver-blue waves (white outfit, stool)', src: 'hero-silver.jpg', x: 35, y: 0, z: 1.18 },
+    { key: 'red',    name: 'Vivid red (fur hood)',                    src: 'hero-red.jpg',    x: 75, y: 30 },
+    { key: 'blonde', name: 'Light blonde selfie',                    src: 'hero-blonde.jpg', x: 55, y: 0 },
+    { key: 'waves',  name: 'Honey-blonde waves (in the salon)',      src: 'hero-salon-curls.jpg', x: 45, y: 40 },
+    { key: 'barber', name: 'Barbershop hero',                        src: 'hero-barber.jpg', x: 62, y: 50 },
+  ];
+  const STORE = 'anais-hero-framer';
+  const $ = (id) => document.getElementById(id);
+  const phone = $('phone'), img = $('img');
+
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORE)) || {}; } catch { saved = {}; }
+  const state = Object.fromEntries(PHOTOS.map((p) => [p.key, { x: p.x, y: p.y, z: p.z || 1, ...(saved[p.key] || {}) }]));
+  let cur = PHOTOS[0];
+
+  PHOTOS.forEach((p) => $('photo').insertAdjacentHTML('beforeend', `<option value="${p.key}">${p.name}</option>`));
+
+  const round = (v) => Math.round(v * 10) / 10;
+  const clamp = (v) => Math.min(100, Math.max(0, v));
+  const save = () => { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch {} };
+  const size = () => $('size').value.split('x').map(Number);
+
+  function line(p) {
+    const s = state[p.key];
+    return `${p.key}: object-position ${round(s.x)}% ${round(s.y)}%` + (s.z !== 1 ? `, zoom ${s.z.toFixed(2)}` : '');
+  }
+
+  function render() {
+    const s = state[cur.key];
+    const [w, h] = size();
+    phone.style.width = w + 'px'; phone.style.height = h + 'px';
+    img.style.objectPosition = `${s.x}% ${s.y}%`;
+    // zoom grows the photo around the same point, so the spot you placed stays where it is
+    img.style.transformOrigin = `${s.x}% ${s.y}%`;
+    img.style.transform = s.z !== 1 ? `scale(${s.z})` : '';
+    $('zoom').value = s.z; $('zoomVal').textContent = s.z.toFixed(2) + '×';
+    $('readout').textContent = `${line(cur)}\n(framed on ${w} × ${h})`;
+    // shrink the whole phone to fit the window if needed (the framing itself is unchanged)
+    fit = Math.min(1, (innerHeight - 110) / h, (innerWidth - 420) / w);
+    fit = Math.max(fit, 0.4);
+    $('fit').style.transform = fit < 1 ? `scale(${fit})` : '';
+    $('fit').style.transformOrigin = 'top center';
+    $('fit').style.marginBottom = fit < 1 ? `${-(h + 40) * (1 - fit)}px` : '';
+    $('sizeTag').textContent = `${w} × ${h} phone screen` + (fit < 1 ? ` (shown at ${Math.round(fit * 100)}% to fit your window)` : '');
+  }
+  let fit = 1;
+  addEventListener('resize', () => render());
+
+  function load(key) {
+    cur = PHOTOS.find((p) => p.key === key);
+    img.src = '../../assets/photos/' + cur.src;
+    render();
+  }
+
+  // drag: how far the photo moves for each % of object-position depends on how much of it spills out
+  let drag = null;
+  phone.addEventListener('pointerdown', (e) => {
+    if (!img.naturalWidth) return;
+    const [w, h] = size(), s = state[cur.key];
+    const k = Math.max(w / img.naturalWidth, h / img.naturalHeight) * s.z;
+    drag = { x0: e.clientX, y0: e.clientY, sx: s.x, sy: s.y,
+             spillX: img.naturalWidth * k - w, spillY: img.naturalHeight * k - h };
+    phone.setPointerCapture(e.pointerId); phone.classList.add('dragging');
+  });
+  phone.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const s = state[cur.key];
+    // with zoom, the photo spills out (z - 1) more on top of the cover spill; object-position
+    // controls the cover spill and the zoom spill keeps the same proportions
+    if (drag.spillX > 0.5) s.x = clamp(drag.sx - (e.clientX - drag.x0) / fit / drag.spillX * 100);
+    if (drag.spillY > 0.5) s.y = clamp(drag.sy - (e.clientY - drag.y0) / fit / drag.spillY * 100);
+    render();
+  });
+  const end = () => { if (drag) { drag = null; phone.classList.remove('dragging'); save(); } };
+  phone.addEventListener('pointerup', end);
+  phone.addEventListener('pointercancel', end);
+
+  phone.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 2 : 0.5, s = state[cur.key];
+    const d = { ArrowLeft: [step, 0], ArrowRight: [-step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] }[e.key];
+    if (!d) return;
+    e.preventDefault(); s.x = clamp(s.x + d[0]); s.y = clamp(s.y + d[1]); render(); save();
+  });
+
+  $('zoom').addEventListener('input', (e) => { state[cur.key].z = +e.target.value; render(); save(); });
+  $('photo').addEventListener('change', (e) => load(e.target.value));
+  $('size').addEventListener('change', render);
+  $('overlay').addEventListener('change', (e) => phone.classList.toggle('no-overlay', !e.target.checked));
+  $('reset').addEventListener('click', () => {
+    Object.assign(state[cur.key], { x: cur.x, y: cur.y, z: cur.z || 1 }); render(); save(); toast('Back to what the site shows now.');
+  });
+
+  let t;
+  function toast(msg) { $('toast').textContent = msg; clearTimeout(t); t = setTimeout(() => ($('toast').textContent = ''), 3000); }
+  async function copy(text, msg) {
+    try { await navigator.clipboard.writeText(text); toast(msg); }
+    catch { $('readout').textContent = text; toast('Copy failed: select the text above and copy it.'); }
+  }
+  $('copy').addEventListener('click', () => copy(`Hero framing (${size().join(' × ')}): ${line(cur)}`, 'Copied. Paste it to Claude.'));
+  $('copyAll').addEventListener('click', () => copy(`Hero framing (${size().join(' × ')}):\n` + PHOTOS.map(line).join('\n'), 'Copied all. Paste it to Claude.'));
+
+  load(PHOTOS[0].key);
+})();
+</script>
+</body>
+</html>
