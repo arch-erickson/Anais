@@ -154,9 +154,13 @@ body.intro-on .hero__photo, body.hero-wait .hero__photo { animation: none; }
   .hero__photo--blonde { object-position: 50% 8%; }
   .hero__photo--waves { object-position: 50% 40%; }
   .hero__photo--barber { object-position: 50% 50%; }
-  .hero--photo > :not(.hero__slides) { grid-column: 1; justify-self: center; width: min(100%, calc(620 * var(--u))); padding: 0 clamp(calc(32 * var(--u)), 5vw, calc(64 * var(--u))); }
+  .hero--photo > :not(.hero__slides) { --hero-pad: clamp(calc(32 * var(--u)), 5vw, calc(64 * var(--u))); grid-column: 1; justify-self: center; width: min(100%, calc(620 * var(--u))); padding: 0 var(--hero-pad); }
   .hero--photo .hero__lede { grid-row: 2; color: var(--gold-deep); font-size: clamp(calc(34 * var(--u)), 3.6vw, calc(52 * var(--u))); }
-  .hero--photo .hero__sub { grid-row: 3; }
+  /* THE HEADLINE, THE PARAGRAPH AND THE BUTTONS SHARE ONE LEFT EDGE (Erickson, 26 Nov 2026).
+     The paragraph is kept 60 units narrower than the other two so its lines stay short. That used to
+     come from max-width, which centred the narrower box and pushed its text in by 30 units. Now the
+     box is as wide as the other two and the 60 units are extra room on its right. */
+  .hero--photo .hero__sub { grid-row: 3; max-width: none; padding-right: calc(var(--hero-pad) + max(0px, min(100%, calc(620 * var(--u))) - calc(560 * var(--u)))); }
   .hero--photo .hero__ctas { grid-row: 4; justify-content: flex-start; }
 }
 
