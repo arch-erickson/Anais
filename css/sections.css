@@ -74,6 +74,7 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 /* the blonde selfie has extra headroom (selfie-long-hair-top-300px.png), which sits behind the header */
 .hero__photo--blonde { object-position: 55% 0; }
 .hero__photo--waves { object-position: 45% 40%; }
+.hero__photo--barber { object-position: 62% 50%; }  /* the barber and his client, right of centre */
 /* the photos take turns, 3 seconds each, over a 12-second loop: red (underneath, always there)
    -> silver fades in on top -> blonde on top of that -> waves on top of that -> waves fade out
    back to red. Each fade takes 0.4s; a photo that has been covered drops away unseen. */
@@ -130,6 +131,7 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   .hero__photo--silver { object-position: 50% 50%; }
   .hero__photo--blonde { object-position: 50% 8%; }
   .hero__photo--waves { object-position: 50% 40%; }
+  .hero__photo--barber { object-position: 50% 50%; }
   .hero--photo > :not(.hero__slides) { grid-column: 1; justify-self: center; width: min(100%, 620px); padding: 0 clamp(32px, 5vw, 64px); }
   .hero--photo .hero__lede { grid-row: 2; color: var(--gold-deep); font-size: clamp(34px, 3.6vw, 52px); }
   .hero--photo .hero__sub { grid-row: 3; }
@@ -297,6 +299,13 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
 /* ---------- cross-link band ---------- */
 .crosslink { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; background: var(--ink); color: var(--cream); }
 .crosslink .ph { min-height: 380px; aspect-ratio: auto; }
+/* a real photo in the band (salon page: the barbershop interior), cropped to the barber at work */
+.crosslink__photo {
+  display: block; width: 100%; height: auto; min-height: 380px; object-fit: cover; object-position: 55% 58%;
+  /* the band's height comes from the text, not the photo: no size or shape of its own, so it
+     stretches to fill its half of the band */
+  contain: size; aspect-ratio: auto;
+}
 .crosslink__text { display: grid; align-content: center; justify-items: start; gap: 14px; padding: clamp(40px, 6vw, 88px); }
 .crosslink__text p { margin: 0; opacity: .85; }
 .crosslink__text .eyebrow { opacity: 1; }
@@ -377,6 +386,7 @@ html:has(.lightbox[open]) { overflow: hidden; }          /* the page behind does
   .quotes, .steps { grid-template-columns: 1fr; }
   .footer { grid-template-columns: 1fr 1fr; }
   .crosslink .ph { min-height: 240px; }
+  .crosslink__photo { min-height: 240px; }
 }
 /* ---------- Color Studio collage: four photos, 2 x 2 ---------- */
 .collage { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -490,6 +500,9 @@ html:has(.lightbox[open]) { overflow: hidden; }          /* the page behind does
   /* cross-link: photo then text, one screen */
   .crosslink { min-height: calc(100svh - var(--header-h)); grid-template-rows: 1fr auto; }
   .crosslink .ph { min-height: 0; height: 100%; }
+  /* with a real photo the band doesn't fill the screen: the photo is a third of a screen tall */
+  .crosslink:has(.crosslink__photo) { min-height: 0; grid-template-rows: auto auto; }
+  .crosslink__photo { min-height: 0; height: 32svh; }
   .crosslink__text { padding: 32px var(--pad-x) 40px; gap: 10px; }
 
   /* visit: address and hours, then the map, then the WhatsApp button at the bottom */
