@@ -56,7 +56,7 @@ Three parts:
 |---|------|---------------------|
 | A | **Phone first, one screen per section.** Nothing scrolls sideways and nothing scrolls inside a section. | 3, 9, 10 |
 | B | **WhatsApp is the front door.** Every point where a client might decide or hesitate offers WhatsApp. No phone numbers and no prices; a person confirms everything. | 15–18, 24, 28 |
-| C | **One clear next step.** One task per screen, with the main button full width at the bottom and Back above it. Disabled means gray. | 12, 19–21 |
+| C | **One clear next step.** One task per screen, with the main button full width at the bottom and Back above it. Disabled means gray. Two button styles only: the gold outline for the most important action, the standard button for the rest. | 12, 19–21 |
 | D | **Two fonts, two jobs.** The serif (Cormorant) is for big display titles only. Everything you read or tap is in the sans-serif (Montserrat). | 13 |
 | E | **Square shapes.** Buttons, tiles, inputs and tags have square corners. Only icons are round (the WhatsApp bubble, step numbers). | 11 |
 | F | **Fewer choices first, details on demand.** Grid → detail page. Broad category → dropdown. | 5, 6, 23, 29 |
@@ -78,7 +78,8 @@ Ranked by how much each one shows. "Where" says the page or element; "Rule" poin
      - outlined gold text buttons (home hero, Color Studio, cross-links, barbershop hero)
      - solid gold buttons (booking)
      - solid green and outlined buttons (profile pages)
-   - Fix, used everywhere: **primary** = solid, full width on phones; **secondary** = outlined, full width; **WhatsApp** = green.
+   - **Decided by Erickson (25 Nov 2026):** two button styles are fine. The **gold outline** button is always the most important button on a screen. The **standard** (solid) button is for everything else.
+   - Fix, used everywhere: at most one gold outline button per screen, on the single most important action; every other button is the standard one. Both are full width on phones, with square corners. Open question: whether WhatsApp buttons keep their green or follow these two styles.
    - Where: hero "Reservar cita" / "Explorar el color", "Reservar consulta de color", "Visitar la barbería" / "Visitar el salón", barbershop hero, footer "Unirme".
 
 2. **Make the home page follow the 4-step journey.** *(Rules B, C)*
