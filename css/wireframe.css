@@ -5,18 +5,18 @@
 /* image placeholder: a crossed box with a label */
 .ph {
   position: relative; display: grid; place-items: center; width: 100%;
-  aspect-ratio: 4 / 3; padding: 12px;
+  aspect-ratio: 4 / 3; padding: calc(12 * var(--u));
   background:
     linear-gradient(to top right, transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px)),
     linear-gradient(to top left,  transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px)),
     rgba(126, 85, 32, .06);
   border: 1px solid var(--line);
-  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; text-align: center; color: var(--gold-deep);
+  font-size: calc(11 * var(--u)); letter-spacing: .2em; text-transform: uppercase; text-align: center; color: var(--gold-deep);
 }
 body.is-barber .ph { background-color: rgba(226, 188, 114, .05); }
 .ph--tall { aspect-ratio: 4 / 5; }
 .ph--square { aspect-ratio: 1; }
 .ph--portrait { aspect-ratio: 3 / 4; }
 .ph--wide { aspect-ratio: 16 / 9; }
-.ph--booking { aspect-ratio: auto; min-height: 460px; }
+.ph--booking { aspect-ratio: auto; min-height: calc(460 * var(--u)); }
 .ph--map { aspect-ratio: 16 / 9; }

@@ -3,33 +3,33 @@
    Nothing scrolls sideways; Back sits above Continue at the bottom of every step. */
 .booker {
   --shade: rgba(0, 0, 0, .5);                         /* greens and greys come from site.css */
-  min-width: 0; max-width: 560px; font-family: Montserrat, system-ui, sans-serif;
+  min-width: 0; max-width: calc(560 * var(--u)); font-family: Montserrat, system-ui, sans-serif;
 }
 .booker [hidden] { display: none !important; }
 .booker button:where(:not(.btn)) { font-family: inherit; color: inherit; }
-#book .sec-head { margin-bottom: 20px; }
+#book .sec-head { margin-bottom: calc(20 * var(--u)); }
 #book .sec-head .eyebrow { display: none; }
 
 /* progress: "Step 2 of 4" and four bars */
-.bk-progress { margin-bottom: 22px; }
-.bk-progress__text { margin: 0 0 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.bk-progress { margin-bottom: calc(22 * var(--u)); }
+.bk-progress__text { margin: 0 0 calc(8 * var(--u)); font-size: calc(12 * var(--u)); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
 .bk-progress__text b { font-weight: 500; }
-.bk-progress__bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
-.bk-progress__bar i { height: 3px; background: var(--line); }
+.bk-progress__bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(4 * var(--u)); }
+.bk-progress__bar i { height: calc(3 * var(--u)); background: var(--line); }
 .bk-progress__bar i.is-on { background: var(--gold); }
 
 /* the question of each step */
-.bk-q { margin: 0 0 16px; font: 500 20px/1.25 Montserrat, system-ui, sans-serif; letter-spacing: 0; }
-.bk-q2 { margin: 18px 0 10px; font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
-.bk-q2 small { font-size: 11px; font-weight: 400; letter-spacing: .02em; text-transform: none; opacity: .7; }
-.bk-sub { margin: -8px 0 16px; font-size: 14px; line-height: 1.5; opacity: .75; }
+.bk-q { margin: 0 0 calc(16 * var(--u)); font: 500 calc(20 * var(--u))/1.25 Montserrat, system-ui, sans-serif; letter-spacing: 0; }
+.bk-q2 { margin: calc(18 * var(--u)) 0 calc(10 * var(--u)); font-size: calc(13 * var(--u)); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.bk-q2 small { font-size: calc(11 * var(--u)); font-weight: 400; letter-spacing: .02em; text-transform: none; opacity: .7; }
+.bk-sub { margin: calc(-8 * var(--u)) 0 calc(16 * var(--u)); font-size: calc(14 * var(--u)); line-height: 1.5; opacity: .75; }
 
 /* the check shown on anything selected */
-.bk-check { width: 22px; height: 22px; }
+.bk-check { width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
 
 /* step 1: people, a photo grid */
-.bk-people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
-.bk-person { display: grid; gap: 8px; padding: 0; border: 0; background: none; cursor: pointer; text-align: center; }
+.bk-people { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(14 * var(--u)) calc(10 * var(--u)); }
+.bk-person { display: grid; gap: calc(8 * var(--u)); padding: 0; border: 0; background: none; cursor: pointer; text-align: center; }
 .bk-person__photo {
   position: relative; display: grid; place-items: center; aspect-ratio: 1; overflow: hidden;
   background:
@@ -45,26 +45,26 @@
 }
 .bk-person.is-on .bk-person__photo .bk-check { opacity: 1; }
 .bk-person--unsure .bk-person__photo { background: none; border-style: dashed; }
-.bk-person__q { font-size: 30px; font-weight: 300; color: var(--gold-deep); }
-.bk-person__name { font-size: 13px; line-height: 1.3; }
+.bk-person__q { font-size: calc(30 * var(--u)); font-weight: 300; color: var(--gold-deep); }
+.bk-person__name { font-size: calc(13 * var(--u)); line-height: 1.3; }
 .bk-person.is-on .bk-person__name { font-weight: 500; }
 .bk-person:focus-visible { outline: none; }
 .bk-person:focus-visible .bk-person__photo { outline: 2px solid var(--gold-deep); outline-offset: 2px; }
 
 /* step 2: calendar */
-.bk-cal { border: 1px solid var(--line); padding: 8px 6px 6px; }
-.bk-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.bk-cal__title { font-size: 14px; font-weight: 500; }
+.bk-cal { border: 1px solid var(--line); padding: calc(8 * var(--u)) calc(6 * var(--u)) calc(6 * var(--u)); }
+.bk-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: calc(6 * var(--u)); }
+.bk-cal__title { font-size: calc(14 * var(--u)); font-weight: 500; }
 .bk-cal__title span { display: inline-block; }
 .bk-cal__title span::first-letter { text-transform: uppercase; }
-.bk-cal__nav { width: 44px; height: 40px; border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; }
+.bk-cal__nav { width: calc(44 * var(--u)); height: calc(40 * var(--u)); border: 0; background: none; font-size: calc(22 * var(--u)); line-height: 1; cursor: pointer; }
 .bk-cal__nav:disabled { opacity: .25; cursor: default; }
 .bk-cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
-.bk-cal__wd { padding: 2px 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+.bk-cal__wd { padding: 2px 0; font-size: calc(11 * var(--u)); letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
 /* a day is a 44px tap target: as wide as its column (44px on a 375px phone), never wider */
 .bk-day {
-  height: 44px; border: 0; background: none; font-size: 14px; cursor: pointer;
-  width: 100%; max-width: 44px; justify-self: center; transition: background-color .15s;
+  height: calc(44 * var(--u)); border: 0; background: none; font-size: calc(14 * var(--u)); cursor: pointer;
+  width: 100%; max-width: calc(44 * var(--u)); justify-self: center; transition: background-color .15s;
 }
 .bk-day:hover:not(:disabled) { background: rgba(184, 134, 58, .15); }
 .bk-day.is-today { box-shadow: inset 0 0 0 1px var(--gold); }
@@ -72,73 +72,73 @@
 .bk-day:disabled { color: var(--off-ink); opacity: .45; cursor: default; text-decoration: none; }
 
 /* step 2: preferred time, four in a row */
-.bk-times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.bk-times { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(6 * var(--u)); }
 .bk-time {
-  display: grid; gap: 2px; padding: 9px 2px; border: 1px solid var(--line); background: none;
+  display: grid; gap: 2px; padding: calc(9 * var(--u)) 2px; border: 1px solid var(--line); background: none;
   cursor: pointer; text-align: center;
 }
-.bk-time b { font-size: 13px; font-weight: 500; }
-.bk-time small { font-size: 10.5px; opacity: .75; }
+.bk-time b { font-size: calc(13 * var(--u)); font-weight: 500; }
+.bk-time small { font-size: calc(10.5 * var(--u)); opacity: .75; }
 .bk-time.is-on { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-fill); }
 .bk-time.is-on small { opacity: 1; }
 .bk-time:disabled { opacity: .35; cursor: default; }
 
 /* "not sure yet" for the date */
 .bk-unsure {
-  display: block; width: 100%; margin-top: 10px; padding: 11px; border: 1px dashed var(--line);
-  background: none; font-size: 14px; cursor: pointer;
+  display: block; width: 100%; margin-top: calc(10 * var(--u)); padding: calc(11 * var(--u)); border: 1px dashed var(--line);
+  background: none; font-size: calc(14 * var(--u)); cursor: pointer;
 }
 .bk-unsure.is-on { border-style: solid; border-color: var(--gold); background: rgba(184, 134, 58, .12); font-weight: 500; }
 .bk-unsure.is-on::before { content: "✓  "; }
 
 /* step 3: categories */
-.bk-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bk-cats { display: grid; grid-template-columns: 1fr 1fr; gap: calc(8 * var(--u)); }
 .bk-cat {
-  position: relative; display: flex; align-items: center; min-height: 52px; padding: 10px 34px 10px 14px;
-  border: 1px solid var(--line); background: none; cursor: pointer; text-align: left; font-size: 14px; line-height: 1.3;
+  position: relative; display: flex; align-items: center; min-height: calc(52 * var(--u)); padding: calc(10 * var(--u)) calc(34 * var(--u)) calc(10 * var(--u)) calc(14 * var(--u));
+  border: 1px solid var(--line); background: none; cursor: pointer; text-align: left; font-size: calc(14 * var(--u)); line-height: 1.3;
 }
-.bk-cat .bk-check { position: absolute; right: 10px; top: 50%; width: 18px; height: 18px; margin-top: -9px; opacity: 0; }
+.bk-cat .bk-check { position: absolute; right: calc(10 * var(--u)); top: 50%; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-top: calc(-9 * var(--u)); opacity: 0; }
 .bk-cat.is-on { border-color: var(--gold-fill); background: var(--gold-fill); color: var(--on-fill); font-weight: 500; }
 .bk-cat.is-on .bk-check { opacity: 1; }
 .bk-cat--unsure { border-style: dashed; }
 
 /* step 4: summary + fields */
-.bk-summary { margin: 0 0 18px; border-top: 1px solid var(--line); }
-.bk-summary__row { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-.bk-summary dt { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); }
-.bk-summary dd { grid-column: 1; margin: 0; font-size: 15px; line-height: 1.4; overflow-wrap: anywhere; }
-.bk-edit { grid-column: 2; grid-row: 1 / span 2; align-self: center; padding: 6px 0; border: 0; background: none; color: var(--gold-deep) !important; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.bk-summary { margin: 0 0 calc(18 * var(--u)); border-top: 1px solid var(--line); }
+.bk-summary__row { display: grid; grid-template-columns: 1fr auto; gap: 2px calc(12 * var(--u)); padding: calc(10 * var(--u)) 0; border-bottom: 1px solid var(--line); }
+.bk-summary dt { font-size: calc(11 * var(--u)); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); }
+.bk-summary dd { grid-column: 1; margin: 0; font-size: calc(15 * var(--u)); line-height: 1.4; overflow-wrap: anywhere; }
+.bk-edit { grid-column: 2; grid-row: 1 / span 2; align-self: center; padding: calc(6 * var(--u)) 0; border: 0; background: none; color: var(--gold-deep) !important; font-size: calc(12 * var(--u)); text-decoration: underline; text-underline-offset: calc(3 * var(--u)); cursor: pointer; }
 .bk-cap { display: inline-block; }
 .bk-cap::first-letter { text-transform: uppercase; }
-.bk-field { display: grid; gap: 6px; margin-bottom: 14px; }
-.bk-field__label { font-size: 13px; font-weight: 500; }
+.bk-field { display: grid; gap: calc(6 * var(--u)); margin-bottom: calc(14 * var(--u)); }
+.bk-field__label { font-size: calc(13 * var(--u)); font-weight: 500; }
 .bk-field input, .bk-field select {
-  width: 100%; padding: 12px 14px; border: 1px solid var(--line); background: var(--cream); color: var(--ink);
-  font: 400 16px/1.4 Montserrat, sans-serif;           /* 16px keeps phones from zooming in */
+  width: 100%; padding: calc(12 * var(--u)) calc(14 * var(--u)); border: 1px solid var(--line); background: var(--cream); color: var(--ink);
+  font: 400 calc(16 * var(--u))/1.4 Montserrat, sans-serif;           /* 16px keeps phones from zooming in */
 }
 .bk-field input:focus, .bk-field select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
 
 /* bottom: Back above Continue */
-.bk-nav { display: grid; gap: 10px; margin-top: 22px; }
+.bk-nav { display: grid; gap: calc(10 * var(--u)); margin-top: calc(22 * var(--u)); }
 .bk-back {
-  justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px 8px 0;
-  border: 0; background: none; font-size: 14px; font-weight: 500; cursor: pointer;
+  justify-self: start; display: inline-flex; align-items: center; gap: calc(6 * var(--u)); padding: calc(8 * var(--u)) calc(10 * var(--u)) calc(8 * var(--u)) 0;
+  border: 0; background: none; font-size: calc(14 * var(--u)); font-weight: 500; cursor: pointer;
 }
 .bk-back:hover { color: var(--gold-deep); }
 /* Continue is the one important action of each step, so it is the gold outline button (.btn--key,
    site.css); grey until the step has an answer. Send keeps the WhatsApp green for now. */
 .bk-next { width: 100%; }
-.bk-note { margin: 2px 0 0; font-size: 13px; line-height: 1.5; text-align: center; opacity: .75; }
+.bk-note { margin: 2px 0 0; font-size: calc(13 * var(--u)); line-height: 1.5; text-align: center; opacity: .75; }
 
 /* after sending */
-.booker__done { display: grid; justify-items: center; gap: 12px; padding: 28px 20px; border: 1px solid var(--line); text-align: center; }
+.booker__done { display: grid; justify-items: center; gap: calc(12 * var(--u)); padding: calc(28 * var(--u)) calc(20 * var(--u)); border: 1px solid var(--line); text-align: center; }
 .booker__done-icon { color: var(--wa-text); }
 .booker__done .bk-q { margin: 0; }
-.booker__done p { margin: 0; font-size: 15px; line-height: 1.5; }
+.booker__done p { margin: 0; font-size: calc(15 * var(--u)); line-height: 1.5; }
 .booker__done .bk-back { justify-self: center; }
 
 /* stylist / barber cards: Book + WhatsApp side by side */
-.person__links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.person__links { display: flex; flex-wrap: wrap; gap: calc(10 * var(--u)) calc(22 * var(--u)); }
 .link--wa { color: var(--wa-text); border-color: currentColor; }
 
 @media (min-width: 541px) { .bk-people { grid-template-columns: repeat(4, 1fr); } }
@@ -147,50 +147,54 @@
    A step keeps Continue on screen in a normal five-week month; a six-week month scrolls a
    little. Days are 44 x 44. */
 @media (max-width: 640px) {
-  #book.page.sec { padding-top: calc(var(--header-h) + 28px); padding-bottom: 56px; }
-  #book .sec-head { margin-bottom: 18px; }
-  #book .sec-head h2 { font-size: 30px; }
-  .bk-progress { margin-bottom: 18px; }
-  .bk-q { margin-bottom: 14px; font-size: 18px; }
-  .bk-cal { padding: 8px 3px 6px; }
+  #book.page.sec { padding-top: calc(var(--header-h) + calc(28 * var(--u))); padding-bottom: calc(56 * var(--u)); }
+  #book .sec-head { margin-bottom: calc(18 * var(--u)); }
+  #book .sec-head h2 { font-size: calc(30 * var(--u)); }
+  .bk-progress { margin-bottom: calc(18 * var(--u)); }
+  .bk-q { margin-bottom: calc(14 * var(--u)); font-size: calc(18 * var(--u)); }
+  .bk-cal { padding: calc(8 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)); }
   .bk-cal__grid { gap: 1px 2px; }
-  .bk-q2 { margin: 16px 0 10px; letter-spacing: .04em; white-space: nowrap; }
-  .bk-q2 small { font-size: 10.5px; letter-spacing: 0; }
-  .bk-unsure { margin-top: 10px; }
-  .bk-nav { margin-top: 16px; gap: 6px; }
-  .bk-people { gap: 20px 12px; }
-  .bk-cats { gap: 10px; }
+  .bk-q2 { margin: calc(16 * var(--u)) 0 calc(10 * var(--u)); letter-spacing: .04em; white-space: nowrap; }
+  .bk-q2 small { font-size: calc(10.5 * var(--u)); letter-spacing: 0; }
+  .bk-unsure { margin-top: calc(10 * var(--u)); }
+  .bk-nav { margin-top: calc(16 * var(--u)); gap: calc(6 * var(--u)); }
+  .bk-people { gap: calc(20 * var(--u)) calc(12 * var(--u)); }
+  .bk-cats { gap: calc(10 * var(--u)); }
 }
 
 /* laptops (wide but short screens, used with a mouse): the calendar step fits one screen even
    in a six-week month. Touch screens (an iPad held sideways) keep the 44px days and scroll a
    little instead. */
-@media (min-width: 641px) and (max-height: 900px) and (pointer: fine) {
-  #book.page.sec { padding-top: calc(var(--header-h) + 24px); padding-bottom: 24px; }
-  #book .sec-head { margin-bottom: 14px; }
-  #book .sec-head h2 { font-size: 40px; }
-  .bk-progress { margin-bottom: 14px; }
-  .bk-q { margin-bottom: 10px; }
-  .bk-day { height: 36px; }
+/* The second condition is the same thing on a big screen: everything there is drawn larger (--u,
+   site.css), so a 1250px-tall monitor has only as much room as a small laptop. It matches every
+   wide screen where the height divided by --u comes to 900 or less. */
+@media (min-width: 641px) and (max-height: 900px) and (pointer: fine),
+       (min-width: 1361px) and (min-aspect-ratio: 151/100) and (max-height: 1440px) and (pointer: fine) {
+  #book.page.sec { padding-top: calc(var(--header-h) + calc(24 * var(--u))); padding-bottom: calc(24 * var(--u)); }
+  #book .sec-head { margin-bottom: calc(14 * var(--u)); }
+  #book .sec-head h2 { font-size: calc(40 * var(--u)); }
+  .bk-progress { margin-bottom: calc(14 * var(--u)); }
+  .bk-q { margin-bottom: calc(10 * var(--u)); }
+  .bk-day { height: calc(36 * var(--u)); }
   .bk-cal__grid { gap: 1px 2px; }
-  .bk-q2 { margin: 12px 0 8px; }
-  .bk-unsure { margin-top: 8px; padding: 9px; }
-  .bk-nav { margin-top: 14px; gap: 6px; }
+  .bk-q2 { margin: calc(12 * var(--u)) 0 calc(8 * var(--u)); }
+  .bk-unsure { margin-top: calc(8 * var(--u)); padding: calc(9 * var(--u)); }
+  .bk-nav { margin-top: calc(14 * var(--u)); gap: calc(6 * var(--u)); }
 }
 
 /* a phone held sideways: the form uses the width. Step 1 is one row of people; step 2 has the
    calendar on the left and the time on the right; step 4 has the summary beside the two fields.
    Back still sits above Continue. */
 @media (orientation: landscape) and (max-height: 500px) {
-  .booker { max-width: 720px; }
-  #book.page.sec { padding-top: calc(var(--header-h) + 20px); padding-bottom: 32px; }
-  #book .sec-head { margin-bottom: 12px; }
-  #book .sec-head h2 { font-size: 30px; }
-  .bk-progress { margin-bottom: 14px; }
-  .bk-q { margin-bottom: 12px; font-size: 18px; }
+  .booker { max-width: calc(720 * var(--u)); }
+  #book.page.sec { padding-top: calc(var(--header-h) + calc(20 * var(--u))); padding-bottom: calc(32 * var(--u)); }
+  #book .sec-head { margin-bottom: calc(12 * var(--u)); }
+  #book .sec-head h2 { font-size: calc(30 * var(--u)); }
+  .bk-progress { margin-bottom: calc(14 * var(--u)); }
+  .bk-q { margin-bottom: calc(12 * var(--u)); font-size: calc(18 * var(--u)); }
   .bk-people { grid-template-columns: repeat(6, 1fr); }
   .bk-cats { grid-template-columns: repeat(3, 1fr); }
-  .bk-step[data-step="2"], .bk-step[data-step="4"] { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 28px; align-items: start; }
+  .bk-step[data-step="2"], .bk-step[data-step="4"] { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: calc(28 * var(--u)); align-items: start; }
   .bk-step[data-step="2"] > .bk-q, .bk-step[data-step="4"] > .bk-q { grid-column: 1 / -1; }
   .bk-step[data-step="2"] > .bk-cal { grid-column: 1; grid-row: 2 / span 3; }
   .bk-step[data-step="2"] > .bk-q2 { grid-column: 2; margin-top: 0; }
@@ -198,21 +202,21 @@
   .bk-step[data-step="2"] > .bk-unsure { grid-column: 2; }
   .bk-step[data-step="4"] > .bk-summary { grid-column: 1; grid-row: 2 / span 2; margin-bottom: 0; }
   .bk-step[data-step="4"] > .bk-field { grid-column: 2; }
-  .bk-cal { padding: 6px 6px 4px; }
-  .bk-day { height: 40px; }
-  .bk-nav { margin-top: 14px; gap: 6px; }
-  .wa-float { right: 12px; bottom: 12px; width: 48px; height: 48px; }
-  .wa-float svg { width: 26px; height: 26px; }
+  .bk-cal { padding: calc(6 * var(--u)) calc(6 * var(--u)) calc(4 * var(--u)); }
+  .bk-day { height: calc(40 * var(--u)); }
+  .bk-nav { margin-top: calc(14 * var(--u)); gap: calc(6 * var(--u)); }
+  .wa-float { right: calc(12 * var(--u)); bottom: calc(12 * var(--u)); width: calc(48 * var(--u)); height: calc(48 * var(--u)); }
+  .wa-float svg { width: calc(26 * var(--u)); height: calc(26 * var(--u)); }
 }
 
 /* ---------- floating WhatsApp button: the salon's main number ---------- */
 .wa-float {
-  position: fixed; right: 16px; bottom: 16px; z-index: 20; display: grid; place-items: center;
-  width: 56px; height: 56px; border-radius: 50%; background: #25D366; color: #fff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, .22); transition: transform .2s, box-shadow .2s;
+  position: fixed; right: calc(16 * var(--u)); bottom: calc(16 * var(--u)); z-index: 20; display: grid; place-items: center;
+  width: calc(56 * var(--u)); height: calc(56 * var(--u)); border-radius: 50%; background: #25D366; color: #fff;
+  box-shadow: 0 calc(6 * var(--u)) calc(20 * var(--u)) rgba(0, 0, 0, .22); transition: transform .2s, box-shadow .2s;
 }
-.wa-float:hover { transform: scale(1.06); box-shadow: 0 8px 26px rgba(0, 0, 0, .28); }
-.wa-float:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.wa-float:hover { transform: scale(1.06); box-shadow: 0 calc(8 * var(--u)) calc(26 * var(--u)) rgba(0, 0, 0, .28); }
+.wa-float:focus-visible { outline: calc(3 * var(--u)) solid var(--gold); outline-offset: calc(3 * var(--u)); }
 body.intro-on .wa-float { display: none; }
 /* the Book page already ends in a WhatsApp step and its own Back / Continue at the bottom */
 body[data-page="book"] .wa-float { display: none; }
