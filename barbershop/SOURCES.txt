@@ -1,0 +1,11 @@
+ANAIS Barbershop logo - photo sources
+
+Both tool photos are from Wikimedia Commons and are public domain (no credit required):
+
+Hair clipper: "Electric hair clipper (1).jpg" by Batholith - Public domain
+  https://commons.wikimedia.org/wiki/File:Electric_hair_clipper_(1).jpg
+Shears: "20250220 Hair scissors.jpg" - CC0 1.0 (public domain dedication)
+  https://commons.wikimedia.org/wiki/File:20250220_Hair_scissors.jpg
+
+Edits: cut out with the BiRefNet segmentation model, printed brand names and logos
+removed, recoloured to the ANAIS gold, placed behind the "A" of the wordmark.
