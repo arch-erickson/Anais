@@ -56,7 +56,7 @@ Three parts:
 |---|------|---------------------|
 | A | **Phone first, one screen per section.** Nothing scrolls sideways and nothing scrolls inside a section. | 3, 9, 10 |
 | B | **WhatsApp is the front door.** Every point where a client might decide or hesitate offers WhatsApp. No phone numbers and no prices; a person confirms everything. | 15–18, 24, 28 |
-| C | **One clear next step.** One task per screen, with the main button full width at the bottom and Back above it. Disabled means gray. Two button styles only: the gold outline for the most important action, the standard button for the rest. | 12, 19–21 |
+| C | **One clear next step.** One task per screen, with the main button full width at the bottom and Back above it. Disabled means gray. Two button styles only: the **gold outline** for the main button of a screen, and a simple button with **no outline and no fill** (just the words) for the rest. No solid gold buttons: Erickson rejected them on 25 Nov 2026. | 12, 19–21 |
 | D | **Two fonts, two jobs.** The serif (Cormorant) is for big display titles only. Everything you read or tap is in the sans-serif (Montserrat). | 13 |
 | E | **Square shapes.** Buttons, tiles, inputs and tags have square corners. Only icons are round (the WhatsApp bubble, step numbers). | 11 |
 | F | **Fewer choices first, details on demand.** Grid → detail page. Broad category → dropdown. | 5, 6, 23, 29 |
@@ -71,22 +71,27 @@ Three parts:
 
 Ranked by how much each one shows. "Where" says the page or element; "Rule" points to section 2.
 
+**Applied 25 Nov 2026** (uncommitted, for review). Each item below starts with its status. Done: 1, 3-13, 16. Rejected by Erickson: 2 (WhatsApp as the hero's main button). Left for a decision or for content: 14, 15, 17. Skipped: 18. Open questions are at the end.
+
 ### High: visible on every visit
 
 1. **One button system.** *(Rules C, E)*
+   - **Status: Done (25 Nov 2026).** The rule in `css/site.css`, with a comment there to stick with it: `.btn--key`, the **gold outline**, is the main button of a screen (Reservar cita, Continuar, Reservar consulta de color); `.btn`, every other button, is **plain words** with no outline and no fill. No solid gold buttons anywhere. Checked on every page at phone and desktop size, salon and barbershop: at most one gold outline per screen, the rest plain, text at 5.3:1 or better. All buttons share one size, type and square corners, and are full width on phones (327-335 px on a 375 px screen). Continue is grey until the step has an answer. WhatsApp buttons are still solid green (`.btn--wa`): open question below.
    - Today there are three different looks:
      - outlined gold text buttons (home hero, Color Studio, cross-links, barbershop hero)
      - solid gold buttons (booking)
      - solid green and outlined buttons (profile pages)
-   - **Decided by Erickson (25 Nov 2026):** two button styles are fine. The **gold outline** button is always the most important button on a screen. The **standard** (solid) button is for everything else.
-   - Fix, used everywhere: at most one gold outline button per screen, on the single most important action; every other button is the standard one. Both are full width on phones, with square corners. Open question: whether WhatsApp buttons keep their green or follow these two styles.
+   - **Decided by Erickson (25 Nov 2026):** two button styles. The **gold outline** button is the main button of a screen. Every other button is **simple: no outline, no fill**, like the old second button of the hero. An earlier reading of this decision ("standard = solid gold") was a mistake; he saw the solid gold buttons on the site and rejected them the same day.
+   - Fix, used everywhere: at most one gold outline button per screen, on the main action; every other button is the simple one. Do not introduce solid gold buttons. Both are full width on phones, with square corners. Open question: whether WhatsApp buttons keep their green or follow these two styles.
    - Where: hero "Reservar cita" / "Explorar el color", "Reservar consulta de color", "Visitar la barbería" / "Visitar el salón", barbershop hero, footer "Unirme".
 
 2. **Make the home page follow the 4-step journey.** *(Rules B, C)*
+   - **Status: Rejected for the hero by Erickson (25 Nov 2026).** WhatsApp was tried as the hero's main button; he asked for "Reservar cita" back as the main button (gold outline) with "Conoce a las estilistas" below it as the simple one. The barbershop hero mirrors it ("Reservar silla", "Conoce a los barberos"). WhatsApp is the floating button. Kept from this item: both home pages end with a closing section that repeats the hero's pair (book, then meet the team).
    - The hero's main button is "Reservar cita", but step 1 of the journey is "Escríbenos por WhatsApp".
    - Fix: make WhatsApp the main hero button and Book the second one, and use the same pair at the end of the home page.
 
 3. **Contrast is too low for small text.** *(Accessibility)* Measured against the 4.5:1 minimum for normal-size text:
+   - **Status: Done.** Measured after the change: selected day / time / category tile, "Especialidad" badge and the menu's "Reservar cita" bar are white on a deeper gold `#8F6326`, 5.3:1 (barbershop: black on `#C9A05A`, 8.1:1). WhatsApp buttons are white on `#117540`, 5.8:1. Green links are `#117540` on cream, 5.1:1 (barbershop `#4CC981` on black, 9.3:1). Gold text is `--gold-deep` `#7E5520` on cream, 5.8:1. Dimmed small labels raised to at least 5:1. The bright green is only on the floating icon. Still under 4.5:1: a disabled Continue button (grey on grey, 3.3:1, exempt as disabled) and the hover colours of the two buttons (about 2.9:1 while hovering).
    - white on the gold button: 3.2:1
    - white on WhatsApp green: 3.5:1
    - green link on cream: 3.1:1
@@ -95,16 +100,19 @@ Ranked by how much each one shows. "Where" says the page or element; "Rule" poin
    Fix: a deeper gold for any filled button or selected tile that has text, and a deeper green for text and button backgrounds. Keep the bright green only on the floating icon. The barbershop's gold on black passes (9.8:1).
 
 4. **The phone number and email are still on the Book page.** *(Rule B)*
+   - **Status: Done.** No phone number or email anywhere on the site. "Chatea por WhatsApp" is on the new Visit page.
    - "Contacto: (000) 000-0000 / hello@…" sits under the booking steps.
    - Fix: replace them with a "Chatea por WhatsApp" button.
 
 5. **The Book page is two screens.** *(Rules A, C)*
+   - **Status: Done.** "Visítanos" is its own page (`#visit`: address, hours, map, WhatsApp button), linked from the menu and the footer on both sides. The Book page is only the booking steps, centred. Every step fits one screen: the tallest, the calendar in a six-week month, is 804 of 812 px on a phone and 797 of 800 px on a laptop.
    - The address, hours and map sit under the booking steps, so the page keeps going after the task ends.
    - Fix: move "Visítanos" to its own small page (linked from the menu and footer), or to the footer, so Book only books.
 
 ### Medium: consistency
 
 6. **Fonts on labels.** *(Rule D)*
+   - **Status: Done.** Serif is now only on `h2` titles, the hero line, profile names and review quotes. Step titles, step numbers, the Visit headings and both barbershop logo placeholders are Montserrat.
    - These are still in the serif:
      - the "Visítanos / Horario / Contacto" headings
      - the "How it works" step titles
@@ -113,51 +121,71 @@ Ranked by how much each one shows. "Where" says the page or element; "Rule" poin
    - Keep the serif for page titles, the hero line, profile names and review quotes; switch the rest to the sans-serif.
 
 7. **Gendered words.** *(Rule I)*
+   - **Status: Done.** "Todo el equipo" (both sides), "Lo que dicen de nosotros", and also "Especialistas en color, corte y peinado" (was "cortadoras") and "Nombre" under each review (was "Nombre de clienta"). Not changed: the hero's second button, "Conoce a las estilistas", added later in another session; "Conoce al equipo" would match.
    - "Todas las estilistas" (back link on profiles) → "Todo el equipo".
    - "De nuestras clientas" (reviews) → "Lo que dicen de nosotros".
    - Placeholder bios are already neutral; keep real bios neutral unless the person says otherwise.
 
 8. **Grid → detail everywhere.** *(Rule F)*
+   - **Status: Done.** Gallery photos, the barbershop's gallery preview and before / after tiles open full screen (`js/lightbox.js`) with "¿Quieres este look? Escríbenos". The WhatsApp message names the photo and carries its address. A tile with several photos gets previous / next.
    - The team grid opens a page, but gallery and before/after tiles don't open anything.
    - Fix: tapping a photo opens it full screen with "¿Quieres este look? Escríbenos" (WhatsApp).
 
 9. **Links that should open the right dropdown.** *(Rule F)*
+   - **Status: Done.** "Ver menú de color" opens Services with Color open. Every category has its own address (`#menu-color`, `#menu-nails`, `#barber-menu-cuts` ...), so any future link can do the same.
    - "Ver menú de color" (Color Studio) and the service links should land on Services with that category already open.
 
 10. **The floating WhatsApp button covers content.** *(Rule A)*
+    - **Status: Done.** 96 px of empty space under the footer on phones. At the end of every page the last line now stops 24 px above the button (it used to sit under it). The hero's buttons also stop 16 px above it.
     - On phones it covers the right end of the last row on long pages (e.g. the last services row, the footer).
     - Fix: about 80 px of empty space at the bottom of each page on phones.
 
 11. **Tap targets.** *(Accessibility)*
+    - **Status: Done.** Calendar days are 44 x 42 px on phones (were 34 x 34), 44 x 44 on tablets, 44 x 36 on short laptop screens; the month arrows are 44 x 40. The step still fits one phone screen.
     - Calendar days are 34 × 34 px; the usual minimum is 44 px.
     - Fix: enlarge to about 42 px. The calendar still fits one screen.
 
 12. **Gallery filters.** *(Rules C, F)*
+    - **Status: Done.** Every chip on screen works: Todo (9 photos), Cabello (3), Uñas (6). The five colour chips are hidden until a hair photo is tagged for them (`data-cat="hair blonde"`), then they appear on their own.
     - Only the Nails filter works, per the photo session; the other chips are decoration.
     - Fix: make them all work, or remove them.
 
 ### Low: completeness and parity
 
 13. **Barbershop parity.** *(Rule H)*
+    - **Status: Done, except the logo.** The barbershop home now has the 4-step "Cómo funciona", a gallery preview with "Ver la galería", and the closing pair. The logo placeholder stays until the logo exists (item 18).
     - The barbershop home is only the hero and the link back to the salon.
     - Fix: add the 4-step "How it works" and a gallery preview, and replace the round logo placeholder once the logo exists.
 
 14. **Footer sign-up.** *(Rule B)*
+    - **Status: Left: Erickson's decision** (WhatsApp offers or email newsletter). Only the "Unirme" button changed, to the plain button style.
     - "Ofertas y novedades" collects email addresses.
     - Decide: switch it to "Recibe ofertas por WhatsApp", or keep email for newsletters.
 
 15. **Hours.** *(Rule B)*
+    - **Status: Left: needs the salon's real hours, or Erickson's choice of the "según tu estilista" line.** The placeholder hours moved to the Visit page with the rest of that block.
     - The listed hours are placeholders, and booking no longer depends on them.
     - Fix: show real salon hours, or replace the list with "Horario según tu estilista · escríbenos por WhatsApp".
 
 16. **One screen per section, re-check on desktop** after the new services dropdowns and team grid. An open services category may run past the screen on purpose; only one stays open at a time.
+    - **Status: Done.** At 1280 x 800 every section fits (limit 732 px under the header, 800 px for a page's first screen): salon home 800 / 724 / 601 / 465 / 431 / 380 / 260, barbershop home 800 / 441 / 487 / 380 / 260, Stylists 652, profile 755, Services 785 (was 865), Gallery 765, Book 797 at its tallest (was 959), Visit 632. Same result in English.
 
 17. **Photos.** *(Rule J)*
+    - **Status: Left: nothing to change until real photos arrive.** The rule stands for the collage, team, gallery and before / after photos.
     - When real photos replace the placeholders (collage, team, gallery, before/after), use the same treatment as the 44 edited photos: blurred black-and-white background, vivid hair.
 
 18. **Placeholders still waiting on the salon** (not design, but they block a final review):
+    - **Status: Skipped on purpose:** waits on the salon.
     - every WhatsApp number (currently +1 555 010 00xx)
     - stylist and barber names, photos and bios
     - which days walk-ins are welcome, and when the follow-up message is sent
     - the barbershop name and logo
     - confirming the nail list and the Brows & lashes category
+
+### Open questions after applying the audit
+
+1. **WhatsApp buttons: green or the two styles?** They are still solid green ("Chatea por WhatsApp" on profiles and Visit, "Enviar por WhatsApp" in booking, "¿Quieres este look?" on photos). Deleting the `.btn--wa` rules in `css/site.css` turns them into gold outline buttons.
+2. **"Conoce a las estilistas"** in the hero (Erickson's wording) is gendered, and item 7 removes that wording elsewhere. Keep it as he said it, or use "Conoce al equipo" as the closing section does?
+3. **Button hover colours** (gold text, and cream on gold for the outline button, as before the audit) are about 2.9:1 while hovering. Use the deeper gold on hover?
+4. **Footer sign-up** (item 14) and **hours** (item 15) still need a decision.
+5. **Menu:** "Visítanos" was added between Galería and Barbería / Salón. Keep it in the menu, or footer only?

@@ -16,7 +16,11 @@ body.is-barber {
   --line: rgba(226, 188, 114, .2);
   --band: #17140F;
   --header-bg: rgba(14, 12, 10, .92);
-  --menu-book-fg: #0E0C0A;
+  --gold-fill: #C9A05A;                 /* filled gold carries black text here (8:1) */
+  --on-fill: #0E0C0A;
+  --wa-text: #4CC981;
+  --off: rgba(239, 231, 216, .14);
+  --off-ink: rgba(239, 231, 216, .5);
 }
 body:not(.is-barber) .only-barber,
 body.is-barber .only-salon { display: none !important; }
@@ -37,15 +41,13 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 .brand__placeholder {
   display: flex; flex-direction: column; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%;
   border: 1px dashed var(--gold); color: var(--gold-deep);
-  font-size: 8px; line-height: 1.2; letter-spacing: .14em; text-transform: uppercase; text-align: center;
+  font: 500 8px/1.2 Montserrat, system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; text-align: center;
 }
 
 /* ---------- hero additions ---------- */
 .hero__sub { margin: 0; max-width: 560px; font-size: 15px; opacity: .8; }
 .hero__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
 .hero > :nth-child(4) { transition-delay: .45s; }
-.btn--ghost { border-color: transparent; }
-.btn--ghost:hover { background: transparent; color: var(--gold); border-color: var(--gold); }
 
 /* salon hero: a full-screen client photo (assets/photos/hero-red.jpg) in place of the big logo.
    Mobile: the photo fills the screen and the text sits over a dark fade at the bottom.
@@ -56,9 +58,11 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   padding: 120px 24px clamp(40px, 8vh, 72px);
   color: #F6F1E8;
 }
+/* the photos are there from the start, so the intro dissolves straight onto them (intro.css
+   otherwise hides every hero child until the intro ends, which left only the dark text fade) */
 .hero--photo .hero__slides {
   position: absolute; inset: 0; z-index: -1;
-  transform: none !important;                       /* no rise-in nudge on the photos */
+  opacity: 1 !important; transform: none !important; transition: none !important;
 }
 .hero--photo .hero__photo {
   position: absolute; inset: 0;
@@ -98,10 +102,14 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 }
 .hero--photo .hero__lede { color: #E2BC72; }
 .hero--photo .hero__sub { opacity: .9; }
-.hero--photo .btn { color: #F6F1E8; border-color: #E2BC72; }
-.hero--photo .btn:hover { background: #E2BC72; color: #1A1A1A; }
-.hero--photo .btn--ghost { border-color: transparent; }
-.hero--photo .btn--ghost:hover { background: transparent; color: #E2BC72; }
+/* over the photo (phones and tablets) both buttons need light text: the main one with its gold
+   outline, the second one plain */
+@media (max-width: 899px) {
+  .hero--photo .btn:not(.btn--wa) { color: #F6F1E8; }
+  .hero--photo .btn:not(.btn--key):not(.btn--wa):hover { color: #E2BC72; }
+  .hero--photo .btn--key:not(.btn--wa) { border-color: #E2BC72; }
+  .hero--photo .btn--key:not(.btn--wa):hover { background: #E2BC72; border-color: #E2BC72; color: #1A1A1A; }
+}
 
 @media (min-width: 900px) {
   /* the hero is exactly one screen tall (under the fixed header), so all of it shows on load.
@@ -126,20 +134,16 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
   .hero--photo .hero__lede { grid-row: 2; color: var(--gold-deep); font-size: clamp(34px, 3.6vw, 52px); }
   .hero--photo .hero__sub { grid-row: 3; }
   .hero--photo .hero__ctas { grid-row: 4; justify-content: flex-start; }
-  .hero--photo .btn { color: var(--gold-deep); border-color: var(--gold); }
-  .hero--photo .btn:hover { background: var(--gold); color: var(--cream); }
-  .hero--photo .btn--ghost { border-color: transparent; }
-  .hero--photo .btn--ghost:hover { background: transparent; color: var(--gold); }
 }
 
 .logo-slot {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
   width: min(420px, 80vw); aspect-ratio: 2.4;
   border: 1px dashed var(--gold); color: var(--gold-deep);
-  font: 400 clamp(22px, 3vw, 30px)/1.2 var(--serif); letter-spacing: .08em; text-align: center;
+  font: 500 clamp(15px, 2vw, 19px)/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; text-align: center;
 }
 .logo-slot small { font: 400 11px/1 Montserrat, sans-serif; letter-spacing: .24em; text-transform: uppercase; opacity: .7; }
-.logo-slot--small { width: 220px; font-size: 16px; }
+.logo-slot--small { width: 220px; font-size: 12px; }
 
 /* ---------- section scaffolding ---------- */
 .sec { position: relative; padding: clamp(72px, 10vw, 128px) var(--pad-x); }
@@ -150,9 +154,11 @@ section[id], main[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
 .eyebrow {
   margin: 0 0 12px; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold-deep);
 }
-h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; }
-h2 { font-size: clamp(34px, 4.6vw, 54px); line-height: 1.05; }
-h3 { font-size: 24px; line-height: 1.2; }
+/* two fonts, two jobs: the serif is for display titles (h2, the hero line, review quotes);
+   everything you read or tap, h3 labels included, is in the sans-serif */
+h2, h3 { margin: 0; }
+h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4.6vw, 54px); line-height: 1.05; }
+h3 { font: 500 17px/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .02em; }
 .lede { max-width: 560px; margin: 16px auto 0; opacity: .82; }
 
 .row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; margin-top: 28px; }
@@ -179,16 +185,16 @@ h3 { font-size: 24px; line-height: 1.2; }
 .steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 4vw, 48px); text-align: center; }
 .steps__n {
   display: inline-grid; place-items: center; width: 44px; height: 44px; margin-bottom: 16px;
-  border: 1px solid var(--gold); border-radius: 50%; font-family: var(--serif); font-size: 20px; color: var(--gold-deep);
+  border: 1px solid var(--gold); border-radius: 50%; font: 500 16px/1 Montserrat, system-ui, sans-serif; color: var(--gold-deep);
 }
-.steps p { margin: 10px auto 0; max-width: 300px; font-size: 15px; opacity: .82; }
+/* dimmed with colour, not opacity, so the green link inside keeps its full contrast */
+.steps p { margin: 10px auto 0; max-width: 300px; font-size: 15px; color: color-mix(in srgb, var(--ink) 82%, var(--cream)); }
 .steps--4 { grid-template-columns: repeat(4, 1fr); }
-.steps h3 { font-size: 22px; }
+.steps h3 { font-size: 17px; }
 .steps__link {
-  display: inline-block; margin-top: 8px; color: #1F9D55; font-size: 12px; font-weight: 500; letter-spacing: .14em;
-  text-transform: uppercase; border-bottom: 1px solid rgba(31, 157, 85, .4); padding-bottom: 2px; opacity: 1;
+  display: inline-block; margin-top: 8px; color: var(--wa-text); font-size: 12px; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 2px; opacity: 1;
 }
-body.is-barber .steps__link { color: #4CC981; }
 
 /* ---------- people (stylists / barbers) ---------- */
 /* the team page is a grid of photo + name; each opens that person's profile page */
@@ -210,21 +216,14 @@ body.is-barber .steps__link { color: #4CC981; }
 .profile h2 { margin-bottom: 6px; }
 .profile .person__role { margin-bottom: 14px; }
 .person__bio { margin: 14px 0 0; font-size: 15px; line-height: 1.6; opacity: .85; max-width: 460px; }
+/* the two buttons run from the left edge of the text to the right edge (.btn, site.css) */
 .profile__actions { display: grid; gap: 10px; margin-top: 24px; }
-.profile__wa, .profile__book {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;
-  font: 500 13px/1 Montserrat, sans-serif; letter-spacing: .14em; text-transform: uppercase; transition: background-color .2s, color .2s;
-}
-.profile__wa { background: #1F9D55; color: #fff; }
-.profile__wa:hover { background: #17834A; }
-.profile__book { border: 1px solid var(--gold); color: var(--gold-deep); }
-.profile__book:hover { background: var(--gold); color: #fff; }
 .tags { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { font-size: 12px; padding: 3px 10px; border: 1px solid var(--line); }
 
 /* ---------- service menu: category dropdowns > services > sub-service dropdowns ---------- */
 .svc-menu { display: grid; gap: 0; max-width: 760px; border-top: 1px solid var(--line); }
-.svc-menu__cat { border-bottom: 1px solid var(--line); }
+.svc-menu__cat { border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 12px); }
 .svc-menu__cat > summary {
   display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 16px;
   padding: 18px 4px; cursor: pointer; list-style: none;
@@ -239,10 +238,10 @@ body.is-barber .steps__link { color: #4CC981; }
   font: 500 17px/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .02em;
 }
 .svc-menu__desc { grid-column: 1; font-size: 13px; line-height: 1.4; opacity: .65; }
-.svc-menu__cat[open] > summary .svc-menu__desc { opacity: .45; }
+.svc-menu__cat[open] > summary .svc-menu__desc { opacity: .65; }
 .badge {
   font: 500 9px/1 Montserrat, sans-serif; letter-spacing: .2em; text-transform: uppercase;
-  padding: 5px 8px; background: var(--gold); color: #fff;
+  padding: 5px 8px; background: var(--gold-fill); color: var(--on-fill);
 }
 .svc { list-style: none; padding: 0 0 14px; margin: 0; }
 .svc > li { display: flex; align-items: center; gap: 10px; padding: 11px 4px 11px 16px; border-top: 1px solid var(--line); font-size: 15px; }
@@ -254,7 +253,7 @@ body.is-barber .steps__link { color: #4CC981; }
   display: flex; align-items: center; gap: 10px; padding: 11px 4px 11px 16px; cursor: pointer; list-style: none;
 }
 .svc-sub > summary > span { flex: 1; }
-.svc-sub > summary small { font-size: 11px; opacity: .55; }
+.svc-sub > summary small { font-size: 11px; opacity: .7; }
 .svc-sub > summary::after {
   content: ""; width: 7px; height: 7px; margin: 0 4px 3px 2px;
   border-right: 1.5px solid var(--gold-deep); border-bottom: 1.5px solid var(--gold-deep); transform: rotate(45deg);
@@ -269,11 +268,9 @@ body.is-barber .steps__link { color: #4CC981; }
 /* no prices on the site: one "Ask for prices on WhatsApp" link under each menu heading */
 .svc-call { margin: 16px auto 0; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
 .svc-call a {
-  display: inline-flex; align-items: center; gap: 8px; color: #1F9D55;
-  border-bottom: 1px solid rgba(31, 157, 85, .4); padding-bottom: 3px;
+  display: inline-flex; align-items: center; gap: 8px; color: var(--wa-text);
+  border-bottom: 1px solid currentColor; padding-bottom: 3px;
 }
-.svc-call a:hover { border-color: #1F9D55; }
-body.is-barber .svc-call a { color: #4CC981; }
 
 /* ---------- gallery ---------- */
 .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
@@ -302,19 +299,58 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
 .crosslink .ph { min-height: 380px; aspect-ratio: auto; }
 .crosslink__text { display: grid; align-content: center; justify-items: start; gap: 14px; padding: clamp(40px, 6vw, 88px); }
 .crosslink__text p { margin: 0; opacity: .85; }
-/* the cross-link band is always dark, so its accents use a fixed gold in both modes */
-.crosslink .eyebrow { color: #C9A05A; }
-.crosslink .btn { margin-top: 10px; color: #C9A05A; border-color: #C9A05A; }
-.crosslink .btn:hover { background: #C9A05A; color: #0E0C0A; }
+.crosslink__text .eyebrow { opacity: 1; }
+/* the band wears the other side's colours (dark on the salon pages, ivory on the barbershop's),
+   so its gold accents are set here for each */
+.crosslink { --gold-deep: #C9A05A; --gold-fill: #C9A05A; --on-fill: #0E0C0A; --line: rgba(226, 188, 114, .25); }
+body.is-barber .crosslink { --gold-deep: #7E5520; --gold-fill: #8F6326; --on-fill: #fff; --line: rgba(126, 85, 32, .22); }
+.crosslink .btn { margin-top: 10px; border-color: var(--gold-deep); }      /* the band's one action: gold outline */
+.crosslink .btn:hover { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-fill); }
 
-/* ---------- book / visit ---------- */
-.visit { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
-.visit__info h3 { font-size: 20px; margin: 0 0 6px; }
+/* ---------- closing: the same pair of buttons as the hero, at the end of each home page ---------- */
+.closing { text-align: center; }
+.closing .sec-head { margin-bottom: 24px; }
+.closing h2 { max-width: 16em; margin: 0 auto; font-size: clamp(30px, 4vw, 44px); }
+.closing__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+
+/* ---------- gallery preview on a home page: one row of photos and a way in ---------- */
+.gallery-preview { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+
+/* ---------- Visit page: address, hours, map and a WhatsApp button (its own page, so that
+   the Book page only books) ---------- */
+.visit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 20px clamp(28px, 5vw, 64px); align-items: start; max-width: 920px; }
+.visit__info h3 { margin: 0 0 6px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-deep); }
 .visit__info h3:not(:first-child) { margin-top: 24px; }
 .visit__info p { margin: 0; font-size: 15px; }
 .hours { display: grid; grid-template-columns: auto 1fr; gap: 4px 24px; margin: 0; font-size: 15px; }
 .hours dd { margin: 0; }
-.visit__info .ph--map { margin-top: 24px; }
+.visit .ph--map { grid-column: 2; grid-row: 1 / span 2; aspect-ratio: 4 / 3; }
+.visit__wa { grid-column: 1; align-self: end; }
+
+/* ---------- photo viewer: a gallery or before / after photo, full screen (js/lightbox.js) ---------- */
+[data-zoom] { cursor: zoom-in; }
+html:has(.lightbox[open]) { overflow: hidden; }          /* the page behind does not scroll */
+[data-zoom]:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 2px; }
+.lightbox {
+  inset: 0; width: 100%; max-width: none; height: 100vh; height: 100dvh; max-height: none; margin: 0; padding: 60px 20px 24px; border: 0;
+  background: #0E0C0A; color: #F6F1E8;
+  --line: rgba(226, 188, 114, .25); --gold-deep: #D9B26A;
+}
+.lightbox[open] { display: grid; grid-template-rows: minmax(0, 1fr) auto auto auto; gap: 14px; justify-items: center; }
+.lightbox::backdrop { background: #0E0C0A; }
+.lightbox__close {
+  position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 44px; height: 44px;
+  border: 0; background: none; color: inherit; cursor: pointer;
+}
+.lightbox__stage { display: grid; place-items: center; width: 100%; min-height: 0; }
+.lightbox__stage img { display: block; max-width: 100%; max-height: 100%; min-height: 0; object-fit: contain; }
+.lightbox__stage .ph { width: min(100%, 60vh); aspect-ratio: 1; }
+.lightbox__cap { margin: 0; max-width: 560px; font-size: 14px; line-height: 1.4; text-align: center; opacity: .85; }
+.lightbox__cap:empty { display: none; }
+.lightbox__nav { display: flex; align-items: center; gap: 6px; font-size: 13px; letter-spacing: .1em; }
+.lightbox__nav[hidden] { display: none; }
+.lightbox__nav button { width: 44px; height: 44px; border: 0; background: none; color: inherit; font-size: 26px; line-height: 1; cursor: pointer; }
+.lightbox .btn { width: min(100%, 420px); }
 
 /* ---------- footer ---------- */
 .footer {
@@ -332,7 +368,7 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
 }
 .footer__social { grid-column: 1; display: flex; gap: 10px; }
 .social { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; font-size: 11px; }
-.footer__legal { grid-column: 1 / -1; margin: 12px 0 0; font-size: 12px; opacity: .6; }
+.footer__legal { grid-column: 1 / -1; margin: 12px 0 0; font-size: 12px; opacity: .72; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
@@ -357,8 +393,10 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
   /* galleries: one large photo and eight small ones, two rows */
   .gallery { grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .gallery > :first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
-  .visit__info .ph--map { aspect-ratio: 3 / 1; margin-top: 16px; }
-  .visit__info h3:not(:first-child) { margin-top: 16px; }
+  /* services: the closed list of categories fits one screen (an open category may run past
+     it on purpose; only one is open at a time) */
+  .svc-menu__cat > summary { padding-top: 12px; padding-bottom: 12px; }
+  #services .sec-head, #barber-services .sec-head { margin-bottom: 24px; }
 }
 
 /* ---------- one screen per section on phones ----------
@@ -371,8 +409,14 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
   .sec-head { margin-bottom: 20px; }
   .eyebrow { margin-bottom: 8px; }
   h2 { font-size: clamp(28px, 8.4vw, 34px); }
+
+  /* every button runs the full width of the screen */
+  .btn { display: flex; width: 100%; padding-left: 16px; padding-right: 16px; letter-spacing: .13em; }
+  .hero__ctas, .closing__ctas { flex-direction: column; flex-wrap: nowrap; width: 100%; gap: 10px; }
+  .row:has(> .btn) { flex-direction: column; align-items: stretch; text-align: center; }
+  .row > .link { align-self: center; }
+  .signup__row { flex-direction: column; }
   .lede { margin-top: 10px; font-size: 14px; line-height: 1.5; }
-  .sec .wf-note { margin-top: 14px; }
 
   /* home sections take the height their content needs, with the same 56px above and below
      each (no forced full screen: short sections were leaving big blank bands between them) */
@@ -382,24 +426,27 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
   }
   .split { grid-template-columns: minmax(0, 1fr); }
   .split__text { min-width: 0; }
-  [data-page="salon"] > .sec > :not(.wf-note), [data-page="barbershop"] > .sec > :not(.wf-note) { width: 100%; }
+  [data-page="salon"] > .sec > *, [data-page="barbershop"] > .sec > * { width: 100%; }
+
+  /* the hero's two buttons stop above the floating WhatsApp button */
+  .hero--photo { padding-bottom: 88px; }
 
   /* Color Studio: collage on top, text below, all on one screen */
-  #color .split { gap: 18px; }
-  #color .collage { height: 28svh; gap: 6px; }
+  #color .split { gap: 16px; }
+  #color .collage { height: 22svh; gap: 6px; }
   #color .collage .ph { aspect-ratio: auto; }
   #color .lede { font-size: 14px; }
-  #color .checks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  #color .checks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   #color .checks li { padding: 4px 10px; border: 1px solid var(--line); font-size: 12px; }
   #color .checks li::before { content: none; }
   #color .row { margin-top: 16px; gap: 12px 20px; }
-  #color .btn { padding: 12px 20px; }
+  [data-page="salon"] > #color { padding-top: 44px; padding-bottom: 44px; }
 
   /* before / after: 2 x 2 portraits */
   .ba { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 0; }
   .ba figcaption { margin-top: 6px; font-size: 12px; }
 
-  /* three steps: number beside the text */
+  /* the four steps: number beside the text */
   .steps { gap: 14px; margin: 0; text-align: left; }
   .steps li { display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; align-items: start; }
   .steps__n { grid-row: 1 / span 2; margin: 0; }
@@ -445,13 +492,19 @@ button.chip { background: none; color: inherit; font-family: inherit; cursor: po
   .crosslink .ph { min-height: 0; height: 100%; }
   .crosslink__text { padding: 32px var(--pad-x) 40px; gap: 10px; }
 
-  /* book: contact details in two short columns under the booking steps */
-  .visit { gap: 32px; }
-  .visit__info { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; align-items: start; }
-  .visit__info h3 { grid-column: 1 / -1; font-size: 18px; }
+  /* visit: address and hours, then the map, then the WhatsApp button at the bottom */
+  .visit { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .visit__info h3:not(:first-child) { margin-top: 16px; }
-  .visit__info p, .hours { grid-column: 1 / -1; font-size: 14px; }
-  .visit__info .ph--map { grid-column: 1 / -1; margin-top: 16px; aspect-ratio: 2 / 1; }
+  .visit .ph--map { grid-column: 1; grid-row: auto; aspect-ratio: 2 / 1; }
+
+  /* gallery preview: 3 x 2 */
+  .gallery-preview { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .gallery-preview .ph { font-size: 9px; padding: 4px; }
+  .gallery-preview + .row { margin-top: 18px; }
+
+  /* the floating WhatsApp button (56px, 16px from the bottom) must never sit on the last line
+     of a page: leave it clear space under the footer */
+  .footer { padding-bottom: 96px; }
 }
 
 @media (max-width: 640px) {

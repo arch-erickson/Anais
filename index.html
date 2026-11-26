@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=2026-11-25e">
-  <link rel="stylesheet" href="css/sections.css?v=2026-11-25w">
-  <link rel="stylesheet" href="css/booking.css?v=2026-11-25w">
+  <link rel="stylesheet" href="css/site.css?v=2026-11-25-audit11">
+  <link rel="stylesheet" href="css/sections.css?v=2026-11-25-audit11">
+  <link rel="stylesheet" href="css/booking.css?v=2026-11-25-audit9">
   <link rel="stylesheet" href="css/wireframe.css">
   <link rel="stylesheet" href="css/intro.css?v=2026-11-25e">
   <script>
@@ -64,11 +64,12 @@
     <a class="only-salon" href="#stylists" style="--i:1"><span lang="es">Estilistas</span><span lang="en">Stylists</span></a>
     <a class="only-salon" href="#services" style="--i:2"><span lang="es">Servicios</span><span lang="en">Services</span></a>
     <a class="only-salon" href="#gallery" style="--i:3"><span lang="es">Galería</span><span lang="en">Gallery</span></a>
-    <a class="only-salon menu__switch" href="#barbershop" style="--i:4"><span lang="es">Barbería</span><span lang="en">Barbershop</span></a>
     <a class="only-barber" href="#barbers" style="--i:1"><span lang="es">Barberos</span><span lang="en">Barbers</span></a>
     <a class="only-barber" href="#barber-services" style="--i:2"><span lang="es">Servicios</span><span lang="en">Services</span></a>
     <a class="only-barber" href="#barber-gallery" style="--i:3"><span lang="es">Galería</span><span lang="en">Gallery</span></a>
-    <a class="only-barber menu__switch" href="#salon" style="--i:4"><span lang="es">Salón</span><span lang="en">Salon</span></a>
+    <a href="#visit" style="--i:4"><span lang="es">Visítanos</span><span lang="en">Visit us</span></a>
+    <a class="only-salon menu__switch" href="#barbershop" style="--i:5"><span lang="es">Barbería</span><span lang="en">Barbershop</span></a>
+    <a class="only-barber menu__switch" href="#salon" style="--i:5"><span lang="es">Salón</span><span lang="en">Salon</span></a>
   </nav>
 
   <!-- =========================================================
@@ -83,7 +84,7 @@
     <section class="hero hero--photo">
       <!-- the hero photos cross-fade, 3 seconds each (css/sections.css: hero-swap-*) -->
       <div class="hero__slides">
-        <img class="hero__photo hero__photo--red" src="assets/photos/hero-red.jpg" width="1027" height="1532"
+        <img class="hero__photo hero__photo--red" src="assets/photos/hero-red.jpg" width="1027" height="1532" fetchpriority="high"
              alt="Clienta con cabello rojo vivo, liso y largo / Client with long, sleek vivid red hair">
         <img class="hero__photo hero__photo--silver" src="assets/photos/hero-silver.jpg" width="1117" height="1408"
              alt="Clienta con ondas largas en plateado azulado / Client with long silver-blue waves">
@@ -97,9 +98,11 @@
         <span lang="es">Un salón especializado en color: balayage, rubios, colores vivos y corrección de color, y además cada corte, tratamiento y peinado.</span>
         <span lang="en">A color-first salon: balayage, blonding, vivids and color correction, plus every cut, treatment and finish in between.</span>
       </p>
+      <!-- "Reservar cita" is the main button (gold outline); the second one is plain.
+           WhatsApp is the floating button at the bottom right. -->
       <div class="hero__ctas">
-        <a class="btn" href="#book"><span lang="es">Reservar cita</span><span lang="en">Book an appointment</span></a>
-        <a class="btn btn--ghost" href="#color"><span lang="es">Explorar el color</span><span lang="en">Explore color</span></a>
+        <a class="btn btn--key" href="#book"><span lang="es">Reservar cita</span><span lang="en">Book an appointment</span></a>
+        <a class="btn" href="#stylists"><span lang="es">Conoce a las estilistas</span><span lang="en">Meet the stylists</span></a>
       </div>
     </section>
 
@@ -128,10 +131,9 @@
             <li><span lang="es">Corrección de color</span><span lang="en">Color correction</span></li>
           </ul>
           <div class="row">
-            <a class="btn" href="#book"><span lang="es">Reservar consulta de color</span><span lang="en">Book a color consultation</span></a>
-            <a class="link" href="#services"><span lang="es">Ver menú de color</span><span lang="en">See color menu</span></a>
+            <a class="btn btn--key" href="#book"><span lang="es">Reservar consulta de color</span><span lang="en">Book a color consultation</span></a>
+            <a class="link" href="#menu-color"><span lang="es">Ver menú de color</span><span lang="en">See color menu</span></a>
           </div>
-          <span class="wf-note">Decision: free consult for new color guests? In person, virtual, or both?</span>
         </div>
       </div>
     </section>
@@ -171,19 +173,18 @@
           <h3><span lang="es">Seguimiento</span><span lang="en">Follow-up</span></h3>
           <p><span lang="es">Te escribimos para ver cómo va tu cabello y apartar tu próxima visita. ¡Hasta la próxima!</span><span lang="en">We check in on how your hair is doing and set up your next visit. See you next time!</span></p></li>
       </ol>
-      <span class="wf-note">Decision: does the salon take walk-ins every day, or only some days? Who sends the follow-up message, and how many days after?</span>
     </section>
 
     <!-- Testimonials -->
     <section class="sec sec--band">
       <div class="sec-head">
         <p class="eyebrow"><span lang="es">Palabras bonitas</span><span lang="en">Kind words</span></p>
-        <h2><span lang="es">De nuestras clientas.</span><span lang="en">From our guests.</span></h2>
+        <h2><span lang="es">Lo que dicen de nosotros.</span><span lang="en">What people say about us.</span></h2>
       </div>
       <div class="quotes">
-        <blockquote><p><span lang="es">"Aquí va la reseña. Una o dos líneas sobre el resultado del color y cómo se sintió."</span><span lang="en">"Review text goes here. One or two lines about the color result and how they felt."</span></p><cite><span lang="es">Nombre de clienta</span><span lang="en">Guest name</span> · Balayage</cite></blockquote>
-        <blockquote><p><span lang="es">"Aquí va la reseña. Una o dos líneas sobre el resultado del color y cómo se sintió."</span><span lang="en">"Review text goes here. One or two lines about the color result and how they felt."</span></p><cite><span lang="es">Nombre de clienta · Corrección de color</span><span lang="en">Guest name · Color correction</span></cite></blockquote>
-        <blockquote><p><span lang="es">"Aquí va la reseña. Una o dos líneas sobre el resultado del color y cómo se sintió."</span><span lang="en">"Review text goes here. One or two lines about the color result and how they felt."</span></p><cite><span lang="es">Nombre de clienta · Colores vivos</span><span lang="en">Guest name · Vivids</span></cite></blockquote>
+        <blockquote><p><span lang="es">"Aquí va la reseña. Una o dos líneas sobre el resultado del color y cómo se sintió."</span><span lang="en">"Review text goes here. One or two lines about the color result and how they felt."</span></p><cite><span lang="es">Nombre</span><span lang="en">Guest name</span> · Balayage</cite></blockquote>
+        <blockquote><p><span lang="es">"Aquí va la reseña. Una o dos líneas sobre el resultado del color y cómo se sintió."</span><span lang="en">"Review text goes here. One or two lines about the color result and how they felt."</span></p><cite><span lang="es">Nombre · Corrección de color</span><span lang="en">Guest name · Color correction</span></cite></blockquote>
+        <blockquote><p><span lang="es">"Aquí va la reseña. Una o dos líneas sobre el resultado del color y cómo se sintió."</span><span lang="en">"Review text goes here. One or two lines about the color result and how they felt."</span></p><cite><span lang="es">Nombre · Colores vivos</span><span lang="en">Guest name · Vivids</span></cite></blockquote>
       </div>
     </section>
 
@@ -197,6 +198,19 @@
         <a class="btn" href="#barbershop"><span lang="es">Visitar la barbería</span><span lang="en">Visit the barbershop</span></a>
       </div>
     </section>
+
+    <!-- Closing: the same pair of buttons as the hero (book is the main one, gold outline;
+         WhatsApp is the floating button) -->
+    <section class="sec closing">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">¿Empezamos?</span><span lang="en">Shall we start?</span></p>
+        <h2><span lang="es">Tu nuevo look empieza aquí.</span><span lang="en">Your new look starts here.</span></h2>
+      </div>
+      <div class="closing__ctas">
+        <a class="btn btn--key" href="#book"><span lang="es">Reservar cita</span><span lang="en">Book an appointment</span></a>
+        <a class="btn" href="#stylists"><span lang="es">Conoce al equipo</span><span lang="en">Meet the team</span></a>
+      </div>
+    </section>
     </div>
 
     <!-- PAGE: Stylists -->
@@ -204,7 +218,7 @@
       <div class="sec-head">
         <p class="eyebrow"><span lang="es">Estilistas</span><span lang="en">Stylists</span></p>
         <h2><span lang="es">Conoce al equipo.</span><span lang="en">Meet the team.</span></h2>
-        <p class="lede"><span lang="es">Coloristas, cortadoras y estilistas. Reserva con quien ya conoces o deja que te recomendemos.</span><span lang="en">Colorists, cutters and finishers. Book with someone you know, or let us match you.</span></p>
+        <p class="lede"><span lang="es">Especialistas en color, corte y peinado. Reserva con quien ya conoces o deja que te recomendemos.</span><span lang="en">Colorists, cutters and finishers. Book with someone you know, or let us match you.</span></p>
       </div>
       <div class="people">
         <article class="person" data-staff="s1" data-whatsapp="15550100001" data-profile="stylist-1">
@@ -256,7 +270,6 @@
           </div>
         </article>
       </div>
-      <span class="wf-note">Decision: how many stylists? Show levels (Junior / Senior / Director) with different pricing?</span>
     </section>
 
     <!-- PAGE: Services -->
@@ -269,7 +282,7 @@
       </div>
 
       <div class="svc-menu">
-        <details class="svc-menu__cat svc-menu__cat--feature">
+        <details id="menu-color" class="svc-menu__cat svc-menu__cat--feature">
           <summary><h3>Color <span class="badge"><span lang="es">Especialidad</span><span lang="en">Signature</span></span></h3><span class="svc-menu__desc"><span lang="es">Balayage, mechas, colores vivos, canas y corrección</span><span lang="en">Balayage, highlights, vivids, greys and correction</span></span></summary>
           <ul class="svc">
             <li><span><span lang="es">Consulta de color</span><span lang="en">Color consultation</span></span><b><span lang="es">Gratis</span><span lang="en">Free</span></b></li>
@@ -282,7 +295,7 @@
             <li><span><span lang="es">Corrección de color</span><span lang="en">Color correction</span></span></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="menu-cuts" class="svc-menu__cat">
           <summary><h3><span lang="es">Cortes y peinados</span><span lang="en">Cuts &amp; styling</span></h3><span class="svc-menu__desc"><span lang="es">Cortes, secados, silk press, novias y eventos</span><span lang="en">Cuts, blowouts, silk press, bridal and events</span></span></summary>
           <ul class="svc">
             <li><details class="svc-sub"><summary><span><span lang="es">Cortes</span><span lang="en">Cuts</span></span><small>4</small></summary><ul><li><span lang="es">Dama</span><span lang="en">Women's</span></li><li><span lang="es">Caballero</span><span lang="en">Men's</span></li><li><span lang="es">Infantil (menores de 12)</span><span lang="en">Kids (under 12)</span></li><li><span lang="es">Flequillo</span><span lang="en">Bang trim</span></li></ul></details></li>
@@ -291,7 +304,7 @@
             <li><details class="svc-sub"><summary><span><span lang="es">Novias y eventos</span><span lang="en">Bridal &amp; events</span></span><small>3</small></summary><ul><li><span lang="es">Recogido o peinado de evento</span><span lang="en">Updo or event styling</span></li><li><span lang="es">Prueba de novia</span><span lang="en">Bridal trial</span></li><li><span lang="es">Peinado de boda</span><span lang="en">Wedding-day hair</span></li></ul></details></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="menu-treatments" class="svc-menu__cat">
           <summary><h3><span lang="es">Tratamientos y textura</span><span lang="en">Treatments &amp; texture</span></h3><span class="svc-menu__desc"><span lang="es">Reparación, hidratación, keratina, rizos y alisados</span><span lang="en">Repair, hydration, keratin, curls and smoothing</span></span></summary>
           <ul class="svc">
             <li><details class="svc-sub"><summary><span><span lang="es">Tratamientos</span><span lang="en">Treatments</span></span><small>3</small></summary><ul><li><span lang="es">Reparador</span><span lang="en">Bond repair</span></li><li><span lang="es">Hidratación profunda</span><span lang="en">Deep conditioning</span></li><li><span lang="es">Cuero cabelludo</span><span lang="en">Scalp</span></li></ul></details></li>
@@ -299,7 +312,7 @@
             <li><details class="svc-sub"><summary><span><span lang="es">Rizos y ondas</span><span lang="en">Curls &amp; waves</span></span><small>2</small></summary><ul><li><span lang="es">Permanente / ondulado</span><span lang="en">Perm / body wave</span></li><li><span lang="es">Corte y definición de rizos</span><span lang="en">Curl cut &amp; define</span></li></ul></details></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="menu-extensions" class="svc-menu__cat">
           <summary><h3><span lang="es">Extensiones</span><span lang="en">Extensions</span></h3><span class="svc-menu__desc"><span lang="es">Tape-in, cortinas cosidas a mano y mantenimiento</span><span lang="en">Tape-in, hand-tied wefts and maintenance</span></span></summary>
           <ul class="svc">
             <li><span><span lang="es">Consulta de extensiones</span><span lang="en">Extension consultation</span></span><b><span lang="es">Gratis</span><span lang="en">Free</span></b></li>
@@ -307,7 +320,7 @@
             <li><span><span lang="es">Mantenimiento</span><span lang="en">Move-up / maintenance</span></span></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="menu-nails" class="svc-menu__cat">
           <summary><h3><span lang="es">Uñas: manos y pies</span><span lang="en">Nails: hands &amp; feet</span></h3><span class="svc-menu__desc"><span lang="es">Manicura, pedicura, gel, acrílico y diseños</span><span lang="en">Manicures, pedicures, gel, acrylic and nail art</span></span></summary>
           <ul class="svc">
             <li><details class="svc-sub"><summary><span><span lang="es">Manos</span><span lang="en">Hands</span></span><small>3</small></summary><ul><li><span lang="es">Manicura clásica</span><span lang="en">Classic manicure</span></li><li><span lang="es">Manicura en gel</span><span lang="en">Gel manicure</span></li><li><span lang="es">Acrílicas: set completo y relleno</span><span lang="en">Acrylic: full set &amp; fill</span></li></ul></details></li>
@@ -316,7 +329,7 @@
             <li><span><span lang="es">Retiro de gel o acrílico</span><span lang="en">Gel or acrylic removal</span></span></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="menu-brows" class="svc-menu__cat">
           <summary><h3><span lang="es">Cejas y pestañas</span><span lang="en">Brows &amp; lashes</span></h3><span class="svc-menu__desc"><span lang="es">Diseño y tinte</span><span lang="en">Shaping and tinting</span></span></summary>
           <ul class="svc">
             <li><span><span lang="es">Diseño de cejas</span><span lang="en">Brow shaping</span></span></li>
@@ -324,7 +337,6 @@
           </ul>
         </details>
       </div>
-      <span class="wf-note">Decision: confirm the categories and the services inside each one, especially nails (from her Facebook manicure / pedicure posts) and brows &amp; lashes.</span>
     </section>
 
     <!-- PAGE: Gallery -->
@@ -333,15 +345,19 @@
         <p class="eyebrow"><span lang="es">Galería</span><span lang="en">Gallery</span></p>
         <h2><span lang="es">Trabajos recientes.</span><span lang="en">Recent work.</span></h2>
       </div>
-      <!-- chips filter the gallery by data-cat (js/gallery.js). Only Nails has real photos so far;
-           the hair chips show the hair placeholders for now. -->
+      <!-- chips filter the gallery by data-cat (js/gallery.js). A tile can carry several words,
+           e.g. data-cat="hair blonde". A chip only shows when at least one tile carries its word,
+           so every chip on screen does something: today that is All, Hair and Nails. The colour
+           chips appear on their own once hair photos are tagged blonde / brunette / vivid /
+           correction / cut. -->
       <div class="chips" data-gallery-filter>
         <button type="button" class="chip is-on" data-filter="all" aria-pressed="true"><span lang="es">Todo</span><span lang="en">All</span></button>
-        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Rubios</span><span lang="en">Blonde</span></button>
-        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Castaños</span><span lang="en">Brunette</span></button>
-        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Vivos</span><span lang="en">Vivid</span></button>
-        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Correcciones</span><span lang="en">Corrections</span></button>
-        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Cortes</span><span lang="en">Cuts</span></button>
+        <button type="button" class="chip" data-filter="hair" aria-pressed="false"><span lang="es">Cabello</span><span lang="en">Hair</span></button>
+        <button type="button" class="chip" data-filter="blonde" aria-pressed="false"><span lang="es">Rubios</span><span lang="en">Blonde</span></button>
+        <button type="button" class="chip" data-filter="brunette" aria-pressed="false"><span lang="es">Castaños</span><span lang="en">Brunette</span></button>
+        <button type="button" class="chip" data-filter="vivid" aria-pressed="false"><span lang="es">Vivos</span><span lang="en">Vivid</span></button>
+        <button type="button" class="chip" data-filter="correction" aria-pressed="false"><span lang="es">Correcciones</span><span lang="en">Corrections</span></button>
+        <button type="button" class="chip" data-filter="cut" aria-pressed="false"><span lang="es">Cortes</span><span lang="en">Cuts</span></button>
         <button type="button" class="chip" data-filter="nails" aria-pressed="false"><span lang="es">Uñas</span><span lang="en">Nails</span></button>
       </div>
       <!-- A tile can hold several photos of the same work; they take turns every 3 seconds
@@ -372,7 +388,6 @@
         <div class="ph ph--square" data-cat="hair">Foto</div><div class="ph ph--square" data-cat="hair">Foto</div><div class="ph ph--square" data-cat="hair">Foto</div>
       </div>
       <div class="row row--center"><a class="link" href="#gallery"><span lang="es">Síguenos en Instagram</span><span lang="en">Follow us on Instagram</span></a></div>
-      <span class="wf-note">Decision: live Instagram feed, or hand-picked photos? (127 salon photos from Facebook are in photos/facebook.)</span>
     </section>
 
   </main>
@@ -393,10 +408,45 @@
         <span lang="en">The barbershop at ANAÍS. Classic and modern cuts, beard work and straight-razor shaves.</span>
       </p>
       <div class="hero__ctas">
-        <a class="btn" href="#book"><span lang="es">Reservar silla</span><span lang="en">Book a chair</span></a>
-        <a class="btn btn--ghost" href="#barber-services"><span lang="es">Ver servicios</span><span lang="en">See services</span></a>
+        <a class="btn btn--key" href="#book"><span lang="es">Reservar silla</span><span lang="en">Book a chair</span></a>
+        <a class="btn" href="#barbers"><span lang="es">Conoce a los barberos</span><span lang="en">Meet the barbers</span></a>
       </div>
-      <span class="wf-note">Decision: barbershop name. Walk-ins welcome, or appointment only?</span>
+    </section>
+
+    <!-- How it works: the same four steps as the salon -->
+    <section class="sec" id="barber-how">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Cómo funciona</span><span lang="en">How it works</span></p>
+        <h2><span lang="es">Cuatro pasos hacia tu corte.</span><span lang="en">Four steps to your cut.</span></h2>
+      </div>
+      <ol class="steps steps--4">
+        <li><span class="steps__n">1</span>
+          <h3><span lang="es">Escríbenos por WhatsApp</span><span lang="en">Message us on WhatsApp</span></h3>
+          <p><span lang="es">Dinos qué corte buscas o mándanos una foto. Te respondemos con ideas, precio y horarios.</span><span lang="en">Tell us the cut you're after, or send a photo. We reply with ideas, pricing and times.</span>
+            <a class="steps__link" href="https://wa.me/15550100010" data-wa-desk="hello" target="_blank" rel="noopener"><span lang="es">Escribir ahora</span><span lang="en">Message now</span></a></p></li>
+        <li><span class="steps__n">2</span>
+          <h3><span lang="es">Ven con cita o sin cita</span><span lang="en">Come in, booked or walk-in</span></h3>
+          <p><span lang="es">Reserva tu silla o pasa directo: si hay una libre, te atendemos ese mismo día.</span><span lang="en">Book a chair or just drop by: if one is free, we'll take you that same day.</span></p></li>
+        <li><span class="steps__n">3</span>
+          <h3><span lang="es">Tu nuevo look</span><span lang="en">Your new look</span></h3>
+          <p><span lang="es">Confirmamos la idea en la silla y tu barbero hace el resto: corte, barba o afeitado.</span><span lang="en">We confirm the plan in the chair, then your barber does the rest: cut, beard or shave.</span></p></li>
+        <li><span class="steps__n">4</span>
+          <h3><span lang="es">Seguimiento</span><span lang="en">Follow-up</span></h3>
+          <p><span lang="es">Te escribimos para apartar tu próxima visita. ¡Hasta la próxima!</span><span lang="en">We message you to set up your next visit. See you next time!</span></p></li>
+      </ol>
+    </section>
+
+    <!-- Gallery preview: tap a photo to see it full screen, or open the whole gallery -->
+    <section class="sec sec--band" id="barber-preview">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">Galería</span><span lang="en">Gallery</span></p>
+        <h2><span lang="es">Trabajo reciente.</span><span lang="en">Recent work.</span></h2>
+      </div>
+      <div class="gallery-preview">
+        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
+        <div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div><div class="ph ph--square">Foto</div>
+      </div>
+      <div class="row row--center"><a class="btn" href="#barber-gallery"><span lang="es">Ver la galería</span><span lang="en">See the gallery</span></a></div>
     </section>
 
     <!-- Cross-link back to the salon -->
@@ -407,6 +457,18 @@
         <h2><span lang="es">Salón ANAÍS</span><span lang="en">ANAÍS Salon</span></h2>
         <p><span lang="es">Especialistas en color, cortes, tratamientos y extensiones.</span><span lang="en">Color specialists, cuts, treatments and extensions.</span></p>
         <a class="btn" href="#salon"><span lang="es">Visitar el salón</span><span lang="en">Visit the salon</span></a>
+      </div>
+    </section>
+
+    <!-- Closing: the same pair of buttons as the hero -->
+    <section class="sec closing">
+      <div class="sec-head">
+        <p class="eyebrow"><span lang="es">¿Empezamos?</span><span lang="en">Shall we start?</span></p>
+        <h2><span lang="es">Tu próximo corte empieza aquí.</span><span lang="en">Your next cut starts here.</span></h2>
+      </div>
+      <div class="closing__ctas">
+        <a class="btn btn--key" href="#book"><span lang="es">Reservar silla</span><span lang="en">Book a chair</span></a>
+        <a class="btn" href="#barbers"><span lang="es">Conoce al equipo</span><span lang="en">Meet the team</span></a>
       </div>
     </section>
     </div>
@@ -466,7 +528,7 @@
         <p class="svc-call"><a href="https://wa.me/15550100000" data-wa-desk target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><use href="#icon-whatsapp"/></svg><span lang="es">Pregunta precios por WhatsApp</span><span lang="en">Ask for prices on WhatsApp</span></a></p>
       </div>
       <div class="svc-menu">
-        <details class="svc-menu__cat">
+        <details id="barber-menu-cuts" class="svc-menu__cat">
           <summary><h3><span lang="es">Cortes</span><span lang="en">Cuts</span></h3><span class="svc-menu__desc"><span lang="es">Clásicos, degradados, a tijera y rapados</span><span lang="en">Classics, fades, scissor cuts and buzz cuts</span></span></summary>
           <ul class="svc">
             <li><span><span lang="es">Corte clásico</span><span lang="en">Classic cut</span></span></li>
@@ -476,7 +538,7 @@
             <li><span><span lang="es">Corte infantil (menores de 12)</span><span lang="en">Kids' cut (under 12)</span></span></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="barber-menu-beard" class="svc-menu__cat">
           <summary><h3><span lang="es">Barba y afeitado</span><span lang="en">Beard &amp; shave</span></h3><span class="svc-menu__desc"><span lang="es">Recorte, perfilado y afeitado con navaja</span><span lang="en">Trims, line-ups and razor shaves</span></span></summary>
           <ul class="svc">
             <li><details class="svc-sub"><summary><span><span lang="es">Barba</span><span lang="en">Beard</span></span><small>2</small></summary><ul><li><span lang="es">Recorte y forma</span><span lang="en">Trim &amp; shape</span></li><li><span lang="es">Perfilado</span><span lang="en">Line-up</span></li></ul></details></li>
@@ -484,7 +546,7 @@
             <li><span><span lang="es">Afeitado de cabeza</span><span lang="en">Head shave</span></span></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="barber-menu-extras" class="svc-menu__cat">
           <summary><h3>Extras</h3><span class="svc-menu__desc"><span lang="es">Perfilado, diseños, canas y facial</span><span lang="en">Line-ups, designs, greys and facials</span></span></summary>
           <ul class="svc">
             <li><span><span lang="es">Perfilado (line-up)</span><span lang="en">Line-up / edge-up</span></span></li>
@@ -494,7 +556,7 @@
             <li><span><span lang="es">Facial con toalla caliente</span><span lang="en">Hot-towel facial</span></span></li>
           </ul>
         </details>
-        <details class="svc-menu__cat">
+        <details id="barber-menu-packages" class="svc-menu__cat">
           <summary><h3><span lang="es">Paquetes</span><span lang="en">Packages</span></h3><span class="svc-menu__desc"><span lang="es">Varios servicios en una visita</span><span lang="en">Several services in one visit</span></span></summary>
           <ul class="svc">
             <li><span><span lang="es">Corte + barba</span><span lang="en">Cut + beard</span></span></li>
@@ -502,7 +564,6 @@
           </ul>
         </details>
       </div>
-      <span class="wf-note">Decision: monthly membership (e.g. two cuts a month)?</span>
     </section>
 
     <!-- PAGE: Barber gallery -->
@@ -529,7 +590,6 @@
       <h2 class="only-salon"><span lang="es">Reserva tu cita.</span><span lang="en">Book your appointment.</span></h2>
       <h2 class="only-barber"><span lang="es">Reserva tu silla.</span><span lang="en">Book your chair.</span></h2>
     </div>
-    <div class="visit">
       <!-- Booking: four steps, one at a time, then WhatsApp. Nothing is stored on the site; the
            request opens in WhatsApp addressed to the chosen stylist, who replies to confirm.
            Every step has an "I'm not sure yet" choice, so nobody gets stuck. js/booking.js -->
@@ -595,10 +655,10 @@
             <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
             <span lang="es">Atrás</span><span lang="en">Back</span>
           </button>
-          <button type="button" class="bk-next" data-next disabled>
+          <button type="button" class="btn btn--key bk-next" data-next disabled>
             <span lang="es">Continuar</span><span lang="en">Continue</span>
           </button>
-          <button type="submit" class="bk-next bk-next--wa" data-send hidden disabled>
+          <button type="submit" class="btn btn--key btn--wa bk-next" data-send hidden disabled>
             <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg>
             <span lang="es">Enviar por WhatsApp</span><span lang="en">Send on WhatsApp</span>
           </button>
@@ -610,25 +670,34 @@
           <svg class="booker__done-icon" aria-hidden="true" viewBox="0 0 24 24" width="44" height="44"><use href="#icon-whatsapp"/></svg>
           <h3 class="bk-q"><span lang="es">Solicitud lista</span><span lang="en">Request ready</span></h3>
           <p><span lang="es">Abrimos WhatsApp con tu mensaje. Toca enviar y espera la respuesta de</span><span lang="en">We opened WhatsApp with your message. Tap send and wait for a reply from</span> <b data-fill="done-who"></b>.</p>
-          <a class="bk-next bk-next--wa" href="#" data-fill="done-link" target="_blank" rel="noopener"><span lang="es">¿No se abrió? Abrir WhatsApp</span><span lang="en">Didn't open? Open WhatsApp</span></a>
+          <a class="btn btn--key btn--wa bk-next" href="#" data-fill="done-link" target="_blank" rel="noopener"><span lang="es">¿No se abrió? Abrir WhatsApp</span><span lang="en">Didn't open? Open WhatsApp</span></a>
           <button type="button" class="bk-back" data-restart><span lang="es">Hacer otra solicitud</span><span lang="en">Make another request</span></button>
         </div>
       </form>
+  </section>
+
+  <!-- PAGE: Visit (shared by the salon and the barbershop): address, hours, map and a WhatsApp
+       button. It used to sit under the booking steps; now the Book page only books. No phone
+       number or email here: WhatsApp is the way in. -->
+  <section class="page sec" id="visit" data-page="visit">
+    <div class="sec-head">
+      <p class="eyebrow"><span lang="es">Visítanos</span><span lang="en">Visit</span></p>
+      <h2><span lang="es">Te esperamos.</span><span lang="en">Come see us.</span></h2>
+    </div>
+    <div class="visit">
       <div class="visit__info">
-        <h3><span lang="es">Visítanos</span><span lang="en">Visit</span></h3>
-        <p><span lang="es">Dirección<br>Ciudad, Estado, Código postal</span><span lang="en">Street address<br>City, State ZIP</span></p>
+        <h3><span lang="es">Dirección</span><span lang="en">Address</span></h3>
+        <p><span lang="es">Calle y número<br>Ciudad, Estado, Código postal</span><span lang="en">Street address<br>City, State ZIP</span></p>
         <h3><span lang="es">Horario</span><span lang="en">Hours</span></h3>
         <dl class="hours">
           <dt><span lang="es">Lun – Vie</span><span lang="en">Mon – Fri</span></dt><dd>9am – 7pm</dd>
           <dt><span lang="es">Sáb</span><span lang="en">Sat</span></dt><dd>9am – 5pm</dd>
           <dt><span lang="es">Dom</span><span lang="en">Sun</span></dt><dd>10am – 4pm</dd>
         </dl>
-        <h3><span lang="es">Contacto</span><span lang="en">Contact</span></h3>
-        <p>(000) 000-0000<br>hello@yourdomain.com</p>
-        <div class="ph ph--map"><span lang="es">Mapa</span><span lang="en">Map</span></div>
       </div>
+      <div class="ph ph--map"><span lang="es">Mapa</span><span lang="en">Map</span></div>
+      <a class="btn btn--key btn--wa visit__wa" href="https://wa.me/15550100000" data-wa-desk="ask" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg><span lang="es">Chatea por WhatsApp</span><span lang="en">Chat on WhatsApp</span></a>
     </div>
-    <span class="wf-note">Decision: each stylist's and barber's real WhatsApp number (now placeholders +1 555 010 00xx), and the front-desk numbers used for "No preference". Real salon hours for this list (the booking itself is open every day; each stylist confirms their own schedule). Deposit or cancellation policy?</span>
   </section>
 
   <footer class="footer">
@@ -646,6 +715,7 @@
       <a class="only-barber" href="#barber-services"><span lang="es">Servicios</span><span lang="en">Services</span></a>
       <a class="only-barber" href="#barber-gallery"><span lang="es">Galería</span><span lang="en">Gallery</span></a>
       <a class="only-barber" href="#salon"><span lang="es">Salón</span><span lang="en">Salon</span></a>
+      <a href="#visit"><span lang="es">Visítanos</span><span lang="en">Visit us</span></a>
     </nav>
     <form class="signup" onsubmit="return false">
       <label for="signup-email"><span lang="es">Ofertas y novedades</span><span lang="en">Offers &amp; news</span></label>
@@ -668,16 +738,32 @@
     </symbol>
   </svg>
 
+  <!-- photo viewer: a gallery or before / after photo opens full screen, with a WhatsApp
+       button to ask for that look (js/lightbox.js) -->
+  <dialog class="lightbox" id="lightbox">
+    <button type="button" class="lightbox__close" data-lb-close aria-label="Cerrar / Close">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <div class="lightbox__stage" data-lb-stage></div>
+    <p class="lightbox__cap" data-lb-cap></p>
+    <div class="lightbox__nav" data-lb-nav hidden>
+      <button type="button" data-lb-step="-1" aria-label="Foto anterior / Previous photo">‹</button>
+      <span data-lb-count></span>
+      <button type="button" data-lb-step="1" aria-label="Foto siguiente / Next photo">›</button>
+    </div>
+    <a class="btn btn--key btn--wa" href="#" data-lb-wa target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg><span lang="es">¿Quieres este look? Escríbenos</span><span lang="en">Want this look? Message us</span></a>
+  </dialog>
+
   <!-- floating WhatsApp button: the salon's main number (js/booking.js adds a greeting) -->
   <a class="wa-float" href="https://wa.me/15550100000" data-wa-main target="_blank" rel="noopener" aria-label="WhatsApp">
     <svg aria-hidden="true" viewBox="0 0 24 24" width="30" height="30"><use href="#icon-whatsapp"/></svg>
   </a>
 
-  <button class="wf-toggle" type="button" aria-pressed="true">Wireframe notes: on</button>
 
-  <script src="js/site.js?v=2026-11-25w"></script>
-  <script src="js/booking.js?v=2026-11-25w"></script>
-  <script src="js/gallery.js?v=2026-11-25a"></script>
+  <script src="js/site.js?v=2026-11-25-audit6"></script>
+  <script src="js/booking.js?v=2026-11-25-audit6"></script>
+  <script src="js/gallery.js?v=2026-11-25-audit6"></script>
+  <script src="js/lightbox.js?v=2026-11-25-audit6"></script>
   <script src="js/intro-flowers.js?v=2026-11-25e"></script>
   <script src="js/intro.js?v=2026-11-25e"></script>
 </body>

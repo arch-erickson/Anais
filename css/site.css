@@ -9,8 +9,18 @@
   --gold-deep: #7E5520;
   --line: rgba(126, 85, 32, .22);
   --header-bg: rgba(246, 241, 232, .92);
-  --menu-book-bg: #B8863A;
-  --menu-book-fg: #fff;
+  /* anything filled that carries text (selected tiles, badges, the menu's Book bar) uses the deeper gold:
+     white on --gold is only 3.2:1, white on --gold-fill is 5.3:1 */
+  --gold-fill: #8F6326;
+  --on-fill: #fff;
+  /* WhatsApp green, deep enough for white text on it (5.8:1) and for green text on cream (5.1:1).
+     The bright #25D366 is only for the floating icon. */
+  --wa: #117540;
+  --wa-hover: #0C5C32;
+  --wa-text: #117540;
+  /* disabled is grey */
+  --off: #DADADA;
+  --off-ink: #767676;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -48,7 +58,7 @@ html[lang="en"] [lang="es"] { display: none !important; }
 .lang { justify-self: start; display: flex; align-items: center; gap: 6px; font-size: 12px; letter-spacing: .16em; }
 .lang button {
   padding: 8px 2px; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit;
-  cursor: pointer; opacity: .45; transition: opacity .2s;
+  cursor: pointer; opacity: .65; transition: opacity .2s;
 }
 .lang button[aria-pressed="true"] { opacity: 1; color: var(--gold-deep); font-weight: 500; }
 .lang__sep { opacity: .35; }
@@ -85,21 +95,38 @@ html[lang="en"] [lang="es"] { display: none !important; }
   transform: translateX(105%); visibility: hidden;
   transition: transform .45s cubic-bezier(.2, .8, .2, 1) calc(var(--i, 0) * 55ms), visibility 0s .5s, background-color .2s;
 }
-.menu a.menu__book { background: var(--menu-book-bg); color: var(--menu-book-fg); }
-.menu a:hover { background: var(--gold); color: var(--cream); }
+.menu a.menu__book { background: var(--gold-fill); color: var(--on-fill); }   /* read here, so the barbershop's own pair applies */
+.menu a:hover { background: var(--gold-fill); color: var(--on-fill); }
 .menu a.menu__switch { font-weight: 500; }
 .menu a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
 .menu.is-open a { transform: none; visibility: visible; transition-delay: calc(var(--i, 0) * 55ms), 0s, 0s; }
 @media (prefers-reduced-motion: reduce) { .menu a { transition: none; } }
 
+/* ---------- buttons: two styles, square corners (DESIGN-AUDIT.md, rule C) ----------
+   STICK WITH THIS (Erickson, 25 Nov 2026; he rejected solid gold buttons twice):
+   .btn--key   the main button: a gold outline, no fill. The most important action on a screen
+               ("Reservar cita" in the hero, Continue in the booking).
+   .btn        every other button: simple, no outline and no fill, just the words.
+   Do NOT add solid gold buttons.
+   .btn--wa    WhatsApp actions keep their green for now (open question in DESIGN-AUDIT.md).
+               Delete the .btn--wa rules and those buttons fall back to the two styles above.
+   Both are full width on phones (sections.css). Disabled is grey. */
 .btn {
-  display: inline-block; padding: 14px 30px;
-  border: 1px solid var(--gold); color: var(--gold-deep);
-  font-size: 12px; letter-spacing: .24em; text-transform: uppercase;
-  transition: background .25s, color .25s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 13px 28px; border: 1px solid transparent; border-radius: 0;
+  background: transparent; color: var(--gold-deep);
+  font: 500 13px/1.3 Montserrat, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; text-align: center;
+  cursor: pointer; transition: background-color .2s, color .2s, border-color .2s;
 }
-.btn:hover { background: var(--gold); color: var(--cream); }
-.btn--small { padding: 9px 18px; font-size: 11px; }
+.btn svg { flex: none; }
+.btn:hover { color: var(--gold); }
+.btn--key { border-color: var(--gold); }
+.btn--key:hover { background: var(--gold); border-color: var(--gold); color: var(--cream); }
+.btn--wa, .btn--wa.btn--key { background: var(--wa); border-color: var(--wa); color: #fff; }
+.btn--wa:hover, .btn--wa.btn--key:hover { background: var(--wa-hover); border-color: var(--wa-hover); color: #fff; }
+.btn:disabled, .btn:disabled:hover { background: var(--off); border-color: var(--off); color: var(--off-ink); cursor: not-allowed; }
+.btn:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
+.btn--small { min-height: 40px; padding: 8px 18px; font-size: 11px; }
 
 .hero {
   min-height: 100vh; min-height: 100svh;

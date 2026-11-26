@@ -2,18 +2,17 @@
    One step at a time, in the plain sans-serif (only "Reserva tu cita" keeps the serif).
    Nothing scrolls sideways; Back sits above Continue at the bottom of every step. */
 .booker {
-  --wa: #1F9D55; --wa-hover: #17834A; --off: #DADADA; --off-ink: #8E8E8E; --shade: rgba(0, 0, 0, .5);
+  --shade: rgba(0, 0, 0, .5);                         /* greens and greys come from site.css */
   min-width: 0; max-width: 560px; font-family: Montserrat, system-ui, sans-serif;
 }
-body.is-barber .booker { --off: rgba(239, 231, 216, .14); --off-ink: rgba(239, 231, 216, .45); }
 .booker [hidden] { display: none !important; }
-.booker button { font-family: inherit; color: inherit; }
+.booker button:where(:not(.btn)) { font-family: inherit; color: inherit; }
 #book .sec-head { margin-bottom: 20px; }
 #book .sec-head .eyebrow { display: none; }
 
 /* progress: "Step 2 of 4" and four bars */
 .bk-progress { margin-bottom: 22px; }
-.bk-progress__text { margin: 0 0 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+.bk-progress__text { margin: 0 0 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
 .bk-progress__text b { font-weight: 500; }
 .bk-progress__bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
 .bk-progress__bar i { height: 3px; background: var(--line); }
@@ -53,22 +52,23 @@ body.is-barber .booker { --off: rgba(239, 231, 216, .14); --off-ink: rgba(239, 2
 .bk-person:focus-visible .bk-person__photo { outline: 2px solid var(--gold-deep); outline-offset: 2px; }
 
 /* step 2: calendar */
-.bk-cal { border: 1px solid var(--line); padding: 10px 10px 8px; }
+.bk-cal { border: 1px solid var(--line); padding: 8px 6px 6px; }
 .bk-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 .bk-cal__title { font-size: 14px; font-weight: 500; }
 .bk-cal__title span { display: inline-block; }
 .bk-cal__title span::first-letter { text-transform: uppercase; }
-.bk-cal__nav { width: 36px; height: 32px; border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; }
+.bk-cal__nav { width: 44px; height: 40px; border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; }
 .bk-cal__nav:disabled { opacity: .25; cursor: default; }
 .bk-cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
-.bk-cal__wd { padding: 4px 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .55; }
+.bk-cal__wd { padding: 2px 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+/* a day is a 44px tap target: as wide as its column (44px on a 375px phone), never wider */
 .bk-day {
-  height: 36px; border: 0; background: none; font-size: 14px; cursor: pointer;
-  width: 36px; justify-self: center; transition: background-color .15s;
+  height: 44px; border: 0; background: none; font-size: 14px; cursor: pointer;
+  width: 100%; max-width: 44px; justify-self: center; transition: background-color .15s;
 }
 .bk-day:hover:not(:disabled) { background: rgba(184, 134, 58, .15); }
 .bk-day.is-today { box-shadow: inset 0 0 0 1px var(--gold); }
-.bk-day.is-on { background: var(--gold); color: #fff; font-weight: 500; }
+.bk-day.is-on { background: var(--gold-fill); color: var(--on-fill); font-weight: 500; }
 .bk-day:disabled { color: var(--off-ink); opacity: .45; cursor: default; text-decoration: none; }
 
 /* step 2: preferred time, four in a row */
@@ -78,9 +78,9 @@ body.is-barber .booker { --off: rgba(239, 231, 216, .14); --off-ink: rgba(239, 2
   cursor: pointer; text-align: center;
 }
 .bk-time b { font-size: 13px; font-weight: 500; }
-.bk-time small { font-size: 10.5px; opacity: .7; }
-.bk-time.is-on { background: var(--gold); border-color: var(--gold); color: #fff; }
-.bk-time.is-on small { opacity: .9; }
+.bk-time small { font-size: 10.5px; opacity: .75; }
+.bk-time.is-on { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-fill); }
+.bk-time.is-on small { opacity: 1; }
 .bk-time:disabled { opacity: .35; cursor: default; }
 
 /* "not sure yet" for the date */
@@ -98,7 +98,7 @@ body.is-barber .booker { --off: rgba(239, 231, 216, .14); --off-ink: rgba(239, 2
   border: 1px solid var(--line); background: none; cursor: pointer; text-align: left; font-size: 14px; line-height: 1.3;
 }
 .bk-cat .bk-check { position: absolute; right: 10px; top: 50%; width: 18px; height: 18px; margin-top: -9px; opacity: 0; }
-.bk-cat.is-on { border-color: var(--gold); background: var(--gold); color: #fff; font-weight: 500; }
+.bk-cat.is-on { border-color: var(--gold-fill); background: var(--gold-fill); color: var(--on-fill); font-weight: 500; }
 .bk-cat.is-on .bk-check { opacity: 1; }
 .bk-cat--unsure { border-style: dashed; }
 
@@ -125,42 +125,53 @@ body.is-barber .booker { --off: rgba(239, 231, 216, .14); --off-ink: rgba(239, 2
   border: 0; background: none; font-size: 14px; font-weight: 500; cursor: pointer;
 }
 .bk-back:hover { color: var(--gold-deep); }
-.bk-next {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 15px 20px;
-  border: 0; background: var(--gold); color: #fff !important;
-  font: 500 14px/1 Montserrat, sans-serif; letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
-  transition: background-color .2s;
-}
-.bk-next:hover:not(:disabled) { background: var(--gold-deep); }
-body.is-barber .bk-next:hover:not(:disabled) { background: #9C7130; }
-.bk-next:disabled { background: var(--off); color: var(--off-ink) !important; cursor: not-allowed; }
-.bk-next--wa { background: var(--wa); }
-.bk-next--wa:hover:not(:disabled) { background: var(--wa-hover) !important; }
-.bk-note { margin: 2px 0 0; font-size: 13px; line-height: 1.5; text-align: center; opacity: .7; }
+/* Continue is the one important action of each step, so it is the gold outline button (.btn--key,
+   site.css); grey until the step has an answer. Send keeps the WhatsApp green for now. */
+.bk-next { width: 100%; }
+.bk-note { margin: 2px 0 0; font-size: 13px; line-height: 1.5; text-align: center; opacity: .75; }
 
 /* after sending */
 .booker__done { display: grid; justify-items: center; gap: 12px; padding: 28px 20px; border: 1px solid var(--line); text-align: center; }
-.booker__done-icon { color: var(--wa); }
+.booker__done-icon { color: var(--wa-text); }
 .booker__done .bk-q { margin: 0; }
 .booker__done p { margin: 0; font-size: 15px; line-height: 1.5; }
 .booker__done .bk-back { justify-self: center; }
 
 /* stylist / barber cards: Book + WhatsApp side by side */
 .person__links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
-.link--wa { color: #1F9D55; border-color: rgba(31, 157, 85, .35); }
-body.is-barber .link--wa { color: #4CC981; }
+.link--wa { color: var(--wa-text); border-color: currentColor; }
 
 @media (min-width: 641px) { .bk-people { grid-template-columns: repeat(4, 1fr); } }
 
-/* phones: each step fits one screen */
+/* phones: each step fits one screen, the calendar step included even in a six-week month
+   (days are 44 x 42, so the spacing around the calendar is tightened to make room) */
 @media (max-width: 640px) {
-  #book .sec-head { margin-bottom: 14px; }
+  #book.page.sec { padding-top: calc(var(--header-h) + 16px); padding-bottom: 20px; }
+  #book .sec-head { margin-bottom: 10px; }
   #book .sec-head h2 { font-size: 28px; }
-  .bk-progress { margin-bottom: 16px; }
-  .bk-q { margin-bottom: 12px; font-size: 18px; }
-  .bk-day { width: 34px; height: 34px; }
-  .bk-nav { margin-top: 18px; gap: 6px; }
-  .visit__info { margin-top: 12px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .bk-progress { margin-bottom: 12px; }
+  .bk-q { margin-bottom: 10px; font-size: 18px; }
+  .bk-day { height: 42px; }
+  .bk-cal__grid { gap: 1px 2px; }
+  .bk-q2 { margin: 12px 0 8px; letter-spacing: .06em; white-space: nowrap; }
+  .bk-q2 small { font-size: 10.5px; letter-spacing: 0; }
+  .bk-unsure { margin-top: 8px; padding: 10px; }
+  .bk-nav { margin-top: 12px; gap: 6px; }
+}
+
+/* laptops (wide but short screens, used with a mouse): the calendar step fits one screen even
+   in a six-week month. Tall touch screens such as tablets keep the 44px days. */
+@media (min-width: 641px) and (max-height: 900px) {
+  #book.page.sec { padding-top: calc(var(--header-h) + 24px); padding-bottom: 24px; }
+  #book .sec-head { margin-bottom: 14px; }
+  #book .sec-head h2 { font-size: 40px; }
+  .bk-progress { margin-bottom: 14px; }
+  .bk-q { margin-bottom: 10px; }
+  .bk-day { height: 36px; }
+  .bk-cal__grid { gap: 1px 2px; }
+  .bk-q2 { margin: 12px 0 8px; }
+  .bk-unsure { margin-top: 8px; padding: 9px; }
+  .bk-nav { margin-top: 14px; gap: 6px; }
 }
 
 /* ---------- floating WhatsApp button: the salon's main number ---------- */

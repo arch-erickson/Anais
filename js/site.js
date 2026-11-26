@@ -110,17 +110,17 @@
     sec.innerHTML = `
       <a class="profile__back" href="#${list}">
         <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-        ${barber ? bi('Todos los barberos', 'All barbers') : bi('Todas las estilistas', 'All stylists')}</a>
+        ${bi('Todo el equipo', 'The whole team')}</a>
       <div class="profile__body">
         <div class="profile__photo"></div>
         <div class="profile__text">
           <h2>${h3.innerHTML}</h2>
           ${card.querySelector('.person__details').innerHTML}
           <div class="profile__actions">
-            <a class="profile__wa" href="#" data-wa target="_blank" rel="noopener">
+            <a class="btn btn--key btn--wa" href="#" data-wa target="_blank" rel="noopener">
               <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><use href="#icon-whatsapp"/></svg>
               ${bi('Chatea por WhatsApp', 'Chat on WhatsApp')}</a>
-            <a class="profile__book" href="#book" data-book-staff>${bi('Reservar cita', 'Book appointment')}</a>
+            <a class="btn" href="#book" data-book-staff>${bi('Reservar cita', 'Book appointment')}</a>
           </div>
         </div>
       </div>`;
@@ -138,6 +138,7 @@
     'barber-services': { es: 'Servicios', en: 'Services' },
     'barber-gallery': { es: 'Galería', en: 'Gallery' },
     book: { es: 'Reservar', en: 'Book' },
+    visit: { es: 'Visítanos', en: 'Visit us' },
   };
   Object.assign(PAGE_NAMES, PROFILE_NAMES);
   const homeOf = (m) => (m === 'barber' ? 'barbershop' : 'salon');
@@ -173,11 +174,22 @@
     return true;
   };
 
+  // a link to a services category (#menu-color, #barber-menu-cuts ...) lands on the Services
+  // page with that category already open, and the others closed
+  const openCategory = (el) => {
+    if (!el || !el.matches('.svc-menu__cat')) return false;
+    el.parentElement.querySelectorAll('.svc-menu__cat').forEach((cat) => { cat.open = cat === el; });
+    return true;
+  };
+
   const go = (id, smooth) => {
     const switchedMode = setMode(ownerOf(id) || mode || 'salon');
     const switchedPage = showPage(pageFor(id));
     const el = id && document.getElementById(id);
-    const inner = el && !el.matches('[data-page], [data-mode-view]');   // e.g. #color on the home page
+    const category = openCategory(el);
+    // e.g. #color on the home page. The first category of a menu already sits under the page
+    // heading, so the page opens at the top; a later one is scrolled to.
+    const inner = el && !el.matches('[data-page], [data-mode-view]') && !(category && !el.previousElementSibling);
     const behavior = smooth && !switchedMode && !switchedPage ? 'smooth' : 'auto';
     if (inner) el.scrollIntoView({ behavior });
     else window.scrollTo({ top: 0, behavior });
@@ -188,6 +200,7 @@
   const first = decodeURIComponent(location.hash.slice(1));
   setMode(ownerOf(first) || 'salon');
   showPage(pageFor(first));
+  openCategory(first && document.getElementById(first));
   setLang(lang());
   if (page !== 'salon') {                      // the sunflower entrance only plays on the salon home
     document.querySelector('.intro')?.remove();
@@ -219,20 +232,4 @@
       if (cat.open) cats.forEach((other) => { if (other !== cat) other.open = false; });
     }));
   });
-
-  /* ---------- wireframe notes toggle ---------- */
-  const toggle = document.querySelector('.wf-toggle');
-  if (toggle) {
-    const apply = (off) => {
-      body.classList.toggle('wf-notes-off', off);
-      toggle.setAttribute('aria-pressed', String(!off));
-      toggle.textContent = 'Wireframe notes: ' + (off ? 'off' : 'on');
-    };
-    apply(localStorage.getItem('anais-wf-notes') === 'off');
-    toggle.addEventListener('click', () => {
-      const off = !body.classList.contains('wf-notes-off');
-      localStorage.setItem('anais-wf-notes', off ? 'off' : 'on');
-      apply(off);
-    });
-  }
 })();

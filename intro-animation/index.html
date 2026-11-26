@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANAÍS · Opening animation</title>
+  <link rel="icon" href="anais-icon-sunflower-gold-light-bg.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="intro.css">
+</head>
+<!-- The ANAÍS opening animation on its own. Everything it needs is in this folder.
+     See ANIMATION-STEPS.md for how it was made and how to tune it. -->
+<body class="intro-on">
+
+  <!-- 1. the intro: dark field, gold flower frame (built by intro.js), the turning sunflower -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro__veil"><svg class="intro__meadow" preserveAspectRatio="xMidYMax slice"></svg></div>
+    <div class="intro__bloom">
+      <img class="intro__bloom-photo" src="assets/flowers-photos/gold/sunflower-hero-rich.webp" alt="">
+      <img class="intro__bloom-dark" src="anais-icon-sunflower-gold-dark-bg.svg" alt="">
+      <img class="intro__bloom-light" src="anais-icon-sunflower-gold-light-bg.svg" alt="">
+    </div>
+  </div>
+  <noscript><style>.intro { display: none; } body.intro-on { overflow: auto; } .hero__logo, .brand__word { -webkit-mask: none !important; mask: none !important; } .brand__icon { opacity: 0 !important; } .brand__flower { opacity: 1 !important; }</style></noscript>
+
+  <!-- 2. where it lands: the header logo, in three stacked layers -->
+  <header class="header">
+    <span></span>
+    <a class="brand" href="#" aria-label="ANAÍS">
+      <span class="brand__lockup">
+        <img class="brand__icon" data-intro-slot src="anais-icon-sunflower-gold-light-bg.svg" alt="">
+        <img class="brand__flower" src="anais-lockup-flower-gold-light-bg.svg" alt="">
+        <img class="brand__word" src="anais-lockup-word-gold-light-bg.svg" alt="">
+      </span>
+    </a>
+    <span></span>
+  </header>
+
+  <!-- 3. what the page reveals: the big logo writes itself in, then the line under it -->
+  <main class="hero">
+    <img class="hero__logo" src="anais-logo-gold-light-bg.svg" alt="ANAÍS">
+    <p class="hero__lede">La belleza, en plena flor.</p>
+    <button class="replay" type="button" onclick="location.reload()">Ver de nuevo · Replay</button>
+  </main>
+
+  <script src="intro-flowers.js"></script>
+  <script src="intro.js"></script>
+</body>
+</html>

@@ -300,10 +300,22 @@
       main.href = waUrl(form.dataset.waSalon, t('Hola, ANAÍS. Tengo una pregunta.', 'Hi ANAÍS, I have a question.'));
       return;
     }
-    // "Ask for prices on WhatsApp" on the Services pages: the salon or barbershop front desk
+    // links to the salon's or the barbershop's front desk, whichever side the visitor is on:
+    //   data-wa-desk          "Ask for prices on WhatsApp" on the Services pages
+    //   data-wa-desk="hello"  the main "Message us on WhatsApp" buttons (hero, end of the home page, step 1)
+    //   data-wa-desk="ask"    "Chat on WhatsApp" on the Visit page
     const desk = e.target.closest('[data-wa-desk]');
     if (desk) {
-      desk.href = waUrl(deskNumber(), t('Hola. Quisiera saber el precio de un servicio.', 'Hi, I\'d like to know the price of a service.'));
+      const messages = {
+        hello: isBarber()
+          ? t('Hola. Les escribo a la Barbería de ANAÍS: quiero contarles el corte que busco.', 'Hi, I\'m writing to the Barbershop at ANAÍS: I\'d like to tell you about the cut I\'m after.')
+          : t('Hola, ANAÍS. Quiero contarles el look que busco.', 'Hi ANAÍS, I\'d like to tell you about the look I\'m after.'),
+        ask: isBarber()
+          ? t('Hola. Tengo una pregunta para la Barbería de ANAÍS.', 'Hi, I have a question for the Barbershop at ANAÍS.')
+          : t('Hola, ANAÍS. Tengo una pregunta.', 'Hi ANAÍS, I have a question.'),
+      };
+      desk.href = waUrl(deskNumber(), messages[desk.dataset.waDesk]
+        || t('Hola. Quisiera saber el precio de un servicio.', 'Hi, I\'d like to know the price of a service.'));
       return;
     }
     const a = e.target.closest('[data-wa]');

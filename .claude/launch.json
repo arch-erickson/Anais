@@ -4,15 +4,38 @@
     {
       "name": "anais-site",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5173", "--bind", "127.0.0.1"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5173",
+        "--bind",
+        "127.0.0.1"
+      ],
       "port": 5173
     },
     {
       "name": "photo-review",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["tools/photo-review/server.py", "5180"],
+      "runtimeArgs": [
+        "tools/photo-review/server.py",
+        "5180"
+      ],
       "port": 5180,
       "autoPort": false
+    },
+    {
+      "name": "intro-animation",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5190",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "intro-animation"
+      ],
+      "port": 5190
     }
   ]
 }
